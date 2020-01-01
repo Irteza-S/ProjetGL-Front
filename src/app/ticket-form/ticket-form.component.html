@@ -1,9 +1,20 @@
 <div class="card card-outline-secondary">
-    <div class="card-header">
-        <h3 class="mb-0">Création d'un ticket</h3>
+
+    <form [formGroup]="ticketFormGroup">
+    <div class="card-header form-row">
+        <div class="form-group col-md-9">
+            <h3 class="mb-0">Création d'un ticket</h3>
+        </div>
+        <div class="form-group col-md-3 input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Statut</label>
+            </div>
+            <select class="form-control custom-select" formControlName="form_status">
+                <option *ngFor="let type of statusList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+            </select>
+          </div>
     </div>
     <div class="card-body container">
-            <form [formGroup]="ticketFormGroup">
                     <div class="form-row">
                       <div class="form-group col-md-7">
                         <label>Objet de la demande</label>
@@ -58,12 +69,18 @@
 
 
                     <div class="form-row">
-                        <div class="form-group col-md-9">
+                        <div class="form-group col-md-4">
                             <label>Catégorie</label>
                             <select class="form-control" formControlName="form_categorie">
                                     <option *ngFor="let type of categorieList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
                             </select>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label>Niveau de priorité</label>
+                            <select class="form-control" formControlName="form_priorite">
+                                    <option *ngFor="let type of prioriteList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                            </select>
+                    </div>
                     </div>
 
 
@@ -92,7 +109,10 @@
                                             </div>
                                             <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
                                             <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps estimé">
-                                            <input type="text" class="form-control" formControlName="tacheCompetence" placeholder="Compétence requise">
+                                            <select class="form-control" formControlName="tacheCompetence">
+                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                            </select>
+                                        
                                         </div>
                                 </div>    
                             </div>
@@ -102,10 +122,32 @@
                     <br>
                     <hr class="style14">
                     <br>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                                <label>Date d'ouverture</label>
+                                <select class="form-control" formControlName="form_demandeur">
+                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label>
+                                    Date de saisie
+                                    <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                                    <owl-date-time #dt></owl-date-time>
+                                </label>
+
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label>Date début traitement</label>
+                                
+                        </div>
+                    </div>
+
                     
                     <div class="form-row">
                     <button type="submit" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer ticket</button>
                     </div>
-                </form>
     </div>
+    </form>
 </div>

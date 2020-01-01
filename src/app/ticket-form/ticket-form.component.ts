@@ -15,6 +15,9 @@ export class TicketFormComponent implements OnInit {
   clientSiteList = ['Site1', 'Site2', 'Site3'];
   categorieList = ['Categorie1', 'Categorie2', 'Categorie3'];
   tacheList = [];
+  prioriteList = ['1', '2', '3'];
+  statusList = ['Non résolu', 'Résolu', 'Ouvert', 'En cours', 'Bloqué'];
+  competenceList = ['Frigoriste', 'Plombier', 'Serrurier'];
 
   constructor(private fb: FormBuilder) {
     this.initForm(fb);
@@ -32,6 +35,8 @@ export class TicketFormComponent implements OnInit {
       form_demandeur: fb.control('', Validators.required),
       form_site: fb.control('', Validators.required),
       form_categorie: fb.control('', Validators.required),
+      form_priorite: fb.control('', Validators.required),
+      form_status: fb.control('', Validators.required),
       form_tache: this.fb.array([this.fb.group({
         tacheName: '',
         tacheLength: '',
