@@ -19,6 +19,10 @@ export class TicketFormComponent implements OnInit {
   statusList = ['Non résolu', 'Résolu', 'Ouvert', 'En cours', 'Bloqué'];
   competenceList = ['Frigoriste', 'Plombier', 'Serrurier'];
 
+  openingDate = new FormControl(new Date());
+  inputDate = new FormControl(new Date());
+  startingDate = new FormControl(new Date());
+
   constructor(private fb: FormBuilder) {
     this.initForm(fb);
    }

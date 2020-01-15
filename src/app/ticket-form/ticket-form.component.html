@@ -125,23 +125,32 @@
 
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                                <label>Date d'ouverture</label>
-                                <select class="form-control" formControlName="form_demandeur">
-                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
-                                </select>
+                            <label>
+                                Date d'ouverture
+                                <br>
+                                <input [formControl]="openingDate" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
+                                <owl-date-time #dtPicker1></owl-date-time>
+                            </label>
                         </div>
-                        <div class="form-group col-md-4">
-                                <label>
-                                    Date de saisie
-                                    <input [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
-                                    <owl-date-time #dt></owl-date-time>
-                                </label>
 
-                        </div>
                         <div class="form-group col-md-4">
-                                <label>Date début traitement</label>
-                                
+                            <label>
+                                Date de saisie
+                                <br>
+                                <input [formControl]="inputDate" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
+                                <owl-date-time #dtPicker2></owl-date-time>
+                            </label>
                         </div>
+
+                        <div class="form-group col-md-4">
+                            <label>
+                                Date de début de traitement
+                                <br>
+                                <input [formControl]="startingDate" [owlDateTimeTrigger]="dtPicker3" [owlDateTime]="dtPicker3">
+                                <owl-date-time #dtPicker3></owl-date-time>
+                            </label>
+                        </div>
+                    
                     </div>
 
                     
