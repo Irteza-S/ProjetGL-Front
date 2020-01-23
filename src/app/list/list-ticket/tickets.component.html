@@ -1,0 +1,48 @@
+<div class="card card-outline-secondary">
+  <div class="card-header">
+      <h3 class="mb-0">Liste des tickets</h3>
+  </div>
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="50%">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+      <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
+          <td mat-cell *matCellDef="let element" class="bold"> {{element.num}} </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Titre</th>
+          <td mat-cell *matCellDef="let element" > {{element.title}} </td>
+      </ng-container>
+      <ng-container matColumnDef="client">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+              <td mat-cell *matCellDef="let element"> {{element.client}} </td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+      <ng-container matColumnDef="tech">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Technicien Affecté</th>
+        <td mat-cell *matCellDef="let element"> {{element.tech}} </td>
+      </ng-container>
+      <ng-container matColumnDef="edition">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Edition</th>
+          <td mat-cell *matCellDef="let element"><a href="/list">{{element.edition}} </a></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+

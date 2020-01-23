@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+}
+th {
+    font-weight: bold;
+}
+.bold {
+    font-weight: bold;
+}
+.center {
+    text-align: center;
+}
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
