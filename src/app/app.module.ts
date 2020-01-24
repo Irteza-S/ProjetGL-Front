@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserSessionComponent } from './user-session/user-session.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { LoginComponent } from './login/login.component';
 import { CustomMaterialModule } from './material.module';
@@ -35,7 +35,8 @@ import { CustomMaterialModule } from './material.module';
     MatFormFieldModule,
     MatInputModule,
     FlexLayoutModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    MatPaginatorModule
   ],
   providers: [
     CookieService
