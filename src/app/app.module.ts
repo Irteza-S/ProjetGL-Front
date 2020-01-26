@@ -13,6 +13,8 @@ import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule} from 
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { LoginComponent } from './login/login.component';
 import { CustomMaterialModule } from './material.module';
+import { TicketAPIService } from './services/api/ticket-api.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -35,10 +37,12 @@ import { CustomMaterialModule } from './material.module';
     MatFormFieldModule,
     MatInputModule,
     FlexLayoutModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    HttpModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    TicketAPIService
   ],
   bootstrap: [AppComponent]
 })

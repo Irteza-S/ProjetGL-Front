@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray, FormControl} from '@angular/forms';
 import { fbind } from 'q';
+import { TicketAPIService } from '../../services/api/ticket-api.service';
 
 @Component({
   selector: 'app-ticket-form',
@@ -23,7 +24,7 @@ export class TicketFormComponent implements OnInit {
   inputDate = new FormControl(new Date());
   startingDate = new FormControl(new Date());
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private ticketApi: TicketAPIService) {
     this.initForm(fb);
    }
 
@@ -74,6 +75,8 @@ export class TicketFormComponent implements OnInit {
   }
 
   sendForm() {
-    console.log(this.ticketFormGroup);
+    // console.log(this.ticketFormGroup);
+    console.log(this.ticketApi.test());
+    console.log(this.ticketApi.initTicket(123456789, 2));
   }
 }
