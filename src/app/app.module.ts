@@ -38,11 +38,8 @@ import { HttpModule } from '@angular/http';
     MatInputModule,
     FlexLayoutModule,
     CustomMaterialModule,
-<<<<<<< HEAD
-    HttpModule
-=======
+    HttpModule,
     MatPaginatorModule
->>>>>>> e51c2d7817fb79eccb80d6404ffe8c28ab9f4fd5
   ],
   providers: [
     CookieService,
