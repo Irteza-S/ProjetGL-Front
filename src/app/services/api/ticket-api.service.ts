@@ -37,11 +37,24 @@ export class TicketAPIService {
   }
 
   public test(): any {
-    this.http.post('localhost:8080/genielog/client/test', '').toPromise().then((data: any) => {
+    this.http.post('/api/client/try', '').toPromise().then((data: any) => {
       console.log(data);
       console.log(data.json.test);
       const res = JSON.stringify(data.json);
       return res;
     });
   }
+
+  public test2(): any {
+    return this.http.get('/api/client/try').map(res => res.json());
+  }
+
+  public okok() {
+      const ok =  this.http.get('https://jsonplaceholder.typicode.com/posts/');
+      ok.subscribe((data) => {
+        console.log(data.json());
+      });
+      return ok;
+  }
 }
+
