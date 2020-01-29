@@ -46,7 +46,11 @@ export class TicketAPIService {
   }
 
   public test2(): any {
-    return this.http.get('/api/client/try').map(res => res.json());
+    const ok =  this.http.get('http://127.0.0.1:4200/genielog/ticket/test');
+    ok.subscribe((data) => {
+      console.log(data);
+    });
+    return ok;
   }
 
   public okok() {
@@ -58,11 +62,11 @@ export class TicketAPIService {
   }
 
   public okok2() {
-    const ok =  this.http.get('localhost:8080/genielog/ticket/init');
+    const ok =  this.http.get('http://127.0.0.1:4200/genielog/client/ok');
     ok.subscribe((data) => {
       console.log(data.json());
     });
     return ok;
-}
+  }
 }
 

@@ -80,7 +80,7 @@ export class TicketFormComponent implements OnInit {
   sendForm() {
     // console.log(this.ticketFormGroup);
     //console.log(this.ticketApi.test2());
-    this.ticketApi.okok();
+    this.ticketApi.test2();
     //this.ticketApi.okok2();
     // console.log(this.ticketApi.initTicket(123456789, 2));
   }
