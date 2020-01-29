@@ -1,3 +1,5 @@
+
+<!-- 
 <mat-card class="example-card" [style.backgroundColor]="'#d1cbcb'">
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
@@ -23,4 +25,14 @@
     <mat-card-actions>
       <button mat-raised-button (click)="login()" color="primary">Login</button>
     </mat-card-actions>
-</mat-card>
+</mat-card> -->
+
+<div class="container">
+  <div>
+    User Name : <input type="text" name="username" [(ngModel)]="username">
+    Password : <input type="password" name="password" [(ngModel)]="password">
+  </div>
+  <button (click)=checkLogin() class="btn btn-success">
+    Login
+  </button>
+</div>

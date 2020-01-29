@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginAPIService } from './services/login/login-api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProjetGL-Front';
+  public constructor(private loginAPI: LoginAPIService) {
+
+  }
 }

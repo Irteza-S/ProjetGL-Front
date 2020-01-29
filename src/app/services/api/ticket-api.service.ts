@@ -56,5 +56,13 @@ export class TicketAPIService {
       });
       return ok;
   }
+
+  public okok2() {
+    const ok =  this.http.get('localhost:8080/genielog/ticket/init');
+    ok.subscribe((data) => {
+      console.log(data.json());
+    });
+    return ok;
+}
 }
 

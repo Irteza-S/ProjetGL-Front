@@ -11,10 +11,12 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { CustomMaterialModule } from './material.module';
 import { TicketAPIService } from './services/api/ticket-api.service';
 import { HttpModule } from '@angular/http';
+import { LoginAPIService } from './services/login/login-api.service';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { HttpModule } from '@angular/http';
     TicketsComponent,
     TicketFormComponent,
     UserSessionComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { HttpModule } from '@angular/http';
   ],
   providers: [
     CookieService,
-    TicketAPIService
+    TicketAPIService,
+    LoginAPIService
   ],
   bootstrap: [AppComponent]
 })
