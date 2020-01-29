@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
 
 export interface TicketsTable {
   num: number;
@@ -23,7 +23,8 @@ const ELEMENT_DATA: TicketsTable[] = [
   {
     num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
     client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
+  },
+  {
     num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
     client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
   },
@@ -34,7 +35,8 @@ const ELEMENT_DATA: TicketsTable[] = [
   {
     num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
     client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
+  },
+  {
     num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
     client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
   },
@@ -45,7 +47,8 @@ const ELEMENT_DATA: TicketsTable[] = [
   {
     num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
     client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
+  },
+  {
     num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
     client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
   },
@@ -56,7 +59,8 @@ const ELEMENT_DATA: TicketsTable[] = [
   {
     num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
     client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
+  },
+  {
     num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
     client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
   },
@@ -67,7 +71,8 @@ const ELEMENT_DATA: TicketsTable[] = [
   {
     num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
     client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
+  },
+  {
     num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
     client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
   },
@@ -138,6 +143,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor() { }
 
   ngOnInit() {
@@ -145,9 +151,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
+ 
