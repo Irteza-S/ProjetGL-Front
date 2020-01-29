@@ -1,1 +1,0 @@
-ok.<i class="fas fa-tshirt    "></i>
