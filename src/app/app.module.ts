@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserSessionComponent } from './user-session/user-session.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from '@angular/material';
+import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTabsModule, MatExpansionModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { LoginComponent } from './auth/login/login.component';
 import { CustomMaterialModule } from './material.module';
@@ -17,6 +17,7 @@ import { TicketAPIService } from './services/api/ticket-api.service';
 import { HttpModule } from '@angular/http';
 import { LoginAPIService } from './services/login/login-api.service';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { ListStaffComponent } from './list/list-staff/list-staff.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     TicketFormComponent,
     UserSessionComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ListStaffComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,9 @@ import { LogoutComponent } from './auth/logout/logout.component';
     FlexLayoutModule,
     CustomMaterialModule,
     HttpModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule,
+    MatExpansionModule
   ],
   providers: [
     CookieService,

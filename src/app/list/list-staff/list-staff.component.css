@@ -1,0 +1,19 @@
+table {
+    text-align: center;
+    width: 100%;
+}
+th {
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+td {
+    cursor: pointer;
+}
+.bold {
+    color: black;
+    font-weight: bold;
+}
+.center {
+    text-align: center;
+}
