@@ -1,0 +1,132 @@
+<div class="card card-outline-secondary">
+  <div class="card-header">
+    <h3 class="mb-0">Liste des membres du personnel </h3>
+  </div>
+  <mat-tab-group mat-stretch-tabs [selectedIndex]=1>
+    <mat-tab>
+      <ng-template mat-tab-label><span>Opérationnels</span></ng-template>
+      <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="25%" appearance="outline">
+          <mat-label><span>Rechercher dans le tableau </span></mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro de téléphone</th>
+          <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+        </ng-container>
+        <ng-container matColumnDef="adress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+          <td mat-cell *matCellDef="let element"> {{element.adress}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label><span>Techniciens</span></ng-template>
+      <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="25%" appearance="outline">
+          <mat-label><span>Rechercher dans le tableau </span></mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="dataSource2" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro de téléphone</th>
+          <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+        </ng-container>
+        <ng-container matColumnDef="adress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+          <td mat-cell *matCellDef="let element"> {{element.adress}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label><span>Responsable Techniciens</span></ng-template>
+      <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="25%" appearance="outline">
+          <mat-label><span>Rechercher dans le tableau </span></mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="dataSource2" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro de téléphone</th>
+          <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+        </ng-container>
+        <ng-container matColumnDef="adress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+          <td mat-cell *matCellDef="let element"> {{element.adress}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
+    </mat-tab>
+  </mat-tab-group>
+  <!--   <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Personal data
+                </mat-panel-title>
+                <mat-panel-description>
+                  Type your name and age
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+              <mat-form-field>
+                <input matInput placeholder="First name">
+              </mat-form-field>
+          
+              <mat-form-field>
+                <input matInput placeholder="Age">
+              </mat-form-field>
+            </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Self aware panel
+                </mat-panel-title>
+                <mat-panel-description>
+                  Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <p>I'm visible because I am open</p>
+            </mat-expansion-panel>
+    </mat-accordion> -->
+</div>

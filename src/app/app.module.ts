@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserSessionComponent } from './user-session/user-session.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule} from '@angular/material';
+import {MatIconModule, MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatTabsModule, MatExpansionModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { LoginComponent } from './auth/login/login.component';
 import { CustomMaterialModule } from './material.module';
@@ -17,7 +17,11 @@ import { TicketAPIService } from './services/api/ticket-api.service';
 import { HttpModule } from '@angular/http';
 import { LoginAPIService } from './services/login/login-api.service';
 import { LogoutComponent } from './auth/logout/logout.component';
+<<<<<<< HEAD
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+=======
+import { ListStaffComponent } from './list/list-staff/list-staff.component';
+>>>>>>> 4792d239877f436b7c9ee0a704b8297245af5932
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     TicketFormComponent,
     UserSessionComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ListStaffComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     CustomMaterialModule,
     HttpModule,
     MatPaginatorModule,
+<<<<<<< HEAD
     NgbModule
+=======
+    MatTabsModule,
+    MatExpansionModule, 
+    MatIconModule
+>>>>>>> 4792d239877f436b7c9ee0a704b8297245af5932
   ],
   providers: [
     CookieService,

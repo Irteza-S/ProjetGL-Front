@@ -7,10 +7,6 @@ th {
 .bold {
     font-weight: bold;
 }
-.center {
-    text-align: center;
+span{
+    color:gray;
 }
-.mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }

@@ -1,0 +1,10 @@
+table {
+    width: 100%;
+    background-color: slategray;
+}
+span {
+    color: gray;
+}
+mat-paginator {
+    background-color: slategray;
+}
