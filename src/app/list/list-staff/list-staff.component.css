@@ -1,19 +1,10 @@
 table {
-    text-align: center;
     width: 100%;
+    background-color: slategray;
 }
-th {
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
+span {
+    color: gray;
 }
-td {
-    cursor: pointer;
-}
-.bold {
-    color: black;
-    font-weight: bold;
-}
-.center {
-    text-align: center;
+mat-paginator {
+    background-color: slategray;
 }
