@@ -17,6 +17,7 @@ import { TicketAPIService } from './services/api/ticket-api.service';
 import { HttpModule } from '@angular/http';
 import { LoginAPIService } from './services/login/login-api.service';
 import { LogoutComponent } from './auth/logout/logout.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     FlexLayoutModule,
     CustomMaterialModule,
     HttpModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgbModule
   ],
   providers: [
     CookieService,

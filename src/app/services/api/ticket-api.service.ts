@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response } from '@angular/http';
+import { Http, Response} from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { map } from 'rxjs-compat/operator/map';
 import { HttpHeaders } from '@angular/common/http';
 
+const postData = {
+  test: 'OKTAM',
+};
+let url = 'http://httpbin.org/post';
+let json;
 
-const API_URL = 'localhost:8080/genielog/ticket/';
+const API_URL = 'http://127.0.0.1:4200/genielog/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +26,11 @@ export class TicketAPIService {
 
   public initTicket(clientID, ticketID): any {
     return this.http
-      .post(API_URL + '/init', {clientIde: clientID, idProject: ticketID})
-      .map(response => {
-        const data =  response.json();
-        return {
-          firstVariable: data
-        };
-      })
-      .catch(this.handleError);
+      .post('http://127.0.0.1:4200/genielog/ticket/init', {clientIde: clientID, idProject: ticketID})
+      .catch(this.handleError)
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   // Error handling
@@ -54,17 +57,18 @@ export class TicketAPIService {
   }
 
   public okok() {
-      const ok =  this.http.get('https://jsonplaceholder.typicode.com/posts/');
-      ok.subscribe((data) => {
-        console.log(data.json());
-      });
-      return ok;
+    const ok =  this.http.post('http://httpbin.org/post', postData);
+    ok.subscribe((data) => {
+      json = JSON.stringify(data);
+      console.log('1');
+      console.log(json);
+    });
   }
 
   public okok2() {
-    const ok =  this.http.get('http://127.0.0.1:4200/genielog/client/ok');
+    const ok =  this.http.get('http://127.0.0.1:4200/genielog/ticket/test');
     ok.subscribe((data) => {
-      console.log(data.json());
+      console.log(data);
     });
     return ok;
   }

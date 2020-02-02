@@ -9,7 +9,8 @@ import { AuthGaurdService } from './services/login/auth-gaurd.service';
 
 const routes: Routes = [
   { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
-  { path: 'form', component: TicketFormComponent},
+  { path: 'form', redirectTo: 'form/'},
+  { path: 'form/:formType', component: TicketFormComponent},
   { path: 'session', component: UserSessionComponent},
   { path: 'login', component: LoginComponent},
   { path: 'logout', component: LogoutComponent },

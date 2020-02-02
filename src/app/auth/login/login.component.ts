@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkLogin() {
-    if (this.loginAPI.authenticate(this.username, this.password)
-    ) {
+    if (this.loginAPI.authenticate(this.username, this.password)) {
       this.router.navigate(['list']);
       this.invalidLogin = false;
     } else {

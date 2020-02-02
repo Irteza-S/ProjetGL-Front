@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators, FormArray, FormControl} from '@angul
 import { fbind } from 'q';
 import { TicketAPIService } from '../../services/api/ticket-api.service';
 import { TicketFormType } from '../../model/ticketformtype';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-form',
@@ -26,9 +27,16 @@ export class TicketFormComponent implements OnInit {
   inputDate = new FormControl(new Date());
   startingDate = new FormControl(new Date());
 
-  constructor(private fb: FormBuilder, private ticketApi: TicketAPIService) {
+  constructor(private fb: FormBuilder, private ticketApi: TicketAPIService, private route: ActivatedRoute) {
     this.initForm(fb);
-    // this.ticketFormType = formType;
+    this.route.paramMap.subscribe(params => {
+      if (params.get('formType') === 'Création ticket') {
+        this.ticketFormType = TicketFormType.Create;
+      } else if (params.get('formType') === 'Modification ticket') {
+        // Load form from Back
+        this.ticketFormType = TicketFormType.Edit;
+      }
+    });
    }
 
   ngOnInit() {
@@ -80,7 +88,8 @@ export class TicketFormComponent implements OnInit {
   sendForm() {
     // console.log(this.ticketFormGroup);
     //console.log(this.ticketApi.test2());
-    this.ticketApi.test2();
+    //this.ticketApi.initTicket(123456789, 2);
+    this.ticketApi.okok();
     //this.ticketApi.okok2();
     // console.log(this.ticketApi.initTicket(123456789, 2));
   }

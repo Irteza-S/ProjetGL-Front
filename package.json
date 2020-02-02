@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~8.2.8",
     "@angular/platform-browser-dynamic": "~8.2.8",
     "@angular/router": "~8.2.8",
+    "@ng-bootstrap/ng-bootstrap": "^5.2.1",
     "angular-bootstrap-datetimepicker": "^4.0.2",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
