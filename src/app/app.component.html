@@ -2,77 +2,86 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div>
-  
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">ProjetGL</a>
-  <!-- si jamais on reduit la window -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <!--operateur-->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="newTicket" [routerLink]="['/form', ticketFormType]">
-          <i class="fa fa-ticket"></i>
-          Nouveau Ticket
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="notifications" routerLink="list">
-          <i class="fa fa-list-ol" aria-hidden="true"></i>
-          Liste Tickets
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="newClient" routerLink="item/newClient">
-          <i class="fa fa-users" aria-hidden="true"></i>
-          Gestion
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="notifications" routerLink="item/notif">
-          <i class="fa fa-bell">
-            <span class="badge badge-warning">11</span>
-          </i>
-          Notifications
-        </a>
-      </li>
-    </ul>
-    <!--deuxieme partie de la barre -->
-    <form class="form-inline my- my-lg-0">
-      <input size="30" class="form-control mr-sm-2" type="text" placeholder="Recherchez un client, un ticket, etc." aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" (click)="session()"  type="button" style = "margin-left: 10px;">Search</button>
-    </form>
-    <ul class="navbar-nav ">
-    
-    <div style = "margin-left:40px;">
-      <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
-        <a class="nav-link" href="logout">
-          <i class="fa fa-sign-out"></i>
-          Logout
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="!loginAPI.isUserLoggedIn()">
-        <a class="nav-link" href="login" >
-          <i class="fa fa-sign-in"></i>
-          LogIn
-        </a>
-      </li>
-    </div>
-    </ul>
-  </div>
-</nav>
 
-    <div class="container">
-      <div class="card border-0 shadow my-5">
-        <div class="card-body p-5">
-          <router-outlet></router-outlet>
+  <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">ProjetGL</a>
+    <!-- si jamais on reduit la window -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--operateur-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="newTicket" [routerLink]="['/form', ticketFormType]">
+            <i class="fa fa-ticket"></i>
+            Nouveau Ticket
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="list">
+            <i class="fa fa-list-ol" aria-hidden="true"></i>
+            Liste Tickets
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="list-staff">
+            <i class="fa fa-wrench" aria-hidden="true"></i>
+            Gestion Personnel
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="list-client">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            Clients
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="notifications" routerLink="item/notif">
+            <i class="fa fa-bell">
+              <span class="badge badge-warning">11</span>
+            </i>
+            Notifications
+          </a>
+        </li>
+      </ul>
+      <!--deuxieme partie de la barre -->
+      <form class="form-inline my- my-lg-0">
+        <input size="30" class="form-control mr-sm-2" type="text" placeholder="Recherchez un client, un ticket, etc."
+          aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="session()" type="button"
+          style="margin-left: 10px;">Search</button>
+      </form>
+      <ul class="navbar-nav ">
+
+        <div style="margin-left:40px;">
+          <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+            <a class="nav-link" href="logout">
+              <i class="fa fa-sign-out"></i>
+              Logout
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="!loginAPI.isUserLoggedIn()">
+            <a class="nav-link" href="login">
+              <i class="fa fa-sign-in"></i>
+              LogIn
+            </a>
+          </li>
         </div>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card border-0 shadow my-5">
+      <div class="card-body p-5">
+        <router-outlet></router-outlet>
       </div>
     </div>
-
   </div>
+
+</div>
 
 <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
   <a class="navbar-brand" href="#">ProjetGL</a>

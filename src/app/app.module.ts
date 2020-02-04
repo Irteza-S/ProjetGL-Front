@@ -19,6 +19,7 @@ import { LoginAPIService } from './services/login/login-api.service';
 import { LogoutComponent } from './auth/logout/logout.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ListStaffComponent } from './list/list-staff/list-staff.component';
+import { ListClientComponent } from './list/list-client/list-client.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ListStaffComponent } from './list/list-staff/list-staff.component';
     UserSessionComponent,
     LoginComponent,
     LogoutComponent,
-    ListStaffComponent
+    ListStaffComponent,
+    ListClientComponent
   ],
   imports: [
     BrowserModule,
