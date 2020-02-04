@@ -2,8 +2,15 @@ table {
     width: 100%;
     background-color: slategray;
 }
+th {
+    font-weight: bold;
+    font-size-adjust: inherit;
+}
 span {
     color: gray;
+}
+a {
+    color: rgb(223, 211, 211);
 }
 mat-paginator {
     background-color: slategray;

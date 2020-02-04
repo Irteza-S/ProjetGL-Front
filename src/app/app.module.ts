@@ -17,11 +17,8 @@ import { TicketAPIService } from './services/api/ticket-api.service';
 import { HttpModule } from '@angular/http';
 import { LoginAPIService } from './services/login/login-api.service';
 import { LogoutComponent } from './auth/logout/logout.component';
-<<<<<<< HEAD
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-=======
 import { ListStaffComponent } from './list/list-staff/list-staff.component';
->>>>>>> 4792d239877f436b7c9ee0a704b8297245af5932
 
 @NgModule({
   declarations: [
@@ -49,13 +46,10 @@ import { ListStaffComponent } from './list/list-staff/list-staff.component';
     CustomMaterialModule,
     HttpModule,
     MatPaginatorModule,
-<<<<<<< HEAD
-    NgbModule
-=======
+    NgbModule,
     MatTabsModule,
     MatExpansionModule, 
     MatIconModule
->>>>>>> 4792d239877f436b7c9ee0a704b8297245af5932
   ],
   providers: [
     CookieService,
