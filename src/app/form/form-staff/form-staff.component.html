@@ -1,0 +1,58 @@
+<div class="card card-outline-secondary">
+
+  <form [formGroup]="staffFormGroup">
+    <div class="card-body container">
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label>Nom de famille</label>
+          <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
+        </div>
+        <div class="form-group col-md-5">
+          <label>Prénom</label>
+          <input type="text" class="form-control" formControlName="form_prenom" placeholder="Prénom">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label>Adresse</label>
+          <input type="text" class="form-control" formControlName="form_adresse" placeholder="Adresse">
+        </div>
+        <div class="form-group col-md-5">
+          <label>Numéro de téléphone</label>
+          <input type="text" class="form-control" formControlName="form_numero" placeholder="Numéro">
+        </div>
+      </div>
+
+      <br>
+      <hr class="style14">
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Fonction</label>
+          <select class="form-control" formControlName="form_fonction">
+            <option *ngFor="let type of fonctionList" let i=index [ngValue]="type" [selected]="!i">{{type}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Compétence</label>
+          <select class="form-control" formControlName="form_competence">
+            <option *ngFor="let type of competenceList" let i=index [ngValue]="type" [selected]="!i">{{type}}</option>
+          </select>
+        </div>
+      </div>
+
+
+      <br>
+      <hr class="style14">
+      <br>
+
+
+
+
+      <div class="form-row">
+        <button type="submit" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer employé</button>
+      </div>
+    </div>
+  </form>
+</div>
