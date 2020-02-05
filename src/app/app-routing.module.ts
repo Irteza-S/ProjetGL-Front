@@ -10,6 +10,7 @@ import { ListStaffComponent } from './list/list-staff/list-staff.component';
 import { ListClientComponent } from './list/list-client/list-client.component';
 import { StaffFormComponent } from './form/form-staff/form-staff.component';
 import { SearchComponent } from './search/search/search.component';
+import { GestionComponent } from './gestion/gestion/gestion.component';
 
 const routes: Routes = [
   { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'list-staff', component: ListStaffComponent},
   { path: 'list-client', component: ListClientComponent},
   { path: 'search', component: SearchComponent},
+  { path: 'gestion', component: GestionComponent},
 ];
 
 @NgModule({

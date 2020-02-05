@@ -23,7 +23,9 @@ import { ListStaffComponent } from './list/list-staff/list-staff.component';
 import { ListClientComponent } from './list/list-client/list-client.component';
 import { StaffFormComponent } from './form/form-staff/form-staff.component';
 import { SearchComponent } from './search/search/search.component';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { GestionComponent } from './gestion/gestion/gestion.component';
+import { GestionCardComponent } from './gestion/gestion-card/gestion-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {MatListModule} from '@angular/material/list';
     ListStaffComponent,
     ListClientComponent,
     StaffFormComponent,
-    SearchComponent
+    SearchComponent,
+    GestionComponent,
+    GestionCardComponent
   ],
   imports: [
     BrowserModule,
