@@ -1,0 +1,37 @@
+<div class="card card-outline-secondary">
+    <div class="card-header">
+        <h3 class="mb-0">Résultats de la recherche</h3>
+    </div>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Tickets
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item *ngFor="let ticket of tickets" [routerLink]="['/form', ticketFormType]">
+                  <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+                  <h4 mat-line>{{ticket.ticketId}} - {{ticket.client}}</h4>
+                  <h4 mat-line>{{ticket.demandeur}}</h4>
+                  <p mat-line> {{ticket.updated | date}} </p>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Clients
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Staff
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

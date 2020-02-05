@@ -89,7 +89,7 @@ export class TicketFormComponent implements OnInit {
     // console.log(this.ticketFormGroup);
     //console.log(this.ticketApi.test2());
     //this.ticketApi.initTicket(123456789, 2);
-    this.ticketApi.okok();
+    this.ticketApi.login('irteza', 'okok');
     //this.ticketApi.okok2();
     // console.log(this.ticketApi.initTicket(123456789, 2));
   }

@@ -50,7 +50,7 @@
       <form class="form-inline my- my-lg-0">
         <input size="30" class="form-control mr-sm-2" type="text" placeholder="Recherchez un client, un ticket, etc."
           aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" (click)="session()" type="button"
+        <button class="btn btn-outline-success my-2 my-sm-0" [routerLink]="['/search']" type="button"
           style="margin-left: 10px;">Search</button>
       </form>
       <ul class="navbar-nav ">

@@ -22,6 +22,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ListStaffComponent } from './list/list-staff/list-staff.component';
 import { ListClientComponent } from './list/list-client/list-client.component';
 import { StaffFormComponent } from './form/form-staff/form-staff.component';
+import { SearchComponent } from './search/search/search.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { StaffFormComponent } from './form/form-staff/form-staff.component';
     LogoutComponent,
     ListStaffComponent,
     ListClientComponent,
-    StaffFormComponent
+    StaffFormComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { StaffFormComponent } from './form/form-staff/form-staff.component';
     NgbModule,
     MatTabsModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     CookieService,

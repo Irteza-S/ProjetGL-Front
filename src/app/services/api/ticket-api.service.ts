@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response} from '@angular/http';
+import { Http, Response, Headers, RequestOptions} from '@angular/http';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/map';
@@ -57,7 +57,7 @@ export class TicketAPIService {
   }
 
   public okok() {
-    const ok =  this.http.post('http://httpbin.org/post', postData);
+    const ok =  this.http.post('http://127.0.0.1:8080/genielog/ticket/init?clientId=123456783&ticketId=3', {id: 1});
     ok.subscribe((data) => {
       json = JSON.stringify(data);
       console.log('1');
@@ -72,5 +72,20 @@ export class TicketAPIService {
     });
     return ok;
   }
+
+  login(US: string, PASS: string) {
+    const data = {username: US, password: PASS};
+    const header = new Headers({ 'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT'});
+    const options = new RequestOptions({ headers: header });
+    this.http.post('http://127.0.0.1:8080/genielog/ticket/test', JSON.stringify(data), options)
+        .subscribe(res => {
+            console.log(res);
+        }, error => {
+            console.log(JSON.stringify(error.json()));
+        });
+  }
+
 }
 

@@ -1,0 +1,14 @@
+.mat-list-icon {
+  color: rgb(255, 255, 255);
+}
+.mat-list-item {
+  color: rgb(255, 255, 255);
+}
+.mat-list-item:hover {
+  color: rgb(104, 89, 89);
+}
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover,
+.mat-expansion-panel-header.mat-expanded:focus {
+    background-color: rgb(133, 131, 131, 0.794);
+}
