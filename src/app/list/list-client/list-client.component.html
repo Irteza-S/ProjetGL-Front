@@ -2,42 +2,43 @@
     <div class="card-header">
         <h3 class="mb-0">Liste des Clients </h3>
     </div>
-    <mat-accordion>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Fauchon
-                </mat-panel-title>
-                <mat-panel-description>
-                    Adresse
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+    <div>
+        <div fxLayout fxLayoutAlign="center center">
+            <mat-form-field fxFlex="25%" appearance="outline">
+                <mat-label><span>Rechercher dans le tableau </span></mat-label>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <button style="margin-left: 30px;" onclick="window.location.href = '/client';" mat-mini-fab>
+                <mat-icon>person_add</mat-icon>
+            </button>
+        </div>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+            </ng-container>
 
-            Liste des demandeurs
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Boucherie SANZO
-                </mat-panel-title>
-                <mat-panel-description>
-                    Adresse
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <p class="">Liste de demandeurs: </p>
+                        <ul *ngFor="let d of element.data">
+                            <li>{{d}}</li>
+                        </ul>
+                    </div>
+                </td>
+            </ng-container>
 
-            Liste des demandeurs
-        </mat-expansion-panel>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Boucherie ALAINE
-                </mat-panel-title>
-                <mat-panel-description>
-                    Adresse
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            Liste des demandeurs
-        </mat-expansion-panel>
-    </mat-accordion>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
+    </div>
 </div>
