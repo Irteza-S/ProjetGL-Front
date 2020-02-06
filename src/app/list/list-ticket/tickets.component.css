@@ -1,12 +1,19 @@
 table {
     width: 100%;
+    background-color: slategray;
 }
 th {
     font-weight: bold;
+    font-size-adjust: inherit;
 }
-.bold {
-    font-weight: bold;
+span {
+    color: gray;
 }
-span{
-    color:gray;
+mat-paginator {
+    background-color: slategray;
 }
+
+.example-container {
+    height: 400px;
+    overflow: auto;
+  }

@@ -1,20 +1,65 @@
-mat-expansion-panel{
-    background-color: white;
-    color: black;
+table {
+    width: 100%;
+    background-color: slategray;
+    cursor: pointer;
+}
+th {
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: unset;
+}
+span {
+    color: gray;
+}
+a {
+    color: rgb(223, 211, 211);
+}
+mat-paginator {
+    background-color: slategray;
+}
+.bold{
+    font-weight: bold;
 }
 
-mat-panel-title {
-    color: black;
+tr.example-detail-row {
+  height: 0;
 }
 
-mat-panel-title,
-mat-panel-description {
-    flex-basis: 0;
-    color: black;
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #777;
 }
 
-mat-panel-description {
-    justify-content: space-between;
-    align-items: center;
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
 }
 
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
