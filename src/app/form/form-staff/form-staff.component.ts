@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { fbind } from 'q';
 import { TicketAPIService } from '../../services/api/ticket-api.service';
 import { StaffFormType } from '../../model/staffformtype';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,10 +19,21 @@ export class StaffFormComponent implements OnInit {
   fonctionList = ['Opérateur', 'Responsable Technicien', 'Technicien'];
 
 
-  constructor(private fb: FormBuilder, private ticketApi: TicketAPIService) {
+  constructor(private fb: FormBuilder, private ticketApi: TicketAPIService, private route: ActivatedRoute) {
     this.initForm(fb);
     // this.ticketFormType = formType;
-
+    this.route.paramMap.subscribe(params => {
+      const tmp = params.get('userId');
+      console.log(tmp);
+      if (tmp) {
+        console.log('OLD');
+        this.staffFormType = StaffFormType.Edit;
+        // Load user informations from backend
+      } else {
+        console.log('NEW');
+        this.staffFormType = StaffFormType.Create;
+      }
+    });
   }
 
 
@@ -42,10 +54,6 @@ export class StaffFormComponent implements OnInit {
 
   sendForm() {
     console.log(this.staffFormGroup);
-    //console.log(this.ticketApi.test2());
-    //this.ticketApi.test2();
-    //this.ticketApi.okok2();
-    // console.log(this.ticketApi.initTicket(123456789, 2));
   }
 
 }

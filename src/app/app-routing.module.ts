@@ -14,14 +14,17 @@ import { GestionComponent } from './gestion/gestion/gestion.component';
 
 const routes: Routes = [
   { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
-  { path: 'form', redirectTo: 'form/'},
-  { path: 'form/:formType', component: TicketFormComponent},
+  { path: 'form-ticket', redirectTo: 'form-ticket/'},
+  { path: 'form-ticket/:ticketId', component: TicketFormComponent},
   { path: 'session', component: UserSessionComponent},
-  { path: 'staff', component: StaffFormComponent},
+  { path: 'form-staff', redirectTo: 'form-staff/'},
+  { path: 'form-staff/:userId', component: StaffFormComponent},
   { path: 'login', component: LoginComponent},
   { path: 'logout', component: LogoutComponent },
-  { path: 'list-staff', component: ListStaffComponent},
-  { path: 'list-client', component: ListClientComponent},
+  { path: 'list-staff', redirectTo: 'list-staff/'},
+  { path: 'list-staff/:foo', component: ListStaffComponent},
+  { path: 'list-client', redirectTo: 'list-client/'},
+  { path: 'list-client/:foo', component: ListClientComponent},
   { path: 'search', component: SearchComponent},
   { path: 'gestion', component: GestionComponent},
 ];

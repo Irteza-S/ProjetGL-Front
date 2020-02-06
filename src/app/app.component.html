@@ -13,31 +13,31 @@
     <!--operateur-->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="newTicket" [routerLink]="['/form', ticketFormType]">
+        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+          <a class="nav-link" [routerLink]="['/form-ticket']">
             <i class="fa fa-ticket"></i>
             Nouveau Ticket
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
           <a class="nav-link" routerLink="list">
             <i class="fa fa-list-ol" aria-hidden="true"></i>
             Liste Tickets
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="list-staff">
+        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+          <a class="nav-link" routerLink="gestion">
             <i class="fa fa-wrench" aria-hidden="true"></i>
-            Gestion Personnel
+            Gestion
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
           <a class="nav-link" routerLink="list-client">
             <i class="fa fa-users" aria-hidden="true"></i>
             Clients
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
           <a class="nav-link" href="notifications" routerLink="item/notif">
             <i class="fa fa-bell">
               <span class="badge badge-warning">11</span>
@@ -45,9 +45,15 @@
             Notifications
           </a>
         </li>
+        <li class="nav-item" style="padding-left: 50px;" *ngIf="loginAPI.isUserLoggedIn()">
+          <a class="nav-link" routerLink="gestion">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+              {{this.user.gender}} {{this.user.firstName}} {{this.user.lastName}} - {{this.user.role}}
+          </a>
+        </li>
       </ul>
       <!--deuxieme partie de la barre -->
-      <form class="form-inline my- my-lg-0">
+      <form class="form-inline my- my-lg-0" *ngIf="loginAPI.isUserLoggedIn()">
         <input size="30" class="form-control mr-sm-2" type="text" placeholder="Recherchez un client, un ticket, etc."
           aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" [routerLink]="['/search']" type="button"

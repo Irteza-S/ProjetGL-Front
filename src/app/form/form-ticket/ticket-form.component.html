@@ -2,10 +2,13 @@
 
     <form [formGroup]="ticketFormGroup">
     <div class="card-header form-row">
-        <div class="form-group col-md-9">
+        <div class="form-group col-6 col-md-4">
             <h3 class="mb-0">{{ticketFormType}}</h3>
         </div>
-        <div class="form-group col-md-3 input-group mb-3">
+        <div class="form-group col-6 col-md-4">
+            <p><ngb-progressbar [animated]="true" [striped]="true" height="22px" type="{{progressBarStatus}}" [value]="25">25</ngb-progressbar></p>
+        </div>
+        <div class="form-group col-6 col-md-4 input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Statut</label>
             </div>
