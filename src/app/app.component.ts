@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginAPIService } from './services/login/login-api.service';
 import { Router} from '@angular/router';
 import { TicketFormType } from './model/ticketformtype';
+import { User } from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +11,8 @@ import { TicketFormType } from './model/ticketformtype';
 })
 export class AppComponent {
   title = 'ProjetGL-Front';
-  ticketFormType = TicketFormType.Create;
+  user: User;
   public constructor(private loginAPI: LoginAPIService, private router: Router) {
-
-  }
-
-  session() {
-    const user = sessionStorage.getItem('userSession');
-    console.log(JSON.parse(user));
-  }
-  openForm() {
-    this.router.navigate(['/form']);
+    this.user = loginAPI.isUserLoggedIn();
   }
 }

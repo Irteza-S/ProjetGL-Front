@@ -27,14 +27,19 @@ export class TicketFormComponent implements OnInit {
   inputDate = new FormControl(new Date());
   startingDate = new FormControl(new Date());
 
+  progressBarStatus = 'success';
+  progressBarValue = 0;
+
   constructor(private fb: FormBuilder, private ticketApi: TicketAPIService, private route: ActivatedRoute) {
     this.initForm(fb);
     this.route.paramMap.subscribe(params => {
-      if (params.get('formType') === 'Création ticket') {
-        this.ticketFormType = TicketFormType.Create;
-      } else if (params.get('formType') === 'Modification ticket') {
-        // Load form from Back
+      const tmp = params.get('userId');
+      console.log(tmp);
+      if (tmp) {
         this.ticketFormType = TicketFormType.Edit;
+        // Load ticket from API
+      } else {
+        this.ticketFormType = TicketFormType.Create;
       }
     });
    }
@@ -86,11 +91,10 @@ export class TicketFormComponent implements OnInit {
   }
 
   sendForm() {
-    // console.log(this.ticketFormGroup);
-    //console.log(this.ticketApi.test2());
-    //this.ticketApi.initTicket(123456789, 2);
-    this.ticketApi.login('irteza', 'okok');
-    //this.ticketApi.okok2();
-    // console.log(this.ticketApi.initTicket(123456789, 2));
+    this.ticketApi.initTicket(123456789, 2);
+  }
+
+  handleProgressBar() {
+
   }
 }

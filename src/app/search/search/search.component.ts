@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+
 export interface Ticket {
   ticketId: number;
-  client: string;
+  clientName: string;
   demandeur: string;
-  updated: Date;
+  ticketDate: Date;
+}
+export interface Client {
+  clientId: number;
+  clientName: string;
+}
+export interface Demandeur {
+  demandeurId: number;
+  demandeurName: string;
+  demandeurClient: string;
 }
 
 @Component({
@@ -17,21 +27,54 @@ export class SearchComponent implements OnInit {
   tickets: Ticket[] = [
     {
       ticketId: 1,
-      client: 'Carefour',
+      clientName: 'Carefour',
       demandeur: 'CarefourDemandeur1',
-      updated: new Date('1/1/16'),
+      ticketDate: new Date('1/1/16'),
     },
     {
       ticketId: 2,
-      client: 'Auchan',
+      clientName: 'Auchan',
       demandeur: 'AuchantDemandeur3',
-      updated: new Date('1/17/16'),
+      ticketDate: new Date('1/17/16'),
     },
     {
       ticketId: 3,
-      client: 'Fnac',
+      clientName: 'Fnac',
       demandeur: 'FnacDemandeur9',
-      updated: new Date('1/28/16'),
+      ticketDate: new Date('1/28/16'),
+    },
+    {
+      ticketId: 1,
+      clientName: 'Carefour',
+      demandeur: 'CarefourDemandeur1',
+      ticketDate: new Date('1/1/16'),
+    },
+    {
+      ticketId: 2,
+      clientName: 'Auchan',
+      demandeur: 'AuchantDemandeur3',
+      ticketDate: new Date('1/17/16'),
+    },
+    {
+      ticketId: 3,
+      clientName: 'Fnac',
+      demandeur: 'FnacDemandeur9',
+      ticketDate: new Date('1/28/16'),
+    }
+  ];
+
+  clients: Client[] = [
+    {
+      clientId: 1,
+      clientName: 'Carefour'
+    },
+    {
+      clientId: 2,
+      clientName: 'Auchan'
+    },
+    {
+      clientId: 3,
+      clientName: 'Fnac'
     }
   ];
   constructor() { }

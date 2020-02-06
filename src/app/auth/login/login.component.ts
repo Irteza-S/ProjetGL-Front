@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
 
   checkLogin() {
     if (this.loginAPI.authenticate(this.username, this.password)) {
-      this.router.navigate(['list']);
+      this.router.navigate(['list']).then(() => {
+        window.location.reload();
+      });
       this.invalidLogin = false;
     } else {
       this.invalidLogin = true;

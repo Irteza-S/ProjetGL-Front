@@ -1,6 +1,6 @@
 <div class="card card-outline-secondary">
     <div class="card-header">
-        <h3 class="mb-0">Résultats de la recherche</h3>
+        <h3 class="mb-0">Résultats de la recherche pour : </h3>
     </div>
     <mat-accordion>
         <mat-expansion-panel>
@@ -12,9 +12,9 @@
             <mat-list>
                 <mat-list-item *ngFor="let ticket of tickets" [routerLink]="['/form', ticketFormType]">
                   <mat-icon mat-list-icon>insert_drive_file</mat-icon>
-                  <h4 mat-line>{{ticket.ticketId}} - {{ticket.client}}</h4>
+                  <h4 mat-line>{{ticket.ticketId}} - {{ticket.clientName}}</h4>
                   <h4 mat-line>{{ticket.demandeur}}</h4>
-                  <p mat-line> {{ticket.updated | date}} </p>
+                  <p mat-line> {{ticket.ticketDate | date}} </p>
                     <mat-divider></mat-divider>
                 </mat-list-item>
             </mat-list>
@@ -25,6 +25,13 @@
                     Clients
                 </mat-panel-title>
             </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item *ngFor="let client of clients" [routerLink]="['/form', ticketFormType]">
+                  <mat-icon mat-list-icon>business</mat-icon>
+                  <h4 mat-line>{{client.clientId}} - {{client.clientName}} </h4>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
         </mat-expansion-panel>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
