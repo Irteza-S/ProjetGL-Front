@@ -3,21 +3,21 @@ import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 export interface ClientTable {
-  id: number;
-  name: string;
-  adress: string;
-  nbTickets: number;
+  Id: number;
+  Nom: string;
+  Adresse: string;
+  NbTickets: number;
   data: string[];
 }
 const Clients: ClientTable[] = [ 
 {
-  id:12, name:'Boucherie ALLAINE', adress:'a', nbTickets:3, data:["Matrin Luther", "Sophie Tripoteau"]
+  Id:123, Nom:'Boucherie ALLAINE', Adresse:'35 Rue du Général de Gaule 75018 Paris', NbTickets:3, data:["Matrin Luther", "Sophie Tripoteau"]
 },
 {
-  id:66, name:'Fauchon', adress:'b', nbTickets:12, data:["Matrin Luther", "Sophie Tripoteau"]
+  Id:666, Nom:'Fauchon', Adresse:'64 Rue de Normandie 94230 Cachan', NbTickets:12, data:["Benoit Dupont", "Sophie Lessier", "Aicha Drame"]
 },
 {
-  id:987, name:'Boucherie Sanzo', adress:'c', nbTickets:2, data:["Matrin Luther", "Sophie Tripoteau"]
+  Id:987, Nom:'Boucherie Sanzo', Adresse:'6 Rue Guichard 75002 Paris ', NbTickets:2, data:["Valerie Dumas", "Jean Puteau"]
 }
 ]
 
@@ -35,7 +35,7 @@ const Clients: ClientTable[] = [
 })
 export class ListClientComponent implements OnInit {
 
-  columnsToDisplay = ['name', 'id', 'nbTickets', 'adress'];
+  columnsToDisplay = ['Nom', 'Id', 'NbTickets', 'Adresse'];
   dataSource = new MatTableDataSource(Clients);
   expandedElement: ClientTable | null;
 
