@@ -10,7 +10,7 @@ import { UserSessionComponent } from './user-session/user-session.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconModule, MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule,
-MatPaginatorModule, MatTabsModule, MatExpansionModule} from '@angular/material';
+MatPaginatorModule, MatTabsModule, MatExpansionModule, MatDialogModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import { LoginComponent } from './auth/login/login.component';
 import { CustomMaterialModule } from './material.module';
@@ -26,6 +26,7 @@ import { SearchComponent } from './search/search/search.component';
 import { MatListModule } from '@angular/material/list';
 import { GestionComponent } from './gestion/gestion/gestion.component';
 import { GestionCardComponent } from './gestion/gestion-card/gestion-card.component';
+import { DeleteModalComponent } from './list/list-staff/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { GestionCardComponent } from './gestion/gestion-card/gestion-card.compon
     StaffFormComponent,
     SearchComponent,
     GestionComponent,
-    GestionCardComponent
+    GestionCardComponent, 
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,11 @@ import { GestionCardComponent } from './gestion/gestion-card/gestion-card.compon
     MatTabsModule,
     MatExpansionModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
+  ],
+  entryComponents:[
+    DeleteModalComponent
   ],
   providers: [
     CookieService,

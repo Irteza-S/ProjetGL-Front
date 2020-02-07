@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Supression d'un employé</h2>
+<mat-dialog-content>
+    <p>Vous êtes sur le point de supprimer {{data.var}}</p> 
+    <p style="color:red;">Attention cette action est irreverssible!! </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-raised-button (click)="delete()">Supprimer</button>
+</mat-dialog-actions>

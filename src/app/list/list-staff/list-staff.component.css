@@ -15,7 +15,10 @@ a {
 mat-paginator {
     background-color: slategray;
 }
-
+.costumButton{
+    color: rgb(223, 211, 211);
+    cursor: pointer;
+}
 .mat-paginator-sticky {
   bottom: 0px;
   position: sticky;
