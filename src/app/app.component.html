@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
-          <a class="nav-link" [routerLink]="['/form-ticket']">
+          <a class="nav-link" [routerLink]="['/form-ticket', '123456789', '3']">
             <i class="fa fa-ticket"></i>
             Nouveau Ticket
           </a>
@@ -92,3 +92,4 @@
 <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
   <a class="navbar-brand" href="#">ProjetGL</a>
 </nav> -->
+<ng4-loading-spinner [timeout]="9999999"> </ng4-loading-spinner>

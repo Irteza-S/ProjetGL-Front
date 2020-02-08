@@ -26,6 +26,8 @@ import { SearchComponent } from './search/search/search.component';
 import { MatListModule } from '@angular/material/list';
 import { GestionComponent } from './gestion/gestion/gestion.component';
 import { GestionCardComponent } from './gestion/gestion-card/gestion-card.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { GestionCardComponent } from './gestion/gestion-card/gestion-card.compon
     StaffFormComponent,
     SearchComponent,
     GestionComponent,
-    GestionCardComponent
+    GestionCardComponent,
+    StopwatchComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { GestionCardComponent } from './gestion/gestion-card/gestion-card.compon
     MatTabsModule,
     MatExpansionModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [
     CookieService,

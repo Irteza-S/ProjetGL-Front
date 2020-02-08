@@ -11,11 +11,12 @@ import { ListClientComponent } from './list/list-client/list-client.component';
 import { StaffFormComponent } from './form/form-staff/form-staff.component';
 import { SearchComponent } from './search/search/search.component';
 import { GestionComponent } from './gestion/gestion/gestion.component';
+import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 
 const routes: Routes = [
   { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
-  { path: 'form-ticket', redirectTo: 'form-ticket/'},
-  { path: 'form-ticket/:ticketId', component: TicketFormComponent},
+  { path: 'form-ticket/:clientId', component: TicketFormComponent},
+  { path: 'form-ticket/:clientId/:ticketId', component: TicketFormComponent},
   { path: 'session', component: UserSessionComponent},
   { path: 'form-staff', redirectTo: 'form-staff/'},
   { path: 'form-staff/:userId', component: StaffFormComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'list-client/:foo', component: ListClientComponent},
   { path: 'search', component: SearchComponent},
   { path: 'gestion', component: GestionComponent},
+  { path: 'chrono', component: StopwatchComponent}
 ];
 
 @NgModule({
