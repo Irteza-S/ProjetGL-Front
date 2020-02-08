@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
+import { MatSort, MatTableDataSource, MatPaginator, MatDialog} from '@angular/material';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 export interface StaffTable {
   id: number;
@@ -75,7 +76,7 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -91,5 +92,16 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource2.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDialog(nom): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      data: {var:nom}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 }

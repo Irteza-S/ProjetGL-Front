@@ -1,4 +1,4 @@
-<div class="card card-outline-secondary">
+<div class="card card-outline-secondary margin: 4px">
   <div class="card-header">
     <h3 class="mb-0">Liste des tickets</h3>
   </div>
@@ -46,7 +46,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 30]">
+    <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="[10, 20, 30]">
     </mat-paginator>
   </div>
 </div>
