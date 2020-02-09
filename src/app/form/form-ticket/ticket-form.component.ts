@@ -62,6 +62,7 @@ export class TicketFormComponent implements OnInit {
   saveHeure(event) {
     this._timer.heures = event.target.value;
     this.isSelected = true;
+    setTimeout(function() { this.isSelected = false; console.log(this.isSelected); }, 1000);
     this.disableChrono = true;
   }
 
@@ -250,6 +251,7 @@ export class TicketFormComponent implements OnInit {
         nom: demandeur[1],
         prenom: demandeur[2]
       },
+      description: this.ticketFormGroup.controls.form_description.value,
       nomClient: 'A',
       objet: this.ticketFormGroup.controls.form_objet.value,
       statut: this.ticketFormGroup.controls.form_status.value,

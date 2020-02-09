@@ -59,6 +59,18 @@ export class TicketAPIService {
     });
   }
 
+  listMyTickets(userId) {
+    console.log('API TICKET - LIST MY TICKETS ');
+    const data = {
+      userId: +userId
+    };
+    return this.http.post(API_URL + '/list', JSON.stringify(data), '')
+    .pipe(timeout(10000))
+    .map(resp => {
+      return resp;
+    });
+  }
+
   editTicket(ticketJSON, clientId) {
     const data = {
       clientId: +clientId,

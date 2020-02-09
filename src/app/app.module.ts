@@ -30,6 +30,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { DeleteModalComponent } from './list/list-staff/delete-modal/delete-modal.component';
 import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { ClientAPIService } from './services/api/client-apiservice.service';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
   providers: [
     CookieService,
     TicketAPIService,
-    LoginAPIService
+    LoginAPIService,
+    ClientAPIService
   ],
   bootstrap: [AppComponent]
 })
