@@ -12,8 +12,8 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Statut</label>
             </div>
-            <select class="form-control custom-select" formControlName="form_status" disabled>
-                <option *ngFor="let type of statusList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+            <select class="form-control custom-select" formControlName="form_status">
+                <option *ngFor="let type of statusList" let i = index [ngValue]="type" >{{type}}</option>
             </select>
           </div>
     </div>
@@ -26,7 +26,7 @@
                       <div class="form-group col-md-5">
                         <label>Type de la demande</label>
                         <select class="form-control" formControlName="form_type">
-                            <option *ngFor="let type of demandeTypeList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                            <option *ngFor="let type of demandeTypeList" let i = index [ngValue]="type" >{{type}}</option>
                         </select>
                       </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="form-group col-md-5">
                                 <label>Technicien affecté</label>
                                 <select class="form-control" formControlName="form_technicien">
-                                    <option *ngFor="let type of technicienList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of technicienList" let i = index [ngValue]="type">{{type}}</option>
                                 </select>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="form-group col-md-4">
                                 <label>Demandeur</label>
                                 <select class="form-control" formControlName="form_demandeur">
-                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" >{{type}}</option>
                                 </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -61,7 +61,7 @@
                         <div class="form-group col-md-4">
                                 <label>Site du client</label>
                                 <select class="form-control" formControlName="form_site">
-                                        <option *ngFor="let type of clientSiteList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                        <option *ngFor="let type of clientSiteList" let i = index [ngValue]="type" >{{type}}</option>
                                 </select>
                         </div>
                     </div>
@@ -71,13 +71,13 @@
                         <div class="form-group col-md-4">
                             <label>Catégorie</label>
                             <select class="form-control" formControlName="form_categorie">
-                                    <option *ngFor="let type of categorieList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of categorieList" let i = index [ngValue]="type" >{{type}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Niveau de priorité</label>
                             <select class="form-control" formControlName="form_priorite">
-                                    <option *ngFor="let type of prioriteList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of prioriteList" let i = index [ngValue]="type" >{{type}}</option>
                             </select>
                     </div>
                     </div>
@@ -108,7 +108,7 @@
                                             </div>
                                             <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
                                             <select class="form-control" formControlName="tacheCompetence">
-                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type" >{{type}}</option>
                                             </select>
                                             <input type="text" class="form-control" formControlName="estimatedTacheLength" placeholder="Temps estimé">
                                             <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps passé" disabled>
@@ -126,33 +126,14 @@
                     <br>
 
                     <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date d'ouverture
-                                <br>
-                                <input [formControl]="openingDate" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
-                                <owl-date-time #dtPicker1></owl-date-time>
-                            </label>
+                        <div class="form-group col-md-4">    
+                            <mat-form-field>
+                                <mat-label>Date de saisie</mat-label>
+                                <input matInput [matDatepicker]="picker" [formControl]="date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>                          
                         </div>
-
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date de saisie
-                                <br>
-                                <input [formControl]="inputDate" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
-                                <owl-date-time #dtPicker2></owl-date-time>
-                            </label>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date de début de traitement
-                                <br>
-                                <input [formControl]="startingDate" [owlDateTimeTrigger]="dtPicker3" [owlDateTime]="dtPicker3">
-                                <owl-date-time #dtPicker3></owl-date-time>
-                            </label>
-                        </div>
-                    
                     </div>
 
                     
@@ -175,20 +156,26 @@
     <div class="modal-body">
 
       <div class="text-center">
-            <h5><span class="badge badge-secondary">{{_timer.heures}} &nbsp; Heures</span>
+            <h5><span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.heures" (keydown.enter)="saveHeure($event)" style="width:35px;">
+            Heures</span>
             &nbsp;&nbsp;
-            <span class="badge badge-secondary">{{_timer.minutes}} &nbsp; Minutes</span>
+            <span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.minutes" (keydown.enter)="saveMin($event)" style="width:35px;">
+            Minutes</span>
             &nbsp;&nbsp;
-            <span class="badge badge-secondary">{{_timer.secondes}} &nbsp; Secondes</span></h5>
+            <span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.secondes" (keydown.enter)="saveSec($event)" style="width:35px;">
+            Secondes</span></h5>
         <p>
-            <button class="btn btn-danger" *ngIf="_state.backward" (click)="backward()">Effacer</button>&nbsp;
-            <button class="btn btn-danger" *ngIf="_state.stop" (click)="stop()">Arrêter</button>&nbsp;
-            <button class="btn btn-primary" *ngIf="_state.play" (click)="play()">{{_btnPlay}}</button>
+            <button class="btn btn-danger" *ngIf="_state.backward" (click)="backward()" [disabled]="disableChrono">Effacer</button>&nbsp;
+            <button class="btn btn-danger" *ngIf="_state.stop" (click)="stop()" [disabled]="disableChrono">Arrêter</button>&nbsp;
+            <button class="btn btn-primary" *ngIf="_state.play" (click)="play()" [disabled]="disableChrono">{{_btnPlay}}</button>
         </p>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Quitter sans souvegarder</button>
-      <button type="button" class="btn btn-primary" (click)="save();modal.close('Close click')">Souvegarder</button>
+      <button type="button" class="btn btn-primary" (click)="saveChrono();modal.close('Close click')">Souvegarder</button>
     </div>
 </ng-template>

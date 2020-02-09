@@ -21,9 +21,24 @@ export class TicketAPIService {
 
   // LOAD AN EXISTING TICKET
   loadTicket(CLIENTID, TICKETID) {
+    console.log('LOAD : ' + CLIENTID + ' ' + TICKETID);
     const data = {
       clientId: CLIENTID,
       ticketId: TICKETID
+    };
+    return this.http.post(API_URL + '/init', JSON.stringify(data), '')
+    .pipe(timeout(10000))
+    .map(resp => {
+      return resp;
+    });
+  }
+
+  // LOAD INFORMATIONS TO CREATE A NEW TICKET
+  initNewTicket(CLIENTID) {
+    console.log('CREATE : ' + CLIENTID);
+    const data = {
+      clientId: CLIENTID,
+      ticketId: -1
     };
     return this.http.post(API_URL + '/init', JSON.stringify(data), '')
     .pipe(timeout(5000))
@@ -32,19 +47,43 @@ export class TicketAPIService {
     });
   }
 
-  // LOAD INFORMATIONS TO CREATE A NEW TICKET
-  initNewTicket(CLIENTID) {
-    console.log('GETTING INFO TO CREATE TICKET');
+  listAllTickets() {
+    console.log('API TICKET - LIST ALL ');
     const data = {
-      clientId: CLIENTID,
-      ticketId: '-1'
+      userId: -1
     };
-    return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-    .pipe(timeout(5000))
+    return this.http.post(API_URL + '/list', JSON.stringify(data), '')
+    .pipe(timeout(10000))
     .map(resp => {
       return resp;
     });
   }
+
+  editTicket(ticketJSON, clientId) {
+    const data = {
+      clientId: +clientId,
+      ticket: ticketJSON
+    };
+    console.log('EDIT TICKET : ' + JSON.stringify(data));
+    return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
+    .pipe(timeout(10000))
+    .map(resp => {
+      return resp;
+    });
+  }
+  createTicket(ticketJSON, clientId) {
+    const data = {
+      ticket: ticketJSON
+    };
+    console.log('EDIT TICKET : ' + JSON.stringify(data));
+    return this.http.post(API_URL + '/create', JSON.stringify(data), '')
+    .pipe(timeout(10000))
+    .map(resp => {
+      return resp;
+    });
+  }
+
+
 
   // Error handling
   handleError(handleError: any): any {

@@ -29,6 +29,7 @@ import { GestionCardComponent } from './gestion/gestion-card/gestion-card.compon
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { DeleteModalComponent } from './list/list-staff/delete-modal/delete-modal.component';
+import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,9 @@ import { DeleteModalComponent } from './list/list-staff/delete-modal/delete-moda
     MatExpansionModule,
     MatIconModule,
     MatListModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     CookieService,

@@ -2,51 +2,107 @@
   <div class="card-header">
     <h3 class="mb-0">Liste des tickets</h3>
   </div>
-  <div fxLayout fxLayoutAlign="center center">
-    <mat-form-field fxFlex="25%" appearance="outline">
-      <mat-label><span>Rechercher dans le tableau </span></mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
-  </div>
-  <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="num">
-        <th mat-header-cell *matHeaderCellDef> &nbsp; </th>
-        <td mat-cell *matCellDef="let element" class="bold"> {{element.num}} </td>
-      </ng-container>
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-      </ng-container>
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Titre</th>
-        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-      </ng-container>
-      <ng-container matColumnDef="client">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
-        <td mat-cell *matCellDef="let element"> {{element.client}} </td>
-      </ng-container>
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
-        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-      </ng-container>
-      <ng-container matColumnDef="tech">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Technicien Affecté</th>
-        <td mat-cell *matCellDef="let element"> {{element.tech}} </td>
-      </ng-container>
-      <ng-container matColumnDef="edition">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Edition</th>
-        <td mat-cell *matCellDef="let element"><a href="/list">{{element.edition}} </a></td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="[10, 20, 30]">
-    </mat-paginator>
-  </div>
+
+<mat-tab-group mat-stretch-tabs [selectedIndex]=0>
+  <mat-tab>
+    <ng-template mat-tab-label><span>Tout les tickets</span></ng-template>
+    <div fxLayout fxLayoutAlign="center center">
+      <mat-form-field fxFlex="25%" appearance="outline">
+        <mat-label><span>Rechercher dans le tableau </span></mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element" class="bold"> {{element.num}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Titre</th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+          <td mat-cell *matCellDef="let element"> {{element.client}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tech">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Technicien Affecté</th>
+          <td mat-cell *matCellDef="let element"> {{element.tech}} </td>
+        </ng-container>
+        <ng-container matColumnDef="edition">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Edition</th>
+          <td mat-cell *matCellDef="let element"><a href="/list">{{element.edition}} </a></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="[10, 20, 30]">
+      </mat-paginator>
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label><span>Mes tickets</span></ng-template>
+    <div fxLayout fxLayoutAlign="center center">
+      <mat-form-field fxFlex="25%" appearance="outline">
+        <mat-label><span>Rechercher dans le tableau </span></mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="num">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element" class="bold"> {{element.num}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Titre</th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+          <td mat-cell *matCellDef="let element"> {{element.client}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tech">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Technicien Affecté</th>
+          <td mat-cell *matCellDef="let element"> {{element.tech}} </td>
+        </ng-container>
+        <ng-container matColumnDef="edition">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Edition</th>
+          <td mat-cell *matCellDef="let element"><a href="/list">{{element.edition}} </a></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator class="mat-paginator-sticky" [pageSize]="20" [pageSizeOptions]="[10, 20, 30]">
+      </mat-paginator>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 </div>

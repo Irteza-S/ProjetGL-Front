@@ -5,8 +5,12 @@ export class Timer {
     private _totalSecondes: number = 0;
     private _timer;
     get minutes(): number { return this._minutes; }
+    set minutes(min) { this._minutes = min; }
     get secondes(): number { return this._secondes; }
+    set secondes(sec) {this._secondes = sec; }
     get heures(): number { return this._heures; }
+    set heures(h) { this._heures = h; }
+
     start() {
       this._timer = setInterval(() => {
         this._heures = Math.floor(++this._minutes / 60);
