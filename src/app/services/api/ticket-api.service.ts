@@ -111,7 +111,7 @@ export class TicketAPIService {
         token: this.user.token,
         ticket: ticketJSON
       };
-      console.log('EDIT TICKET : ' + JSON.stringify(data));
+      console.log('CREATE TICKET : ' + JSON.stringify(data));
       return this.http.post(API_URL + '/create', JSON.stringify(data), '')
       .pipe(timeout(15000))
       .map(resp => {

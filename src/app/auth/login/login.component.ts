@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('userSession', JSON.stringify(tech));
         }
         this.spinnerService.hide();
-        this.router.navigate(['list']).then(() => {
+        this.router.navigate(['']).then(() => {
           window.location.reload();
         });
         this.invalidLogin = false;

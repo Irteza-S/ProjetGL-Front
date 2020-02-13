@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators, FormArray, FormControl} from '@angul
 import { fbind } from 'q';
 import { TicketAPIService } from '../../services/api/ticket-api.service';
 import { TicketFormType } from '../../model/ticketformtype';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Timer } from '../..//model/timer';
@@ -94,7 +94,7 @@ export class TicketFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private ticketApi: TicketAPIService,
               private route: ActivatedRoute, private spinnerService: Ng4LoadingSpinnerService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal, private router: Router) {
     this.initForm(fb);
     this.route.paramMap.subscribe(params => {
       this.ticketId = params.get('ticketId');
@@ -245,6 +245,7 @@ export class TicketFormComponent implements OnInit {
     let ticket =  {
       categorie: this.ticketFormGroup.controls.form_categorie.value,
       competences: ['Electricien', 'Frigoriste'],
+      priorite: 1,
       demandeur: {
         id: +demandeur[0],
         nom: demandeur[1],
@@ -276,7 +277,9 @@ export class TicketFormComponent implements OnInit {
       this.ticketApi.editTicket(ticket, this.clientId).subscribe(
         value => {
           console.log(value);
-          this.spinnerService.hide(); },
+          this.spinnerService.hide();
+          this.router.navigate(['/list-ticket']);
+        },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
     } else {
@@ -289,7 +292,9 @@ export class TicketFormComponent implements OnInit {
       this.ticketApi.createTicket(ticket, this.clientId).subscribe(
         value => {
           console.log(value);
-          this.spinnerService.hide(); },
+          this.spinnerService.hide();
+          this.router.navigate(['/list-ticket']);
+        },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
     }

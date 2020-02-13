@@ -93,4 +93,20 @@ export class UserAPIService {
       });
     }
   }
+
+  deleteStaff(STAFFID) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      console.log('LIST STAFFAPI');
+      const data = {
+        token: this.user.token,
+        staffId: +STAFFID
+      };
+      return this.http.post(API_URL + '/delete', JSON.stringify(data), '')
+      .pipe(timeout(10000))
+      .map(resp => {
+        return resp;
+      });
+    }
+  }
 }

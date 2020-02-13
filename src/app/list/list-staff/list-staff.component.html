@@ -64,7 +64,7 @@
           <mat-icon>person_add</mat-icon>
         </button>
       </div>
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource2" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -102,7 +102,7 @@
       <mat-paginator class="mat-paginator-sticky" [pageSize]="10" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
     </mat-tab>
     <mat-tab>
-      <ng-template mat-tab-label><span>Responsable Techniciens</span></ng-template>
+      <ng-template mat-tab-label><span>Admins</span></ng-template>
       <div fxLayout fxLayoutAlign="center center">
         <mat-form-field fxFlex="25%" appearance="outline">
           <mat-label><span>Rechercher dans le tableau </span></mat-label>
@@ -113,7 +113,7 @@
           <mat-icon>person_add</mat-icon>
         </button>
       </div>
-      <table mat-table [dataSource]="dataSource2" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource3" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>

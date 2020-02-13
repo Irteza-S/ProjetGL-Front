@@ -157,7 +157,7 @@ export class StaffFormComponent implements OnInit {
         value => {
           console.log(value);
           this.spinnerService.hide();
-          this.router.navigate(['/list-staff', name]);
+          this.router.navigate(['/list-staff']);
         },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
@@ -169,7 +169,9 @@ export class StaffFormComponent implements OnInit {
       this.userAPI.createStaff(staff).subscribe(
         value => {
           console.log(value);
-          this.spinnerService.hide(); },
+          this.spinnerService.hide();
+          this.router.navigate(['/list-staff']);
+        },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
     }

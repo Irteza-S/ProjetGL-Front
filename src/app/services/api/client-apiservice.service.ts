@@ -47,8 +47,9 @@ export class ClientAPIService {
     if (this.user != null) {
       const data = {
         token: this.user.token,
-        clientId: +CLIENTID
+        SIREN: +CLIENTID
       };
+      console.log('LOAD CLIENT ' + JSON.stringify(data));
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
         .pipe(timeout(10000))
         .map(resp => {
@@ -71,4 +72,35 @@ export class ClientAPIService {
         });
     }
   }
+
+  createClient(CLIENT) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        client: CLIENT
+      };
+      return this.http.post(API_URL + '/create', JSON.stringify(data), '')
+        .pipe(timeout(10000))
+        .map(resp => {
+          return resp;
+        });
+    }
+  }
+
+  editClient(CLIENT) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        client: CLIENT
+      };
+      return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
+        .pipe(timeout(10000))
+        .map(resp => {
+          return resp;
+        });
+    }
+  }
+
 }

@@ -3,6 +3,7 @@ import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ClientAPIService } from 'src/app/services/api/client-apiservice.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { LoginAPIService } from 'src/app/services/login/login-api.service';
 
 export interface ClientTable {
   SIREN: number;
@@ -25,9 +26,9 @@ export interface ClientTable {
   ],
 })
 export class ListClientComponent implements OnInit {
-
+  user;
   Clients = [];
-  columnsToDisplay = ['SIREN', 'Nom', 'Adresse', 'Nb Tickets'];
+  columnsToDisplay = ['SIREN', 'Nom', 'Adresse', 'NbTickets', 'Edition'];
   dataSource = new MatTableDataSource(this.Clients);
   expandedElement: ClientTable | null;
 
@@ -35,7 +36,8 @@ export class ListClientComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService) {
+  constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService, private loginAPI: LoginAPIService) {
+    this.user = loginAPI.isUserAdmin();
     this.spinnerService.show();
     this.clientAPI.getClientList().subscribe(
       value => {
@@ -54,10 +56,19 @@ export class ListClientComponent implements OnInit {
     console.log(body);
     this.Clients = [];
     for (const client of body) {
+      let demandeurs = [];
+      if (client.demandeurs.length !== 0) {
+        client.demandeurs.forEach((part, index) => {
+          client.demandeurs[index] = part.nom + ' ' + part.prenom;
+        }, client.demandeurs);
+        demandeurs = client.demandeurs;
+        }
       const tmp = {
         SIREN: client.SIREN, Nom: client.name, Adresse: (client.adresse.numero + ' ' + client.adresse.rue +
-        ' ' + client.adresse.codePostal + ' ' + client.adresse.ville), NbTickets: client.nbTicket, Demandeurs: client.demandeurs
+        ' ' + client.adresse.codePostal + ' ' + client.adresse.ville), NbTickets: client.nbTicket,
+        Demandeurs: demandeurs
       };
+      console.log(tmp);
       this.Clients.push(tmp);
     }
     this.dataSource = new MatTableDataSource(this.Clients);
@@ -74,5 +85,8 @@ export class ListClientComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteClient() {
   }
 }

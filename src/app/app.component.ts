@@ -18,18 +18,34 @@ export class AppComponent {
   title = 'ProjetGL-Front';
   user: User;
   closeResult: string;
-  clientList = ['Carefour', 'Fnac', 'LeroyMerlin'];
+  clientList = [];
   clientNameForm;
   isUserLoggedIn = false;
   public constructor(private loginAPI: LoginAPIService, private router: Router, private http: Http,
-                     private modalService: NgbModal, private fb: FormBuilder, private clientAPI: ClientAPIService) {
+                     private modalService: NgbModal, private fb: FormBuilder, private clientAPI: ClientAPIService,
+                     private spinnerService: Ng4LoadingSpinnerService) {
     this.user = loginAPI.isUserLoggedIn();
     if (this.user != null) {
+      this.spinnerService.show();
       this.isUserLoggedIn = true;
+      this.clientNameForm = this.fb.group({
+        clientName: fb.control('', Validators.required)
+      });
+      this.clientAPI.getClientList().subscribe(
+        value => {
+          const resSTR = JSON.parse(JSON.stringify(value));
+          const body = JSON.parse(resSTR._body);
+          console.log(body);
+          if (body.length !== 0) {
+            body.forEach(element => {
+              const client = element.SIREN + '\t' + element.name;
+              this.clientList.push(client);
+            });
+          }
+          this.spinnerService.hide(); },
+        error => {console.log('ERROR', error); this.spinnerService.hide(); }
+      );
     }
-    this.clientNameForm = this.fb.group({
-      clientName: fb.control('', Validators.required)
-    });
   }
 
   openVerticallyCentered(content) {
@@ -38,7 +54,9 @@ export class AppComponent {
 
   openNewTicket() {
     console.log(this.clientNameForm);
-    const name = this.clientNameForm.controls.clientName.value;
-    this.router.navigate(['/form-ticket', name]);
+    const client = this.clientNameForm.controls.clientName.value;
+    const clientId = client.split('\t')[0];
+    console.log(clientId);
+    this.router.navigate(['/form-ticket', +clientId]);
   }
 }

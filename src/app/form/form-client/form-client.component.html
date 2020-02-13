@@ -100,8 +100,7 @@
                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteDemandeur(pointIndex)">-</button>
                             </div>
                             <select class="form-control" formControlName="demandeurSexe">
-                              <option value="M.">M.</option>
-                              <option value="Mme.">Mme.</option>
+                              <option *ngFor="let s of sexeList" [value]="s">{{s}}</option>
                             </select>
                             <input type="text" class="form-control col-md-10" formControlName="demandeurNom" placeholder="Nom">
                             <input type="text" class="form-control col-md-10" formControlName="demandeurPrenom" placeholder="Prenom">

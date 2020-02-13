@@ -56,7 +56,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.ticketAPI.listMyTickets(this.user.id).subscribe(
         value => {
           this.initListMyTickets(value);
-          this.spinnerService.hide();
         },
           error => {console.log('ERROR', error); }
       );
@@ -76,7 +75,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         num: ticket.id,
         date: '02/09/2019',
         title: ticket.objet,
-        clientNom: ticket.nomClient,
+        clientNom: ticket.clientName,
         type: ticket.type,
         status: ticket.statut,
         tech: technicien,
@@ -97,7 +96,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         num: ticket.id,
         date: '02/09/2019',
         title: ticket.objet,
-        clientNom: 'ok',
+        clientNom: ticket.clientName,
         type: ticket.type,
         status: ticket.statut,
         tech: technicien,

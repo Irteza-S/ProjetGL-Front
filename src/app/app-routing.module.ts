@@ -15,7 +15,7 @@ import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { ClientFormComponent } from './form/form-client/form-client.component';
 
 const routes: Routes = [
-  { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
+  { path: 'list-ticket', component: TicketsComponent, canActivate: [AuthGaurdService] },
   { path: 'form-ticket/:clientId', component: TicketFormComponent},
   { path: 'form-ticket/:clientId/:ticketId', component: TicketFormComponent},
   { path: 'session', component: UserSessionComponent},

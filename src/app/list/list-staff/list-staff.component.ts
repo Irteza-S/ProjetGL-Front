@@ -20,6 +20,9 @@ export interface StaffTable {
 let Ops: StaffTable[] = [
 ];
 
+let Admins: StaffTable[] = [
+];
+
 const Techs: StaffTable[] = [
 ];
 
@@ -33,6 +36,7 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
   public displayedColumns: string[] = ['id', 'name', 'tel', 'mail', 'adress', 'edition'];
   dataSource = new MatTableDataSource(Ops);
   dataSource2 = new MatTableDataSource(Techs);
+  dataSource3 = new MatTableDataSource(Admins);
   userIsAdmin = false;
   deleteStaffID;
   deleteStaffName;
@@ -52,7 +56,7 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
         this.initPage(value);
         this.spinnerService.hide(); },
         error => {console.log('ERROR', error); this.spinnerService.hide(); }
-      );
+    );
   }
 
   ngOnInit() {
@@ -71,9 +75,17 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
         ' ' + staff.staffAdress.codePostal + ' ' + staff.staffAdress.ville),
         edition: 'Modifier/Supprimer'
       };
-      Ops.push(tmp);
+      if (staff.staffRole[0] === UserType.Admin) {
+        Admins.push(tmp);
+      } else if (staff.staffRole[0] === UserType.Technicien) {
+        Techs.push(tmp);
+      } else if (staff.staffRole[0] === UserType.Operateur) {
+        Ops.push(tmp);
+      }
     }
     this.dataSource = new MatTableDataSource(Ops);
+    this.dataSource2 = new MatTableDataSource(Techs);
+    this.dataSource3 = new MatTableDataSource(Admins);
   }
 
   ngAfterViewInit(): void {
@@ -82,11 +94,15 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
 
     this.dataSource2.sort = this.sort;
     this.dataSource2.paginator = this.paginator;
+
+    this.dataSource3.sort = this.sort;
+    this.dataSource3.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource2.filter = filterValue.trim().toLowerCase();
+    this.dataSource3.filter = filterValue.trim().toLowerCase();
   }
 
   openDialog(nom): void {
@@ -110,6 +126,16 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
 
   deleteStaff() {
     console.log("StaffDeleted " + this.deleteStaffID);
+    this.spinnerService.show();
+    this.UserAPI.deleteStaff(+this.deleteStaffID).subscribe(
+      value => {
+        this.spinnerService.hide();
+        this.router.navigate(['list-staff']).then(() => {
+          window.location.reload();
+        });
+      },
+        error => {console.log('ERROR', error); this.spinnerService.hide();}
+    );
   }
 
   openVerticallyCentered(content, staffId, staffName) {
