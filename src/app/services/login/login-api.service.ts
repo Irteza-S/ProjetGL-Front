@@ -1,16 +1,37 @@
 import { Injectable } from '@angular/core';
 import { User, Gender } from '../../model/user';
 import { UserType } from 'src/app/model/userole';
+import { Http } from '@angular/http';
+import { timeout } from 'rxjs/operators';
+
+
+const API_URL = 'http://127.0.0.1:8080/genielog/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginAPIService {
-  constructor() { }
+  constructor(private http: Http) { }
 
+  // LOAD AN EXISTING TICKET
+  authenticate(USERNAME, PASSWORD) {
+    console.log('LOGIN : ' + USERNAME + ' ' + PASSWORD);
+    const data = {
+      staffUserName: USERNAME,
+      userPassword: PASSWORD
+    };
+    return this.http.post(API_URL + '/login', JSON.stringify(data), '')
+    .pipe(timeout(10000))
+    .map(resp => {
+      return resp;
+    });
+  }
+  /*
   // Insert REST request to server
   // Save user info in session
   authenticate(username, password) {
+
+    
     if (username === 'admin' && password === 'admin') {
       // Create admin userSession
       const admin = new User(1, Gender.Male, 'Irteza', 'SHEIKH', UserType.Admin, 'dqlofgpdxcv');
@@ -23,8 +44,7 @@ export class LoginAPIService {
       return true;
     } else {
       return false;
-    }
-  }
+    }*/
 
   isUserLoggedIn(): User {
     const userString = sessionStorage.getItem('userSession');
@@ -53,7 +73,7 @@ export class LoginAPIService {
     const userString = sessionStorage.getItem('userSession');
     if (userString) {
       const user = JSON.parse(userString);
-      if (user.role === UserType.Responsable) {
+      if (user.role === UserType.RespTech) {
         return user;
       } else {
         return null;
@@ -71,7 +91,7 @@ export class LoginAPIService {
         return null;
       }
     }
-  }
+    }
 
   logOut() {
     sessionStorage.removeItem('userSession');

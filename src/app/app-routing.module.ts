@@ -12,6 +12,7 @@ import { StaffFormComponent } from './form/form-staff/form-staff.component';
 import { SearchComponent } from './search/search/search.component';
 import { GestionComponent } from './gestion/gestion/gestion.component';
 import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
+import { ClientFormComponent } from './form/form-client/form-client.component';
 
 const routes: Routes = [
   { path: 'list', component: TicketsComponent, canActivate: [AuthGaurdService] },
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'session', component: UserSessionComponent},
   { path: 'form-staff', redirectTo: 'form-staff/'},
   { path: 'form-staff/:userId', component: StaffFormComponent},
+  { path: 'form-client', redirectTo: 'form-client/' },
+  { path: 'form-client/:clientId', component: ClientFormComponent },
   { path: 'login', component: LoginComponent},
   { path: 'logout', component: LogoutComponent },
   { path: 'list-staff', redirectTo: 'list-staff/'},

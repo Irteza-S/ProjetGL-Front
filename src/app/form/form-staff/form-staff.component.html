@@ -8,7 +8,13 @@
     </div>
     <div class="card-body container">
       <div class="form-row">
-        <div class="form-group col-md-7">
+        <div class="form-group col-md-2">
+          <label>Sexe</label>
+          <select class="form-control" formControlName="form_sexe" id="sexe">
+            <option *ngFor="let sexe of sexeList" let i=index [ngValue]="sexe" >{{sexe}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-5">
           <label>Nom de famille</label>
           <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
         </div>
@@ -18,13 +24,27 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-7">
-          <label>Adresse</label>
-          <input type="text" class="form-control" formControlName="form_adresse" placeholder="Adresse">
+        <div class="form-group col-md-2">
+          <label>N° Rue</label>
+          <input type="text" class="form-control" formControlName="form_adresse_numero" placeholder="1, 1-Bis...">
         </div>
-        <div class="form-group col-md-5">
-          <label>Numéro de téléphone</label>
-          <input type="text" class="form-control" formControlName="form_numero" placeholder="Numéro">
+        <div class="form-group col-md-10">
+          <label>Adresse</label>
+          <input type="text" class="form-control" formControlName="form_adresse_rue" placeholder="Adresse">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label>Code Postal</label>
+          <input type="text" class="form-control" formControlName="form_adresse_codePostal" placeholder="91080, 91000...">
+        </div>
+        <div class="form-group col-md-7">
+          <label>Ville</label>
+          <input type="text" class="form-control" formControlName="form_adresse_ville" placeholder="Orsay, Courcouronnes....">
+        </div>
+        <div class="form-group col-md-2">
+          <label>ID</label>
+          <input type="text" class="form-control" value="{{userId}}" disabled>
         </div>
       </div>
 
@@ -35,18 +55,46 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Fonction</label>
-          <select class="form-control" formControlName="form_fonction">
-            <option *ngFor="let type of fonctionList" let i=index [ngValue]="type" [selected]="!i">{{type}}</option>
+          <select class="form-control" formControlName="form_fonction" id="fonction">
+            <option *ngFor="let fonction of fonctionList" let i=index [ngValue]="fonction" >{{fonction}}</option>
           </select>
         </div>
         <div class="form-group col-md-4">
-          <label>Compétence</label>
-          <select class="form-control" formControlName="form_competence">
-            <option *ngFor="let type of competenceList" let i=index [ngValue]="type" [selected]="!i">{{type}}</option>
-          </select>
+          <div *ngFor="let competence of competenceList; let i=index">
+            <label>
+              <input type="checkbox" [value]="competence" (change)="onCheckboxChange($event)" />
+              {{competence}}
+            </label>
+          </div>
         </div>
       </div>
 
+
+      <br>
+      <hr class="style14">
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Login</label>
+          <input type="text" class="form-control" formControlName="form_login" placeholder="Login">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Mot de passe</label>
+          <input type="password" class="form-control" formControlName="form_mdp" placeholder="********">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Numéro de téléphone</label>
+          <input type="text" class="form-control" formControlName="form_tel" placeholder="Numéro">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label>Mail</label>
+          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com">
+        </div>
+      </div>
 
       <br>
       <hr class="style14">
@@ -56,7 +104,8 @@
 
 
       <div class="form-row">
-        <button type="submit" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer employé</button>
+        <button type="submit" *ngIf="isCreation()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer Staff</button>
+        <button type="submit" *ngIf="isModification()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Modifier employé</button>
       </div>
     </div>
   </form>

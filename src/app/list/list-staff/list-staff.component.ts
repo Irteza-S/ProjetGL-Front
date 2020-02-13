@@ -1,6 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator, MatDialog} from '@angular/material';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import { UserAPIService } from 'src/app/services/api/user-api.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Router } from '@angular/router';
+import { LoginAPIService } from 'src/app/services/login/login-api.service';
+import { User } from 'src/app/model/user';
+import { UserType } from 'src/app/model/userole';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export interface StaffTable {
   id: number;
@@ -10,56 +17,11 @@ export interface StaffTable {
   adress: string;
   edition: string;
 }
-const Ops: StaffTable[] = [
-  {
-    id:1, name: 'Valerie Dupont', tel: '0676267260', mail: 'valerie.dupont@pops2019.fr', adress:'6 Rue Guichard 98000 ', edition:'Modifier/Supprimer'
-  },
-  {
-    id:2, name: 'Sophie Guy', tel: '0676267260', mail: 'sophie.guy@pops2019.fr', adress:'17 Rue Camus 75000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:3, name: 'Benoit Cerf', tel: '0676267260', mail: 'benoit.cerf@pops2019.fr', adress:'76 Rue Giscard 98000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:4, name: 'Caroline Dupré', tel: '0676267260', mail: 'caroline.dupre@pops2019.fr', adress:'64 Rue de Normandie 94230', edition:'Modifier/Supprimer'
-  },
-  {
-    id:5,  name: 'John Smith', tel: '0676267260', mail: 'john.smith@pops2019.fr', adress:'35 Rue du Général de Gaule 75018 ', edition:'Modifier/Supprimer'
-  }
-]
+let Ops: StaffTable[] = [
+];
 
 const Techs: StaffTable[] = [
-  {
-    id:1, name: 'Benoit Cerf', tel: '0676267260', mail: 'benoit.cerf@pops2019.fr', adress:'76 Rue Giscard 98000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:2, name: 'Caroline Dupré', tel: '0676267260', mail: 'caroline.dupre@pops2019.fr', adress:'64 Rue de Normandie 94230', edition:'Modifier/Supprimer'
-  },
-  {
-    id:3, name: 'Valerie Dupont', tel: '0676267260', mail: 'valerie.dupont@pops2019.fr', adress:'6 Rue Guichard 98000 ', edition:'Modifier/Supprimer'
-  },
-  {
-    id:4, name: 'Sophie Guy', tel: '0676267260', mail: 'sophie.guy@pops2019.fr', adress:'17 Rue Camus 75000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:5, name: 'John Smith', tel: '0676267260', mail: 'john.smith@pops2019.fr', adress:'35 Rue du Général de Gaule 75018 ', edition:'Modifier/Supprimer'
-  },
-  {
-    id:6, name: 'Benoit Cerf', tel: '0676267260', mail: 'benoit.cerf@pops2019.fr', adress:'76 Rue Giscard 98000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:7, name: 'Caroline Dupré', tel: '0676267260', mail: 'caroline.dupre@pops2019.fr', adress:'64 Rue de Normandie 94230', edition:'Modifier/Supprimer'
-  },
-  {
-    id:8, name: 'Valerie Dupont', tel: '0676267260', mail: 'valerie.dupont@pops2019.fr', adress:'6 Rue Guichard 98000 ', edition:'Modifier/Supprimer'
-  },
-  {
-    id:9, name: 'Sophie Guy', tel: '0676267260', mail: 'sophie.guy@pops2019.fr', adress:'17 Rue Camus 75000', edition:'Modifier/Supprimer'
-  },
-  {
-    id:10, name: 'John Smith', tel: '0676267260', mail: 'john.smith@pops2019.fr', adress:'35 Rue du Général de Gaule 75018 ', edition:'Modifier/Supprimer'
-  }
-]
+];
 
 @Component({
   selector: 'app-list-staff',
@@ -68,17 +30,50 @@ const Techs: StaffTable[] = [
 })
 export class ListStaffComponent implements OnInit, AfterViewInit{
 
-  public displayedColumns: string[] = ['name', 'tel', 'mail', 'adress', 'edition'];
+  public displayedColumns: string[] = ['id', 'name', 'tel', 'mail', 'adress', 'edition'];
   dataSource = new MatTableDataSource(Ops);
   dataSource2 = new MatTableDataSource(Techs);
+  userIsAdmin = false;
+  deleteStaffID;
+  deleteStaffName;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  
-  constructor(public dialog: MatDialog) { }
+
+  constructor(public dialog: MatDialog, private UserAPI: UserAPIService, private spinnerService: Ng4LoadingSpinnerService,
+              private router: Router, private loginAPI: LoginAPIService, private modalService: NgbModal) {
+    if (loginAPI.isUserAdmin()) {
+      this.userIsAdmin = true;
+    }
+    this.spinnerService.show();
+    this.UserAPI.listStaff().subscribe(
+      value => {
+        this.initPage(value);
+        this.spinnerService.hide(); },
+        error => {console.log('ERROR', error); this.spinnerService.hide(); }
+      );
+  }
 
   ngOnInit() {
+  }
+
+  initPage(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const tmp = JSON.parse(resSTR._body);
+    const body = JSON.parse(resSTR._body);
+    console.log(tmp);
+    Ops = [];
+    for (const staff of body) {
+      const tmp = {
+        id: staff.staffId, name: (staff.staffName + ' ' + staff.staffSurname), tel: staff.staffTel,
+        mail: staff.staffMail, adress: (staff.staffAdress.numero + ' ' + staff.staffAdress.rue +
+        ' ' + staff.staffAdress.codePostal + ' ' + staff.staffAdress.ville),
+        edition: 'Modifier/Supprimer'
+      };
+      Ops.push(tmp);
+    }
+    this.dataSource = new MatTableDataSource(Ops);
   }
 
   ngAfterViewInit(): void {
@@ -95,6 +90,8 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
   }
 
   openDialog(nom): void {
+    console.log(nom);
+    /*
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       data: {var:nom}
     });
@@ -102,6 +99,22 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
-    });
+    });*/
+  }
+
+  editStaff(staffId) {
+    this.spinnerService.show();
+    console.log(staffId);
+    this.router.navigate(['/form-staff', +staffId]);
+  }
+
+  deleteStaff() {
+    console.log("StaffDeleted " + this.deleteStaffID);
+  }
+
+  openVerticallyCentered(content, staffId, staffName) {
+    this.deleteStaffID = staffId;
+    this.deleteStaffName = staffName;
+    this.modalService.open(content, { centered: true });
   }
 }

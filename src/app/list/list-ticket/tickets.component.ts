@@ -12,7 +12,6 @@ export interface TicketsTable {
   num: number;
   date: string;
   title: string;
-  clientId: string;
   clientNom: string;
   type: string;
   status: string;
@@ -44,22 +43,24 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     ELEMENT_DATA_ALL = [];
     ELEMENT_DATA_MY = [];
     this.spinnerService.show();
+    console.log('loading');
     this.user = loginAPI.isUserLoggedIn();
     if (this.user != null) {
       this.ticketAPI.listAllTickets().subscribe(
         value => {
           this.initListAllTickets(value);
+          this.spinnerService.hide();
         },
           error => {console.log('ERROR', error); }
       );
       this.ticketAPI.listMyTickets(this.user.id).subscribe(
         value => {
           this.initListMyTickets(value);
+          this.spinnerService.hide();
         },
           error => {console.log('ERROR', error); }
       );
     }
-    this.spinnerService.hide();
   }
 
   ngOnInit() {
@@ -75,7 +76,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         num: ticket.id,
         date: '02/09/2019',
         title: ticket.objet,
-        clientId: '12',
         clientNom: ticket.nomClient,
         type: ticket.type,
         status: ticket.statut,
@@ -97,8 +97,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         num: ticket.id,
         date: '02/09/2019',
         title: ticket.objet,
-        clientId: '12',
-        clientNom: ticket.nomClient,
+        clientNom: 'ok',
         type: ticket.type,
         status: ticket.statut,
         tech: technicien,

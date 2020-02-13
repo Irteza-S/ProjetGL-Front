@@ -177,7 +177,6 @@ export class TicketFormComponent implements OnInit {
 
     // Si le ticket existe déjà
     if (body.ticket) {
-
       this.clientName = body.ticket.nomClient;
       const description = body.ticket.description;
       const objet = body.ticket.objet;

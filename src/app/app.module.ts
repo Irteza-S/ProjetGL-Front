@@ -31,6 +31,8 @@ import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { DeleteModalComponent } from './list/list-staff/delete-modal/delete-modal.component';
 import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { ClientAPIService } from './services/api/client-apiservice.service';
+import { ClientFormComponent } from './form/form-client/form-client.component';
+import { UserAPIService } from './services/api/user-api.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ClientAPIService } from './services/api/client-apiservice.service';
     GestionComponent,
     GestionCardComponent,
     StopwatchComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    ClientFormComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import { ClientAPIService } from './services/api/client-apiservice.service';
     CookieService,
     TicketAPIService,
     LoginAPIService,
-    ClientAPIService
+    ClientAPIService,
+    UserAPIService
   ],
   bootstrap: [AppComponent]
 })

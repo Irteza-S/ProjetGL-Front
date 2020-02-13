@@ -8,6 +8,8 @@ import { timeout } from 'rxjs/operators';
 import { map } from 'rxjs-compat/operator/map';
 import { HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { LoginAPIService } from '../login/login-api.service';
+import { User } from 'src/app/model/user';
 
 const API_URL = 'http://127.0.0.1:8080/genielog/ticket';
 
@@ -16,83 +18,106 @@ const API_URL = 'http://127.0.0.1:8080/genielog/ticket';
 })
 
 export class TicketAPIService {
-
-  constructor(private http: Http) { }
-
+  constructor(private http: Http, private loginAPI: LoginAPIService) { }
+  user: User;
   // LOAD AN EXISTING TICKET
   loadTicket(CLIENTID, TICKETID) {
-    console.log('LOAD : ' + CLIENTID + ' ' + TICKETID);
-    const data = {
-      clientId: CLIENTID,
-      ticketId: TICKETID
-    };
-    return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-    .pipe(timeout(10000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      console.log('LOAD TICKET : ' + CLIENTID + ' ' + TICKETID + ' ' + this.user.token);
+      const data = {
+        token: this.user.token,
+        clientId: CLIENTID,
+        ticketId: TICKETID
+      };
+      return this.http.post(API_URL + '/init', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
 
   // LOAD INFORMATIONS TO CREATE A NEW TICKET
   initNewTicket(CLIENTID) {
-    console.log('CREATE : ' + CLIENTID);
-    const data = {
-      clientId: CLIENTID,
-      ticketId: -1
-    };
-    return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-    .pipe(timeout(5000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      console.log('CREATE TICKET : ' + CLIENTID + this.user.token);
+      const data = {
+        token: this.user.token,
+        clientId: CLIENTID,
+        ticketId: -1
+      };
+      return this.http.post(API_URL + '/init', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
 
   listAllTickets() {
-    console.log('API TICKET - LIST ALL ');
-    const data = {
-      userId: -1
-    };
-    return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-    .pipe(timeout(10000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      console.log('API TICKET - LIST ALL ');
+      const data = {
+        token: this.user.token,
+        userId: -1
+      };
+      return this.http.post(API_URL + '/list', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
 
   listMyTickets(userId) {
-    console.log('API TICKET - LIST MY TICKETS ');
-    const data = {
-      userId: +userId
-    };
-    return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-    .pipe(timeout(10000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      console.log('API TICKET - LIST MY TICKETS ');
+      const data = {
+        token: this.user.token,
+        userId: +userId
+      };
+      return this.http.post(API_URL + '/list', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
 
   editTicket(ticketJSON, clientId) {
-    const data = {
-      clientId: +clientId,
-      ticket: ticketJSON
-    };
-    console.log('EDIT TICKET : ' + JSON.stringify(data));
-    return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
-    .pipe(timeout(10000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        clientId: +clientId,
+        ticket: ticketJSON
+      };
+      console.log('EDIT TICKET : ' + JSON.stringify(data));
+      return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
   createTicket(ticketJSON, clientId) {
-    const data = {
-      ticket: ticketJSON
-    };
-    console.log('EDIT TICKET : ' + JSON.stringify(data));
-    return this.http.post(API_URL + '/create', JSON.stringify(data), '')
-    .pipe(timeout(10000))
-    .map(resp => {
-      return resp;
-    });
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        ticket: ticketJSON
+      };
+      console.log('EDIT TICKET : ' + JSON.stringify(data));
+      return this.http.post(API_URL + '/create', JSON.stringify(data), '')
+      .pipe(timeout(15000))
+      .map(resp => {
+        return resp;
+      });
+    }
   }
 
 

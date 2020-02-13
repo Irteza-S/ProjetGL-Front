@@ -13,31 +13,31 @@
     <!--operateur-->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
-          <a class="nav-link" [routerLink]="['/form-ticket', '123456789', '3']">
+        <li class="nav-item" *ngIf="this.isUserLoggedIn">
+          <a class="nav-link" (click)="openVerticallyCentered(content)">
             <i class="fa fa-ticket"></i>
             Nouveau Ticket
           </a>
         </li>
-        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+        <li class="nav-item" *ngIf="this.isUserLoggedIn">
           <a class="nav-link" routerLink="list">
             <i class="fa fa-list-ol" aria-hidden="true"></i>
             Liste Tickets
           </a>
         </li>
-        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+        <li class="nav-item" *ngIf="this.isUserLoggedIn">
           <a class="nav-link" routerLink="gestion">
             <i class="fa fa-wrench" aria-hidden="true"></i>
             Gestion
           </a>
         </li>
-        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+        <li class="nav-item" *ngIf="this.isUserLoggedIn">
           <a class="nav-link" routerLink="list-client">
             <i class="fa fa-users" aria-hidden="true"></i>
             Clients
           </a>
         </li>
-        <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+        <li class="nav-item" *ngIf="this.isUserLoggedIn">
           <a class="nav-link" href="notifications" routerLink="item/notif">
             <i class="fa fa-bell">
               <span class="badge badge-warning">11</span>
@@ -45,7 +45,7 @@
             Notifications
           </a>
         </li>
-        <li class="nav-item" style="padding-left: 50px;" *ngIf="loginAPI.isUserLoggedIn()">
+        <li class="nav-item" style="padding-left: 50px;" *ngIf="this.isUserLoggedIn">
           <a class="nav-link" routerLink="gestion">
             <i class="fa fa-info-circle" aria-hidden="true"></i>
               {{this.user.gender}} {{this.user.firstName}} {{this.user.lastName}} - {{this.user.role}}
@@ -53,22 +53,24 @@
         </li>
       </ul>
       <!--deuxieme partie de la barre -->
-      <form class="form-inline my- my-lg-0" *ngIf="loginAPI.isUserLoggedIn()">
+      <form class="form-inline my- my-lg-0" *ngIf="this.isUserLoggedIn">
         <input size="30" class="form-control mr-sm-2" type="text" placeholder="Recherchez un client, un ticket, etc."
           aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" [routerLink]="['/search']" type="button"
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="userList()" type="button"
           style="margin-left: 10px;">Search</button>
+          <!-- <button class="btn btn-outline-success my-2 my-sm-0" [routerLink]="['/search']" type="button"
+          style="margin-left: 10px;">Search</button>-->
       </form>
       <ul class="navbar-nav ">
 
         <div style="margin-left:40px;">
-          <li class="nav-item" *ngIf="loginAPI.isUserLoggedIn()">
+          <li class="nav-item" *ngIf="this.isUserLoggedIn">
             <a class="nav-link" href="logout">
               <i class="fa fa-sign-out"></i>
               Logout
             </a>
           </li>
-          <li class="nav-item" *ngIf="!loginAPI.isUserLoggedIn()">
+          <li class="nav-item" *ngIf="!this.isUserLoggedIn">
             <a class="nav-link" href="login">
               <i class="fa fa-sign-in"></i>
               LogIn
@@ -93,3 +95,29 @@
   <a class="navbar-brand" href="#">ProjetGL</a>
 </nav> -->
 <ng4-loading-spinner [timeout]="9999999"> </ng4-loading-spinner>
+<ng-template #content let-modal>
+  <form [formGroup]="clientNameForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title">Choisir client</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="text-center">
+        <select class="form-control custom-select" formControlName="clientName">
+          <option *ngFor="let client of clientList" let i = index [ngValue]="client">{{client}}</option>
+        </select> 
+        &nbsp;
+        &nbsp;
+        <p>
+          <button class="btn btn-danger" (click)="modal.close('Close click')">Annuler</button>&nbsp;
+          <button class="btn btn-primary"  (click)="openNewTicket();modal.close('Close click')">Choisir</button>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-light" (click)="modal.close('Close click')">Ferme</button>
+    </div>
+  </form>
+</ng-template>

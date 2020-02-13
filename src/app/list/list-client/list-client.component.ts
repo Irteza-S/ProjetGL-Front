@@ -1,25 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ClientAPIService } from 'src/app/services/api/client-apiservice.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 export interface ClientTable {
-  Id: number;
+  SIREN: number;
   Nom: string;
   Adresse: string;
   NbTickets: number;
-  data: string[];
+  Demandeurs: string[];
 }
-const Clients: ClientTable[] = [ 
-{
-  Id:123, Nom:'Boucherie ALLAINE', Adresse:'35 Rue du Général de Gaule 75018 Paris', NbTickets:3, data:["Matrin Luther", "Sophie Tripoteau"]
-},
-{
-  Id:666, Nom:'Fauchon', Adresse:'64 Rue de Normandie 94230 Cachan', NbTickets:12, data:["Benoit Dupont", "Sophie Lessier", "Aicha Drame"]
-},
-{
-  Id:987, Nom:'Boucherie Sanzo', Adresse:'6 Rue Guichard 75002 Paris ', NbTickets:2, data:["Valerie Dumas", "Jean Puteau"]
-}
-]
 
 @Component({
   selector: 'app-list-client',
@@ -35,19 +26,44 @@ const Clients: ClientTable[] = [
 })
 export class ListClientComponent implements OnInit {
 
-  columnsToDisplay = ['Nom', 'Id', 'NbTickets', 'Adresse'];
-  dataSource = new MatTableDataSource(Clients);
+  Clients = [];
+  columnsToDisplay = ['SIREN', 'Nom', 'Adresse', 'Nb Tickets'];
+  dataSource = new MatTableDataSource(this.Clients);
   expandedElement: ClientTable | null;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  
-  constructor() { }
+
+  constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService) {
+    this.spinnerService.show();
+    this.clientAPI.getClientList().subscribe(
+      value => {
+        this.initPage(value);
+        this.spinnerService.hide(); },
+        error => {console.log('ERROR', error); this.spinnerService.hide(); }
+    );
+  }
 
   ngOnInit() {
   }
 
+  initPage(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const body = JSON.parse(resSTR._body);
+    console.log(body);
+    this.Clients = [];
+    for (const client of body) {
+      const tmp = {
+        SIREN: client.SIREN, Nom: client.name, Adresse: (client.adresse.numero + ' ' + client.adresse.rue +
+        ' ' + client.adresse.codePostal + ' ' + client.adresse.ville), NbTickets: client.nbTicket, Demandeurs: client.demandeurs
+      };
+      this.Clients.push(tmp);
+    }
+    this.dataSource = new MatTableDataSource(this.Clients);
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

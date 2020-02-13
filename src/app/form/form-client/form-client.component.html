@@ -1,0 +1,129 @@
+<div class="card card-outline-secondary">
+
+  <form [formGroup]="clientFormGroup">
+    <div class="card-header form-row">
+      <div class="form-group col-6 col-md-4">
+          <h3 class="mb-0">{{clientFormType}}</h3>
+      </div>
+    </div>
+    <div class="card-body container">
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label>Nom</label>
+          <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
+        </div>
+        <div class="form-group col-md-5">
+          <label>Siren</label>
+          <input type="text" class="form-control" formControlName="form_siren" placeholder="Siren">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label>N° Rue</label>
+          <input type="text" class="form-control" formControlName="form_adresse_numero" placeholder="1, 1-Bis...">
+        </div>
+        <div class="form-group col-md-10">
+          <label>Adresse</label>
+          <input type="text" class="form-control" formControlName="form_adresse_rue" placeholder="Adresse" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label>Code Postal</label>
+          <input type="text" class="form-control" formControlName="form_adresse_codePostal" placeholder="91080, 91000...">
+        </div>
+        <div class="form-group col-md-7">
+          <label>Ville</label>
+          <input type="text" class="form-control" formControlName="form_adresse_ville" placeholder="Orsay, Courcouronnes....">
+        </div>
+        <div class="form-group col-md-2">
+          <label>ID</label>
+          <input type="text" class="form-control" value="{{clientId}}" disabled>
+        </div>
+      </div>
+
+      <br>
+      <hr class="style14">
+      <br>
+    
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" (click)="addSite()">+</button>
+                </div>
+                <input type="text" class="form-control" placeholder="Sites : " aria-label="" aria-describedby="basic-addon1" disabled>
+            </div>
+        </div>
+      </div>
+
+      <div formArrayName="form_site">
+        <div class="form-row">
+            <div class="col-md-9">
+                <div *ngFor="let item of form_site.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                    <div class="input-group form-row">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" (click)="deleteSite(pointIndex)">-</button>
+                            </div>
+                            <input type="text" class="form-control col-md-10" formControlName="site_numero" placeholder="Numéro">
+                            <input type="text" class="form-control col-md-10" formControlName="site_rue" placeholder="Rue">
+                            <input type="text" class="form-control col-md-10" formControlName="site_codePostal" placeholder="CodePostal">
+                            <input type="text" class="form-control col-md-10" formControlName="site_ville" placeholder="Ville">
+                    </div>
+                </div>    
+            </div>
+        </div>
+      </div>
+
+      <br>
+        <hr class="style14">
+      <br>
+    
+      <div class="form-row">
+        <div class="form-group col-md-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" (click)="addDemandeur()">+</button>
+                </div>
+                <input type="text" class="form-control" placeholder="Demandeurs : " aria-label="" aria-describedby="basic-addon1" disabled>
+            </div>
+        </div>
+      </div>
+
+      <div formArrayName="form_demandeur">
+        <div class="form-row">
+            <div class="col-md-9">
+                <div *ngFor="let item of form_demandeur.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                    <div class="input-group form-row">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button" (click)="deleteDemandeur(pointIndex)">-</button>
+                            </div>
+                            <select class="form-control" formControlName="demandeurSexe">
+                              <option value="M.">M.</option>
+                              <option value="Mme.">Mme.</option>
+                            </select>
+                            <input type="text" class="form-control col-md-10" formControlName="demandeurNom" placeholder="Nom">
+                            <input type="text" class="form-control col-md-10" formControlName="demandeurPrenom" placeholder="Prenom">
+                            <select class="form-control" formControlName="demandeurSite">
+                              <option *ngFor="let site of clientSiteList" let i = index [ngValue]="site" >{{site}}</option>
+                            </select>
+                            
+                    </div>
+                </div>    
+            </div>
+        </div>
+      </div>
+      
+
+      <br>
+      <hr class="style14">
+      <br>
+
+      <div class="form-row">
+        <button type="submit" *ngIf="isCreation()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer ticket</button>
+        <button type="submit" *ngIf="isModification()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Modifier ticket</button>
+      </div>
+    </div>
+  </form>
+</div>
