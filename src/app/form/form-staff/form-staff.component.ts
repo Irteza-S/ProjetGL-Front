@@ -21,6 +21,7 @@ export class StaffFormComponent implements OnInit {
   fonctionList = ['Opérateur', 'Responsable Technicien', 'Technicien'];
   sexeList = ['M', 'F'];
   userId;
+  submitted=false;
 
   constructor(private fb: FormBuilder, private userAPI: UserAPIService, private route: ActivatedRoute,
               private spinnerService: Ng4LoadingSpinnerService, private router: Router) {
@@ -57,6 +58,8 @@ export class StaffFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  get f() { return this.staffFormGroup.controls; }
+  
   initPage(data) {
     const resSTR = JSON.parse(JSON.stringify(data));
     const tmp = JSON.parse(resSTR._body);
@@ -94,8 +97,8 @@ export class StaffFormComponent implements OnInit {
   }
 
   initForm(fb: FormBuilder) {
-    this.staffFormGroup = fb.group({
-      form_sexe: fb.control('', Validators.required),
+    this.staffFormGroup = this.fb.group({
+      form_sexe: ['', Validators.required],
       form_nom: fb.control('', Validators.required),
       form_prenom: fb.control('', Validators.required),
       form_adresse_numero: fb.control('', Validators.required),
@@ -107,7 +110,7 @@ export class StaffFormComponent implements OnInit {
       form_competences: fb.array([]),
       form_login: fb.control('', Validators.required),
       form_mdp: fb.control('', Validators.required),
-      form_mail: fb.control('', Validators.required)
+      form_mail: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -130,6 +133,9 @@ export class StaffFormComponent implements OnInit {
   }
 
   sendForm() {
+    if (this.staffFormGroup.invalid) {
+      return;
+    }
     let staff =  {
       staffSexe: this.staffFormGroup.controls.form_sexe.value,
       staffUserName: this.staffFormGroup.controls.form_login.value,
@@ -192,4 +198,16 @@ export class StaffFormComponent implements OnInit {
       return false;
     }
   }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.staffFormGroup.invalid) {
+        return;
+    }
+
+    // display form values on success
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.staffFormGroup.value, null, 4));
+}
 }

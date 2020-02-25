@@ -1,6 +1,6 @@
 <div class="card card-outline-secondary">
 
-  <form [formGroup]="staffFormGroup">
+  <form [formGroup]="staffFormGroup" (ngSubmit)="sendForm()">
     <div class="card-header form-row">
       <div class="form-group col-6 col-md-4">
           <h3 class="mb-0">{{staffFormType}}</h3>
@@ -9,17 +9,20 @@
     <div class="card-body container">
       <div class="form-row">
         <div class="form-group col-md-2">
-          <label>Sexe</label>
-          <select class="form-control" formControlName="form_sexe" id="sexe">
+          <label>Sexe*</label>
+          <select class="form-control" formControlName="form_sexe" id="sexe" [ngClass]="{ 'is-invalid': submitted && f.form_sexe.errors }">
             <option *ngFor="let sexe of sexeList" let i=index [ngValue]="sexe" >{{sexe}}</option>
           </select>
+          <div *ngIf="submitted && f.form_sexe.errors" class="invalid-feedback">
+            <div *ngIf="f.form_sexe.errors.required">Sexe is required</div>
+        </div>
         </div>
         <div class="form-group col-md-5">
-          <label>Nom de famille</label>
+          <label>Nom de famille*</label>
           <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
         </div>
         <div class="form-group col-md-5">
-          <label>Prénom</label>
+          <label>Prénom*</label>
           <input type="text" class="form-control" formControlName="form_prenom" placeholder="Prénom">
         </div>
       </div>
@@ -85,14 +88,18 @@
         </div>
         <div class="form-group col-md-4">
           <label>Numéro de téléphone</label>
-          <input type="text" class="form-control" formControlName="form_tel" placeholder="Numéro">
+          <input type="number" class="form-control" formControlName="form_tel" placeholder="Numéro">
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group col-md-7">
           <label>Mail</label>
-          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com">
+          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com"[ngClass]="{ 'is-invalid': submitted && f.form_mail.errors }" />
+          <div *ngIf="submitted && f.form_mail.errors" class="invalid-feedback">
+              <div *ngIf="f.form_mail.errors.required">L'Email est requis</div>
+              <div *ngIf="f.form_mail.errors.email">Attention, l'email doit être valid</div>
+          </div>
         </div>
       </div>
 
