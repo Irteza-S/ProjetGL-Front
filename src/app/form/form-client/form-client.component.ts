@@ -18,7 +18,8 @@ export class ClientFormComponent implements OnInit {
   clientFormType: ClientFormType;
   clientFormGroup: FormGroup;
   clientId;
-  clientSiteList: ['PLO', 'PLA', 'PLI'];
+  clientSiteList: any[] =  [];
+  sexeList = ['M', 'F'];
 
 
   constructor(private fb: FormBuilder, private clientAPI: ClientAPIService, private route: ActivatedRoute,
@@ -54,6 +55,7 @@ export class ClientFormComponent implements OnInit {
       form_siren: fb.control('', Validators.required),
       form_site: this.fb.array([this.fb.group({
         site_numero: '',
+        site_id: '',
         site_codePostal: '',
         site_rue: '',
         site_ville: '',
@@ -61,13 +63,22 @@ export class ClientFormComponent implements OnInit {
       form_demandeur: this.fb.array([this.fb.group({
         demandeurSexe: '',
         demandeurNom: '',
+        demandeurId: '',
         demandeurPrenom: '',
-        demandeurSite: ''
+        demandeurTelephone: '',
+        demandeurIdAdresse: '',
+        demandeurSIRET: ''
       })])
     });
+    this.deleteDemandeur(0);
+    this.deleteSite(0);
   }
 
   initPage(data) {
+
+    this.deleteDemandeur(0);
+    this.deleteSite(0);
+
     const resSTR = JSON.parse(JSON.stringify(data));
     const body = JSON.parse(resSTR._body);
     console.log(body);
@@ -86,18 +97,21 @@ export class ClientFormComponent implements OnInit {
     this.clientFormGroup.controls.form_adresse_codePostal.setValue(clientCodePostal);
     this.clientFormGroup.controls.form_adresse_ville.setValue(clientVille);
 
+    // Setup site list
     if (body.clientSiteList) {
       body.clientSiteList.forEach(element => {
         this.form_site.push(this.fb.group({
+          site_id: element.adresse.id,
           site_numero: element.adresse.numero,
           site_codePostal: element.adresse.codePostal,
           site_rue: element.adresse.rue,
           site_ville: element.adresse.ville,
         }));
       });
-      this.deleteDemandeur(0);
     }
 
+    // Setup demandeur list
+    /*
     if (body.demandeurList) {
       body.demandeurList.forEach(element => {
         this.form_demandeur.push(this.fb.group({
@@ -108,7 +122,8 @@ export class ClientFormComponent implements OnInit {
         }));
       });
       this.deleteDemandeur(0);
-    }
+    }*/
+
   }
 
   get form_site() {
@@ -120,6 +135,7 @@ export class ClientFormComponent implements OnInit {
 
   addSite() {
     this.form_site.push(this.fb.group({
+      site_id: '',
       site_numero: '',
       site_codePostal: '',
       site_rue: '',
@@ -127,12 +143,32 @@ export class ClientFormComponent implements OnInit {
     }));
   }
 
+  addSiteToDatabase(siteIndex) {
+    this.spinnerService.show();
+    const newSite = {
+      id: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+      numero: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+      codePostal: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+      rue: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+      ville: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+    };
+    this.clientAPI.createSite(newSite).subscribe(
+      value => {
+        this.clientSiteList.push(newSite.id);
+        this.spinnerService.hide(); },
+        error => {console.log('ERROR', error); this.spinnerService.hide(); this.deleteSite(siteIndex); }
+    );
+  }
+
   addDemandeur() {
     this.form_demandeur.push(this.fb.group({
       demandeurSexe: '',
       demandeurNom: '',
+      demandeurId: '',
       demandeurPrenom: '',
-      demandeurSite: ''
+      demandeurTelephone: '',
+      demandeurIdAdresse: '',
+      demandeurSIRET: ''
     }));
   }
 
@@ -144,6 +180,44 @@ export class ClientFormComponent implements OnInit {
   }
 
   sendForm() {
+    console.log(this.clientFormGroup);
+    // Traitement des demandeurs
+    // Todo adresse
+    let demandeurList = [];
+    const demandeurFormList = (this.clientFormGroup.controls.form_demandeur as FormArray);
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < demandeurFormList.length; i++) {
+      let demandeur = {
+        SIRET: demandeurFormList.value[i].demandeurSIRET,
+        demandeur: {
+          nom: demandeurFormList.value[i].demandeurNom,
+          prenom: demandeurFormList.value[i].demandeurPrenom,
+          sexe: demandeurFormList.value[i].demandeurSexe,
+          id: demandeurFormList.value[i].demandeurId,
+        },
+        telephone: demandeurFormList.value[i].demandeurTelephone,
+        idAdresse: demandeurFormList.value[i].demandeurIdAdresse
+      }
+      demandeurList.push(demandeur);
+    }
+
+    // Traitement des sites
+    let siteList = [];
+    const siteFormList = (this.clientFormGroup.controls.form_site as FormArray);
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < siteFormList.length; i++) {
+      let site = {
+        SIRET: siteFormList.value[i].id,
+        Adresse : {
+          numero: siteFormList.value[i].id,
+          codePostal: siteFormList.value[i].id,
+          rue: siteFormList.value[i].id,
+          ville: siteFormList.value[i].id,
+        }
+      };
+      siteList.push(site);
+    }
+
     let client =  {
       SIREN: +this.clientFormGroup.controls.form_siren.value,
       nom: this.clientFormGroup.controls.form_nom.value,
@@ -152,7 +226,9 @@ export class ClientFormComponent implements OnInit {
         rue: this.clientFormGroup.controls.form_adresse_rue.value,
         ville: this.clientFormGroup.controls.form_adresse_ville.value,
         codePostal: this.clientFormGroup.controls.form_adresse_codePostal.value,
-      }
+      },
+      demandeurs: demandeurList,
+      listeSites: siteList
     };
 
     if (this.clientFormType === ClientFormType.Edit) {

@@ -66,11 +66,15 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteSite(pointIndex)">-</button>
                             </div>
+                            <input type="text" class="form-control col-md-10" formControlName="site_id" placeholder="ID">
                             <input type="text" class="form-control col-md-10" formControlName="site_numero" placeholder="Numéro">
                             <input type="text" class="form-control col-md-10" formControlName="site_rue" placeholder="Rue">
                             <input type="text" class="form-control col-md-10" formControlName="site_codePostal" placeholder="CodePostal">
                             <input type="text" class="form-control col-md-10" formControlName="site_ville" placeholder="Ville">
-                    </div>
+                            &nbsp;
+                            &nbsp;
+                            <button type="button" class="btn btn-outline-primary" (click)="addSiteToDatabase(pointIndex)">Creer/modifier site</button>
+                      </div>
                 </div>    
             </div>
         </div>
@@ -99,12 +103,15 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteDemandeur(pointIndex)">-</button>
                             </div>
+                            <input type="text" class="form-control col-md-10" formControlName="demandeurId" placeholder="ID">
                             <select class="form-control" formControlName="demandeurSexe">
                               <option *ngFor="let s of sexeList" [value]="s">{{s}}</option>
                             </select>
+                            <input type="text" class="form-control col-md-10" formControlName="demandeurSIRET" placeholder="SIRET">
                             <input type="text" class="form-control col-md-10" formControlName="demandeurNom" placeholder="Nom">
                             <input type="text" class="form-control col-md-10" formControlName="demandeurPrenom" placeholder="Prenom">
-                            <select class="form-control" formControlName="demandeurSite">
+                            <input type="text" class="form-control col-md-10" formControlName="demandeurTelephone" placeholder="Telephone">
+                            <select class="form-control" formControlName="demandeurIdAdresse">
                               <option *ngFor="let site of clientSiteList" let i = index [ngValue]="site" >{{site}}</option>
                             </select>
                             

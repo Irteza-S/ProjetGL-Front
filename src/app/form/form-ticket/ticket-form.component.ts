@@ -142,12 +142,17 @@ export class TicketFormComponent implements OnInit {
         tacheName: '',
         estimatedTacheLength: '',
         tacheLength: '',
-        tacheCompetence: ''
+        tacheCompetence: '',
+        tacheDescription: '',
+        tacheStatut: '',
+        tacheId: '',
+        technicien: ''
       })])
     });
   }
 
   initPage(data) {
+    this.deleteTache(0);
     const resSTR = JSON.parse(JSON.stringify(data));
     const tmp = JSON.parse(resSTR._body);
     const body = JSON.parse(resSTR._body);
@@ -180,7 +185,7 @@ export class TicketFormComponent implements OnInit {
       this.clientName = body.ticket.nomClient;
       const description = body.ticket.description;
       const objet = body.ticket.objet;
-      const tech = body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
+      let tech = body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
       const demande = body.ticket.type;
       const demandeur = body.ticket.demandeur.id + ' ' + body.ticket.demandeur.nom + ' ' + body.ticket.demandeur.prenom;
       const adresse = body.ticket.adresse.numero + ' ' + body.ticket.adresse.rue + ' ' +
@@ -197,6 +202,16 @@ export class TicketFormComponent implements OnInit {
       this.ticketFormGroup.controls.form_objet.setValue(objet);
       this.ticketFormGroup.controls.form_status.setValue(statut);
 
+      // Ajout de taches existantes
+      if (body.ticket.taches) {
+          // Ajout des taches suivantes
+          body.ticket.taches.forEach(tache => {
+            console.log(tache);
+            tech = tache.technicien.id + ' ' + tache.technicien.nom + ' ' + tache.technicien.prenom;
+            (this.ticketFormGroup.get("form_tache") as FormArray).push(this.addExistingTache(tache.objet, tache.tempsEstime,
+            tache.tempsPasse, tache.competences[0], tache.description, tache.statut, tache.id, tech));
+          });
+      }
       // Set status
       // TODO
     } else {
@@ -205,8 +220,7 @@ export class TicketFormComponent implements OnInit {
       this.ticketFormGroup.controls.form_demandeur.setValue(this.demandeurList[0]);
       this.ticketFormGroup.controls.form_site.setValue(this.clientSiteList[0]);
       this.ticketFormGroup.controls.form_categorie.setValue(this.categorieList[0]);
-      this.ticketFormGroup.controls.form_status.setValue(this.statusList[0])
-      ;
+      this.ticketFormGroup.controls.form_status.setValue(this.statusList[0]);
     }
   }
 
@@ -215,7 +229,24 @@ export class TicketFormComponent implements OnInit {
       tacheName: ['', Validators.required],
       estimatedTacheLength: ['', Validators.required],
       tacheLength: ['', Validators.required],
-      tacheCompetence: ['', Validators.required]
+      tacheCompetence: ['', Validators.required],
+      tacheDescription: ['', Validators.required],
+      tacheStatut: ['', Validators.required],
+      tacheId: ['', Validators.required],
+      technicien: ['', Validators.required]
+    });
+  }
+
+  addExistingTache(name, estimatedLength, length, competence, description, status, id, technicien): FormGroup {
+    return this.fb.group({
+      tacheName: [name, Validators.required],
+      estimatedTacheLength: [estimatedLength, Validators.required],
+      tacheLength: [length, Validators.required],
+      tacheCompetence: [competence, Validators.required],
+      tacheDescription: [description, Validators.required],
+      tacheStatut: [status, Validators.required],
+      tacheId: [id, Validators.required],
+      technicien: [technicien, Validators.required]
     });
   }
 
@@ -228,7 +259,11 @@ export class TicketFormComponent implements OnInit {
       tacheName: '',
       estimatedTacheLength: '',
       tacheLength: '',
-      tacheCompetence: ''
+      tacheCompetence: '',
+      tacheDescription: '',
+      tacheStatut: '',
+      tacheId: '',
+      technicien: ''
     }));
   }
 
@@ -237,10 +272,39 @@ export class TicketFormComponent implements OnInit {
   }
 
   sendForm() {
+    console.log(this.ticketFormGroup);
     // Save ticket
     const demandeur = (this.ticketFormGroup.controls.form_demandeur.value).split(' ', 10);
     const adresse = (this.ticketFormGroup.controls.form_site.value).split(' ', 10);
     const technicien = (this.ticketFormGroup.controls.form_technicien.value).split(' ', 10);
+
+
+    // Traitement des taches
+    let tacheList = [];
+    const formTachList = (this.ticketFormGroup.controls.form_tache as FormArray);
+    for (let i = 0; i < formTachList.length; i++) {
+      // Todo : Technicien + ticketParent verif
+      const tmpTechnicien = (formTachList.value[i].technicien).split(' ', 10);
+      let tache = {
+        statut: formTachList.value[i].tacheStatut,
+        objet: formTachList.value[i].tacheName,
+        description: formTachList.value[i].tacheDescription,
+        technicien: {
+          id: +tmpTechnicien[0],
+          nom: tmpTechnicien[1],
+          prenom: tmpTechnicien[2]
+        },
+        competences: [formTachList.value[i].tacheCompetence],
+        tempsEstime: +formTachList.value[i].estimatedTacheLength,
+        tempsPasse: +formTachList.value[i].tacheLength,
+        //ticketParent: formTachList.value[i], si nouveau ticket
+      };
+      if (formTachList.value[i].tacheId !== '') {
+        Object.assign(tache, {id: +(formTachList.value[i].tacheId)});
+      }
+      tacheList.push(tache);
+    }
+
 
     let ticket =  {
       categorie: this.ticketFormGroup.controls.form_categorie.value,
@@ -266,7 +330,8 @@ export class TicketFormComponent implements OnInit {
         rue: adresse[1] + ' ' + adresse[2],
         ville: adresse[4],
         codePostal: adresse[3]
-      }
+      },
+      taches: tacheList
     };
     if (this.ticketFormType === 'Modification ticket') {
       console.log('MODIFICATION SAVED');
@@ -325,4 +390,5 @@ export class TicketFormComponent implements OnInit {
     console.log(index);
     this.selectedTache = index;
   }
+
 }

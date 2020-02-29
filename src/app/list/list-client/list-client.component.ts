@@ -4,6 +4,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { ClientAPIService } from 'src/app/services/api/client-apiservice.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LoginAPIService } from 'src/app/services/login/login-api.service';
+import { Validators, FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export interface ClientTable {
   SIREN: number;
@@ -31,12 +33,17 @@ export class ListClientComponent implements OnInit {
   columnsToDisplay = ['SIREN', 'Nom', 'Adresse', 'NbTickets', 'Edition'];
   dataSource = new MatTableDataSource(this.Clients);
   expandedElement: ClientTable | null;
-
+  clientNameForm;
+  clientList = [];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService, private loginAPI: LoginAPIService) {
+  constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService,
+              private loginAPI: LoginAPIService, private fb: FormBuilder, private modalService: NgbModal) {
+    this.clientNameForm = this.fb.group({
+      clientName: fb.control('', Validators.required)
+    });
     this.user = loginAPI.isUserAdmin();
     this.spinnerService.show();
     this.clientAPI.getClientList().subscribe(
@@ -70,6 +77,7 @@ export class ListClientComponent implements OnInit {
       };
       console.log(tmp);
       this.Clients.push(tmp);
+      this.clientList.push(client.SIREN + '\t' + client.name);
     }
     this.dataSource = new MatTableDataSource(this.Clients);
   }
@@ -88,5 +96,16 @@ export class ListClientComponent implements OnInit {
   }
 
   deleteClient() {
+    const client = this.clientNameForm.controls.clientName.value;
+    const clientId = client.split('\t')[0];
+    console.log(clientId);
+    this.clientAPI.deleteClient(clientId).subscribe(value => {
+      // Refresh la page
+      this.spinnerService.hide(); },
+      error => {console.log('ERROR', error); this.spinnerService.hide(); }
+    );
+  }
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
   }
 }

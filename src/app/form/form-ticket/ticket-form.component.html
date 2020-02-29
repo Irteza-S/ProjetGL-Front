@@ -100,15 +100,23 @@
 
                     <div formArrayName="form_tache">
                         <div class="form-row">
-                            <div class="col-md-9">
+                            <div>
                                 <div *ngFor="let item of form_tache.controls; let pointIndex=index" [formGroupName]="pointIndex">
                                     <div class="input-group" >
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteTache(pointIndex)">-</button>
                                             </div>
+                                            <input type="text" class="form-control" formControlName="tacheId" placeholder="ID" disabled>
+                                            <select class="form-control" formControlName="tacheStatut">
+                                                <option *ngFor="let status of statusList" let i = index [ngValue]="status" >{{status}}</option>
+                                            </select>
                                             <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
+                                            <input type="text" class="form-control" formControlName="tacheDescription" placeholder="Description">
                                             <select class="form-control" formControlName="tacheCompetence">
-                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type" >{{type}}</option>
+                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type">{{type}}</option>
+                                            </select>
+                                            <select class="form-control" formControlName="technicien">
+                                                <option *ngFor="let tech of technicienList" let i = index [ngValue]="tech" >{{tech}}</option>
                                             </select>
                                             <input type="text" class="form-control" formControlName="estimatedTacheLength" placeholder="Temps estimé">
                                             <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps passé" disabled>

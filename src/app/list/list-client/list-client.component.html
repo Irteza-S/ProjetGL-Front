@@ -12,7 +12,7 @@
             <button style="margin-left: 30px;" onclick="window.location.href = '/form-client';" mat-mini-fab>
                 <mat-icon>person_add</mat-icon>
             </button>
-            <button style="margin-left: 30px;" mat-mini-fab onclick="deleteClient();">
+            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content)">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
@@ -45,3 +45,31 @@
         <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <form [formGroup]="clientNameForm" (ngSubmit)="onSubmit()">
+      <div class="modal-header">
+        <h4 class="modal-title">Choisir client</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <select class="form-control custom-select" formControlName="clientName">
+            <option *ngFor="let client of clientList" let i = index [ngValue]="client">{{client}}</option>
+          </select> 
+          &nbsp;
+          &nbsp;
+          <p>
+            <button class="btn btn-danger" (click)="modal.close('Close click')">Annuler</button>&nbsp;
+            <button class="btn btn-primary"  (click)="deleteClient();modal.close('Close click')">Supprimer</button>
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-light" (click)="modal.close('Close click')">Ferme</button>
+      </div>
+    </form>
+  </ng-template>

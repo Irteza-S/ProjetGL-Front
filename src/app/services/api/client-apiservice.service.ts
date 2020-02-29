@@ -103,4 +103,34 @@ export class ClientAPIService {
     }
   }
 
+  createSite(SITE) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        site: SITE
+      };
+      return this.http.post(API_URL + '/createSite', JSON.stringify(data), '')
+        .pipe(timeout(10000))
+        .map(resp => {
+          return resp;
+        });
+    }
+  }
+
+  deleteClient(CLIENTID) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        client: CLIENTID
+      };
+      return this.http.post(API_URL + '/delete', JSON.stringify(data), '')
+        .pipe(timeout(10000))
+        .map(resp => {
+          return resp;
+        });
+    }
+  }
+
 }
