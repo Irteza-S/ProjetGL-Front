@@ -6,7 +6,7 @@ import { StaffFormType } from '../../model/staffformtype';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserAPIService } from '../../services/api/user-api.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-form-staff',
@@ -22,6 +22,16 @@ export class StaffFormComponent implements OnInit {
   sexeList = ['M', 'F'];
   userId;
   submitted=false;
+
+  // Competences selection
+  competencesDropdownSettings = {
+    singleSelection: false,
+    idField: 'item_id',
+    textField: 'item_text',
+    selectAllText: 'Tout selectionner',
+    unSelectAllText: 'Tout de-selectionner',
+    allowSearchFilter: true
+  };
 
   constructor(private fb: FormBuilder, private userAPI: UserAPIService, private route: ActivatedRoute,
               private spinnerService: Ng4LoadingSpinnerService, private router: Router) {
@@ -97,6 +107,10 @@ export class StaffFormComponent implements OnInit {
   }
 
   initForm(fb: FormBuilder) {
+    let mdpValidator = null;
+    if(this.isCreation()) {
+      mdpValidator = Validators.required;
+    }
     this.staffFormGroup = this.fb.group({
       form_sexe: ['', Validators.required],
       form_nom: fb.control('', Validators.required),
@@ -107,29 +121,11 @@ export class StaffFormComponent implements OnInit {
       form_adresse_ville: fb.control('', Validators.required),
       form_tel: fb.control('', Validators.required),
       form_fonction: fb.control('', Validators.required),
-      form_competences: fb.array([]),
+      form_competences: fb.control('', Validators.required),
       form_login: fb.control('', Validators.required),
-      form_mdp: fb.control('', Validators.required),
+      form_mdp: fb.control('', mdpValidator),
       form_mail: ['', [Validators.required, Validators.email]],
     });
-  }
-
-  onCheckboxChange(e) {
-    const checkArray: FormArray = this.staffFormGroup.get('form_competences') as FormArray;
-    console.log(this.staffFormGroup);
-    if (e.target.checked) {
-      console.log(e.target.value);
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      let i = 0;
-      checkArray.controls.forEach((item: FormControl) => {
-        if (item.value === e.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
-    }
   }
 
   sendForm() {
@@ -201,12 +197,12 @@ export class StaffFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    console.log(this.staffFormGroup);
+    
     // stop here if form is invalid
     if (this.staffFormGroup.invalid) {
         return;
     }
-
     // display form values on success
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.staffFormGroup.value, null, 4));
 }

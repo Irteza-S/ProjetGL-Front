@@ -33,6 +33,10 @@ import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { ClientAPIService } from './services/api/client-apiservice.service';
 import { ClientFormComponent } from './form/form-client/form-client.component';
 import { UserAPIService } from './services/api/user-api.service';
+import { StatAPIService } from './services/api/stat-api.service';
+import { ChartsModule } from 'ng2-charts';
+import { StatComponent } from './stat/stat.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,8 @@ import { UserAPIService } from './services/api/user-api.service';
     GestionCardComponent,
     StopwatchComponent,
     DeleteModalComponent,
-    ClientFormComponent
+    ClientFormComponent,
+    StatComponent
   ],
   imports: [
     BrowserModule,
@@ -75,14 +80,17 @@ import { UserAPIService } from './services/api/user-api.service';
     MatListModule,
     Ng4LoadingSpinnerModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ChartsModule,
+    NgMultiSelectDropDownModule
   ],
   providers: [
     CookieService,
     TicketAPIService,
     LoginAPIService,
     ClientAPIService,
-    UserAPIService
+    UserAPIService,
+    StatAPIService
   ],
   bootstrap: [AppComponent]
 })

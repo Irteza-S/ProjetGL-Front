@@ -1,0 +1,40 @@
+<div class="card card-outline-secondary">
+    <mat-tab-group #tabGroup>
+        <mat-tab label="Temps techniciens">
+            <div>
+                <div style="display: block;">
+                <canvas baseChart  
+                        [datasets]="STAT_TEMPSTECHNICIEN.barChartData"
+                        [labels]="STAT_TEMPSTECHNICIEN.barChartLabels"
+                        [options]="STAT_TEMPSTECHNICIEN.barChartOptions"
+                        [legend]="STAT_TEMPSTECHNICIEN.barChartLegend"
+                        [chartType]="STAT_TEMPSTECHNICIEN.barChartType">
+                </canvas>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Tickets par client">
+            <div style="display: block">
+                <canvas baseChart
+                        [data]="STAT_TICKETPARCLIENT.doughnutChartData"
+                        [labels]="STAT_TICKETPARCLIENT.doughnutChartLabels"
+                        [chartType]="STAT_TICKETPARCLIENT.doughnutChartType">
+                </canvas>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Statut tickets par categorie">
+            <div style="display: block">
+                <canvas baseChart
+                        [datasets]="STAT_TICKETPARCATEGORIE.radarChartData"
+                        [labels]="STAT_TICKETPARCATEGORIE.radarChartLabels"
+                        [chartType]="STAT_TICKETPARCATEGORIE.radarChartType">
+                </canvas>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    
+    <button mat-button (click)="tabGroup.selectedIndex = 0">Show Tab 1</button>
+    <button mat-button (click)="tabGroup.selectedIndex = 1">Show Tab 2</button>
+</div>

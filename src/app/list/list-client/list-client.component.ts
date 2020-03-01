@@ -6,6 +6,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LoginAPIService } from 'src/app/services/login/login-api.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 export interface ClientTable {
   SIREN: number;
@@ -40,7 +41,8 @@ export class ListClientComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private clientAPI: ClientAPIService, private spinnerService: Ng4LoadingSpinnerService,
-              private loginAPI: LoginAPIService, private fb: FormBuilder, private modalService: NgbModal) {
+              private loginAPI: LoginAPIService, private fb: FormBuilder, private modalService: NgbModal,
+              private router: Router) {
     this.clientNameForm = this.fb.group({
       clientName: fb.control('', Validators.required)
     });
@@ -101,7 +103,11 @@ export class ListClientComponent implements OnInit {
     console.log(clientId);
     this.clientAPI.deleteClient(clientId).subscribe(value => {
       // Refresh la page
-      this.spinnerService.hide(); },
+      this.spinnerService.hide();
+      this.router.navigate(['list-client']).then(() => {
+        window.location.reload();
+      }); 
+    },
       error => {console.log('ERROR', error); this.spinnerService.hide(); }
     );
   }

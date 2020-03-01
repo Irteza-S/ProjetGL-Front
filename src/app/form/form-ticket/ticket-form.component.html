@@ -6,7 +6,7 @@
             <h3 class="mb-0">{{ticketFormType}}</h3>
         </div>
         <div class="form-group col-6 col-md-4">
-            <p><ngb-progressbar [animated]="true" [striped]="true" height="22px" type="{{progressBarStatus}}" [value]="25">25</ngb-progressbar></p>
+            <p><ngb-progressbar [animated]="true" [striped]="true" height="22px" type="{{progressBarStatus}}" [value]="progressBarValue">{{progressBarValue}}%</ngb-progressbar></p>
         </div>
         <div class="form-group col-6 col-md-4 input-group mb-3">
             <div class="input-group-prepend">
@@ -112,9 +112,14 @@
                                             </select>
                                             <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
                                             <input type="text" class="form-control" formControlName="tacheDescription" placeholder="Description">
-                                            <select class="form-control" formControlName="tacheCompetence">
-                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type">{{type}}</option>
-                                            </select>
+                                            <ng-multiselect-dropdown
+                                                name="competence"
+                                                [placeholder]="'Competences'"
+                                                [data]="competenceList"
+                                                formControlName="tacheCompetence"
+                                                [disabled]="disabled"
+                                                [settings]="dropdownSettings">
+                                            </ng-multiselect-dropdown>
                                             <select class="form-control" formControlName="technicien">
                                                 <option *ngFor="let tech of technicienList" let i = index [ngValue]="tech" >{{tech}}</option>
                                             </select>

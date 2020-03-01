@@ -13,6 +13,9 @@ import { SearchComponent } from './search/search/search.component';
 import { GestionComponent } from './gestion/gestion/gestion.component';
 import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { ClientFormComponent } from './form/form-client/form-client.component';
+import { StatComponent } from './stat/stat.component';
+
+
 
 const routes: Routes = [
   { path: 'list-ticket', component: TicketsComponent, canActivate: [AuthGaurdService] },
@@ -31,7 +34,8 @@ const routes: Routes = [
   { path: 'list-client/:foo', component: ListClientComponent},
   { path: 'search', component: SearchComponent},
   { path: 'gestion', component: GestionComponent},
-  { path: 'chrono', component: StopwatchComponent}
+  { path: 'chrono', component: StopwatchComponent},
+  { path: 'stat', component: StatComponent},
 ];
 
 @NgModule({

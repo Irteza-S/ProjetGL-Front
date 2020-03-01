@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Timer } from '../..//model/timer';
 import { State } from '../../model/state';
 import { tick } from '@angular/core/testing';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-ticket-form',
@@ -31,13 +32,24 @@ export class TicketFormComponent implements OnInit {
   ticketId;
   clientName;
 
+  // Taches competences selection
+  competencesDropdownSettings = {
+    singleSelection: false,
+    idField: 'item_id',
+    textField: 'item_text',
+    selectAllText: 'Tout selectionner',
+    unSelectAllText: 'Tout de-selectionner',
+    allowSearchFilter: true
+  };
+
   date = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
 
   // ProgressBar
   progressBarStatus = 'success';
-  progressBarValue = 0;
+  progressBarValue = 45;
   ticketJSON;
+  animated = false;
 
   // Chrono
   private _btnPlay: string = 'Démarrer';
@@ -164,13 +176,13 @@ export class TicketFormComponent implements OnInit {
 
     // Techniciens
     body.technicienList.forEach((part, index) => {
-      body.technicienList[index] = part.id + ' ' + part.nom + ' ' + part.prenom;
+      body.technicienList[index] = part.sexe + ' ' + part.id + ' ' + part.nom + ' ' + part.prenom;
     }, body.technicienList);
     this.technicienList = body.technicienList;
 
     // Demandeurs
     body.demandeurList.forEach((part, index) => {
-      body.demandeurList[index] = part.id + ' ' + part.nom + ' ' + part.prenom;
+      body.demandeurList[index] = part.sexe + ' ' + part.id + ' ' + part.nom + ' ' + part.prenom;
     }, body.demandeurList);
     this.demandeurList = body.demandeurList;
 
@@ -185,9 +197,9 @@ export class TicketFormComponent implements OnInit {
       this.clientName = body.ticket.nomClient;
       const description = body.ticket.description;
       const objet = body.ticket.objet;
-      let tech = body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
+      let tech = body.ticket.technicien.sexe + ' ' + body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
       const demande = body.ticket.type;
-      const demandeur = body.ticket.demandeur.id + ' ' + body.ticket.demandeur.nom + ' ' + body.ticket.demandeur.prenom;
+      const demandeur = body.ticket.demandeur.sexe + ' ' + body.ticket.demandeur.id + ' ' + body.ticket.demandeur.nom + ' ' + body.ticket.demandeur.prenom;
       const adresse = body.ticket.adresse.numero + ' ' + body.ticket.adresse.rue + ' ' +
       body.ticket.adresse.codePostal + ' ' + body.ticket.adresse.ville;
       const categorie = body.ticket.categorie;
@@ -207,9 +219,9 @@ export class TicketFormComponent implements OnInit {
           // Ajout des taches suivantes
           body.ticket.taches.forEach(tache => {
             console.log(tache);
-            tech = tache.technicien.id + ' ' + tache.technicien.nom + ' ' + tache.technicien.prenom;
+            tech = tache.technicien.sexe + ' ' + tache.technicien.id + ' ' + tache.technicien.nom + ' ' + tache.technicien.prenom;
             (this.ticketFormGroup.get("form_tache") as FormArray).push(this.addExistingTache(tache.objet, tache.tempsEstime,
-            tache.tempsPasse, tache.competences[0], tache.description, tache.statut, tache.id, tech));
+            tache.tempsPasse, tache.competences, tache.description, tache.statut, tache.id, tech));
           });
       }
       // Set status
@@ -290,11 +302,12 @@ export class TicketFormComponent implements OnInit {
         objet: formTachList.value[i].tacheName,
         description: formTachList.value[i].tacheDescription,
         technicien: {
-          id: +tmpTechnicien[0],
-          nom: tmpTechnicien[1],
-          prenom: tmpTechnicien[2]
+          sexe: tmpTechnicien[0],
+          id: +tmpTechnicien[1],
+          nom: tmpTechnicien[2],
+          prenom: tmpTechnicien[3]
         },
-        competences: [formTachList.value[i].tacheCompetence],
+        competences: formTachList.value[i].tacheCompetence,
         tempsEstime: +formTachList.value[i].estimatedTacheLength,
         tempsPasse: +formTachList.value[i].tacheLength,
         //ticketParent: formTachList.value[i], si nouveau ticket
@@ -311,18 +324,20 @@ export class TicketFormComponent implements OnInit {
       competences: ['Electricien', 'Frigoriste'],
       priorite: 1,
       demandeur: {
-        id: +demandeur[0],
-        nom: demandeur[1],
-        prenom: demandeur[2]
+        sexe: demandeur[0],
+        id: +demandeur[1],
+        nom: demandeur[2],
+        prenom: demandeur[3]
       },
       description: this.ticketFormGroup.controls.form_description.value,
       nomClient: 'A',
       objet: this.ticketFormGroup.controls.form_objet.value,
       statut: this.ticketFormGroup.controls.form_status.value,
       technicien: {
-        id: +technicien[0],
-        nom: technicien[1],
-        prenom: technicien[2]
+        sexe: technicien[0],
+        id: +technicien[1],
+        nom: technicien[2],
+        prenom: technicien[3]
       },
       type: this.ticketFormGroup.controls.form_type.value,
       adresse: {

@@ -123,7 +123,7 @@ export class ClientAPIService {
     if (this.user != null) {
       const data = {
         token: this.user.token,
-        client: CLIENTID
+        client: +CLIENTID
       };
       return this.http.post(API_URL + '/delete', JSON.stringify(data), '')
         .pipe(timeout(10000))

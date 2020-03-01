@@ -62,13 +62,16 @@
             <option *ngFor="let fonction of fonctionList" let i=index [ngValue]="fonction" >{{fonction}}</option>
           </select>
         </div>
-        <div class="form-group col-md-4">
-          <div *ngFor="let competence of competenceList; let i=index">
-            <label>
-              <input type="checkbox" [value]="competence" (change)="onCheckboxChange($event)" />
-              {{competence}}
-            </label>
-          </div>
+        <div class="form-group col-md-4" style="
+        padding-top: 32px;">
+          <ng-multiselect-dropdown
+            name="competence"
+            [placeholder]="'Competences'"
+            [data]="competenceList"
+            formControlName="form_competences"
+            [disabled]="disabled"
+            [settings]="dropdownSettings">
+          </ng-multiselect-dropdown>
         </div>
       </div>
 
