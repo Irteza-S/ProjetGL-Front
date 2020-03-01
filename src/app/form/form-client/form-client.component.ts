@@ -5,6 +5,7 @@ import { ClientFormType } from '../../model/clientformtype';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ClientAPIService } from 'src/app/services/api/client-apiservice.service';
+import { AjoutBaseAPIService } from 'src/app/services/api/ajout-base-api.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ClientFormComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private clientAPI: ClientAPIService, private route: ActivatedRoute,
-              private spinnerService: Ng4LoadingSpinnerService, private router: Router) {
+              private spinnerService: Ng4LoadingSpinnerService, private router: Router, private AjoutBaseAPI: AjoutBaseAPIService) {
     this.initForm(fb);
     this.route.paramMap.subscribe(params => {
       this.clientId = params.get('clientId');
@@ -101,29 +102,33 @@ export class ClientFormComponent implements OnInit {
     if (body.clientSiteList) {
       body.clientSiteList.forEach(element => {
         this.form_site.push(this.fb.group({
-          site_id: element.adresse.id,
+          site_id: +element.adresse.id,
           site_numero: element.adresse.numero,
           site_codePostal: element.adresse.codePostal,
           site_rue: element.adresse.rue,
           site_ville: element.adresse.ville,
         }));
+        this.clientSiteList.push(+element.adresse.id);
       });
     }
 
     // Setup demandeur list
-    /*
+    
     if (body.demandeurList) {
       body.demandeurList.forEach(element => {
         this.form_demandeur.push(this.fb.group({
-          demandeurSexe: 'M',
+          demandeurSexe: element.demandeur.sexe,
           demandeurNom: element.demandeur.nom,
+          demandeurId: element.demandeur.id,
           demandeurPrenom: element.demandeur.prenom,
-          demandeurSite: ''
+          demandeurTelephone: element.telephone,
+          demandeurIdAdresse: +element.idAdresse,
+          demandeurSIRET: element.SIRET
         }));
       });
-      this.deleteDemandeur(0);
-    }*/
+    }
 
+    console.log(this.clientSiteList);
   }
 
   get form_site() {
@@ -145,18 +150,31 @@ export class ClientFormComponent implements OnInit {
 
   addSiteToDatabase(siteIndex) {
     this.spinnerService.show();
-    const newSite = {
-      id: this.clientFormGroup.controls.form_site.value[siteIndex].id,
-      numero: this.clientFormGroup.controls.form_site.value[siteIndex].id,
-      codePostal: this.clientFormGroup.controls.form_site.value[siteIndex].id,
-      rue: this.clientFormGroup.controls.form_site.value[siteIndex].id,
-      ville: this.clientFormGroup.controls.form_site.value[siteIndex].id,
+    let newSite = {
+      id: '',
+      numero: +this.clientFormGroup.controls.form_site.value[siteIndex].site_numero,
+      codePostal: this.clientFormGroup.controls.form_site.value[siteIndex].site_codePostal,
+      rue: this.clientFormGroup.controls.form_site.value[siteIndex].site_rue,
+      ville: this.clientFormGroup.controls.form_site.value[siteIndex].site_ville,
     };
-    this.clientAPI.createSite(newSite).subscribe(
+    const tmpSite = newSite;
+    delete tmpSite.id;
+    this.AjoutBaseAPI.createAdresse(tmpSite).subscribe(
       value => {
-        this.clientSiteList.push(newSite.id);
-        this.spinnerService.hide(); },
-        error => {console.log('ERROR', error); this.spinnerService.hide(); this.deleteSite(siteIndex); }
+        const resSTR = JSON.parse(JSON.stringify(value));
+        const body = JSON.parse(resSTR._body);
+        this.deleteSite(siteIndex);
+        this.form_site.push(this.fb.group({
+          site_id: +body,
+          site_numero: newSite.numero,
+          site_codePostal: newSite.codePostal,
+          site_rue: newSite.rue,
+          site_ville: newSite.ville,
+        }));
+        this.clientSiteList.push(+body);
+        console.log(this.form_site);
+        this.spinnerService.hide();},
+        error => {console.log('ERROR', error); this.spinnerService.hide();}
     );
   }
 
@@ -188,34 +206,20 @@ export class ClientFormComponent implements OnInit {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < demandeurFormList.length; i++) {
       let demandeur = {
-        SIRET: demandeurFormList.value[i].demandeurSIRET,
+        SIRET: +demandeurFormList.value[i].demandeurSIRET,
         demandeur: {
           nom: demandeurFormList.value[i].demandeurNom,
           prenom: demandeurFormList.value[i].demandeurPrenom,
-          sexe: demandeurFormList.value[i].demandeurSexe,
-          id: demandeurFormList.value[i].demandeurId,
+          sexe: demandeurFormList.value[i].demandeurSexe
         },
         telephone: demandeurFormList.value[i].demandeurTelephone,
-        idAdresse: demandeurFormList.value[i].demandeurIdAdresse
+        idAdresse: +demandeurFormList.value[i].demandeurIdAdresse
       }
+      if(demandeurFormList.value[i].demandeurId != '') {
+        Object.assign(demandeur.demandeur, {id: +demandeurFormList.value[i].demandeurId});
+      }
+      console.log(demandeur);
       demandeurList.push(demandeur);
-    }
-
-    // Traitement des sites
-    let siteList = [];
-    const siteFormList = (this.clientFormGroup.controls.form_site as FormArray);
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < siteFormList.length; i++) {
-      let site = {
-        SIRET: siteFormList.value[i].id,
-        Adresse : {
-          numero: siteFormList.value[i].id,
-          codePostal: siteFormList.value[i].id,
-          rue: siteFormList.value[i].id,
-          ville: siteFormList.value[i].id,
-        }
-      };
-      siteList.push(site);
     }
 
     let client =  {
@@ -228,13 +232,15 @@ export class ClientFormComponent implements OnInit {
         codePostal: this.clientFormGroup.controls.form_adresse_codePostal.value,
       },
       demandeurs: demandeurList,
-      listeSites: siteList
     };
 
+    console.log(client);
+    
     if (this.clientFormType === ClientFormType.Edit) {
       console.log('MODIFICATION client SAVED');
       console.log(this.clientFormGroup.value);
       this.spinnerService.show();
+      console.log(JSON.stringify(client));
       this.clientAPI.editClient(client).subscribe(
         value => {
           console.log(value);
@@ -256,7 +262,7 @@ export class ClientFormComponent implements OnInit {
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
     }
-
+    
   }
 
   isCreation() {

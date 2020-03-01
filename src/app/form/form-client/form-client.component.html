@@ -66,7 +66,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteSite(pointIndex)">-</button>
                             </div>
-                            <input type="text" class="form-control col-md-10" formControlName="site_id" placeholder="ID">
+                            <input disabled type="text" class="form-control col-md-10" formControlName="site_id" placeholder="ID">
                             <input type="text" class="form-control col-md-10" formControlName="site_numero" placeholder="Numéro">
                             <input type="text" class="form-control col-md-10" formControlName="site_rue" placeholder="Rue">
                             <input type="text" class="form-control col-md-10" formControlName="site_codePostal" placeholder="CodePostal">
@@ -103,7 +103,7 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteDemandeur(pointIndex)">-</button>
                             </div>
-                            <input type="text" class="form-control col-md-10" formControlName="demandeurId" placeholder="ID">
+                            <input disabled type="text" class="form-control col-md-10" formControlName="demandeurId" placeholder="ID">
                             <select class="form-control" formControlName="demandeurSexe">
                               <option *ngFor="let s of sexeList" [value]="s">{{s}}</option>
                             </select>

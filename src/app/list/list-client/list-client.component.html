@@ -12,8 +12,11 @@
             <button style="margin-left: 30px;" onclick="window.location.href = '/form-client';" mat-mini-fab>
                 <mat-icon>person_add</mat-icon>
             </button>
-            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content)">
-                <mat-icon>remove_circle_outline</mat-icon>
+            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content, 1)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content, 2)">
+              <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8">
@@ -50,7 +53,7 @@
 <ng-template #content let-modal>
     <form [formGroup]="clientNameForm" (ngSubmit)="onSubmit()">
       <div class="modal-header">
-        <h4 class="modal-title">Choisir client</h4>
+        <h4 class="modal-title">{{modalName}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -64,7 +67,8 @@
           &nbsp;
           <p>
             <button class="btn btn-danger" (click)="modal.close('Close click')">Annuler</button>&nbsp;
-            <button class="btn btn-primary"  (click)="deleteClient();modal.close('Close click')">Supprimer</button>
+            <button class="btn btn-primary"  (click)="deleteClient();modal.close('Close click')" *ngIf="isDelete()">Supprimer</button>
+            <button class="btn btn-primary"  (click)="editClient();modal.close('Close click')" *ngIf="!isDelete()">Modifier</button>
           </p>
         </div>
       </div>

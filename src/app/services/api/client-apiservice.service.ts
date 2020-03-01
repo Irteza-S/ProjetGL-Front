@@ -21,7 +21,7 @@ export class ClientAPIService {
         clientName: CLIENTNAME
       };
       return this.http.post(API_URL + '/getId', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -35,7 +35,7 @@ export class ClientAPIService {
         token: this.user.token
       };
       return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
@@ -51,7 +51,7 @@ export class ClientAPIService {
       };
       console.log('LOAD CLIENT ' + JSON.stringify(data));
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
@@ -66,7 +66,7 @@ export class ClientAPIService {
         clientId: -1
       };
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
@@ -77,11 +77,12 @@ export class ClientAPIService {
     this.user = this.loginAPI.isUserLoggedIn();
     if (this.user != null) {
       const data = {
-        token: this.user.token,
+        token: '96b29b22-cefb-4699-93b9-9fcc97aa003e',
         client: CLIENT
       };
+      console.log(JSON.stringify(data));
       return this.http.post(API_URL + '/create', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
@@ -96,22 +97,7 @@ export class ClientAPIService {
         client: CLIENT
       };
       return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
-        .pipe(timeout(10000))
-        .map(resp => {
-          return resp;
-        });
-    }
-  }
-
-  createSite(SITE) {
-    this.user = this.loginAPI.isUserLoggedIn();
-    if (this.user != null) {
-      const data = {
-        token: this.user.token,
-        site: SITE
-      };
-      return this.http.post(API_URL + '/createSite', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
@@ -123,10 +109,10 @@ export class ClientAPIService {
     if (this.user != null) {
       const data = {
         token: this.user.token,
-        client: +CLIENTID
+        SIREN: +CLIENTID
       };
       return this.http.post(API_URL + '/delete', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });

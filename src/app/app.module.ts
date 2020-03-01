@@ -37,6 +37,7 @@ import { StatAPIService } from './services/api/stat-api.service';
 import { ChartsModule } from 'ng2-charts';
 import { StatComponent } from './stat/stat.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AjoutBaseAPIService } from './services/api/ajout-base-api.service';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     LoginAPIService,
     ClientAPIService,
     UserAPIService,
-    StatAPIService
+    StatAPIService,
+    AjoutBaseAPIService
   ],
   bootstrap: [AppComponent]
 })

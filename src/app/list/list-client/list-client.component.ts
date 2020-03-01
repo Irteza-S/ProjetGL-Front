@@ -36,6 +36,16 @@ export class ListClientComponent implements OnInit {
   expandedElement: ClientTable | null;
   clientNameForm;
   clientList = [];
+
+  // Modal type
+  modalName;
+  isDelete() {
+    if(this.modalName == 'Supprimer Client') {
+      return true;
+    }
+    return false;
+  }
+
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -68,7 +78,7 @@ export class ListClientComponent implements OnInit {
       let demandeurs = [];
       if (client.demandeurs.length !== 0) {
         client.demandeurs.forEach((part, index) => {
-          client.demandeurs[index] = part.nom + ' ' + part.prenom;
+          client.demandeurs[index] = part.demandeur.nom + ' ' + part.demandeur.prenom;
         }, client.demandeurs);
         demandeurs = client.demandeurs;
         }
@@ -111,7 +121,21 @@ export class ListClientComponent implements OnInit {
       error => {console.log('ERROR', error); this.spinnerService.hide(); }
     );
   }
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
+  openVerticallyCentered(content, tmp) {
+    if (tmp == 1) {
+      this.modalName = 'Modifier Client';
+      this.modalService.open(content, { centered: true });
+    } else {
+      this.modalName = 'Supprimer Client';
+      this.modalService.open(content, { centered: true });
+    }
   }
+
+  editClient() {
+    const client = this.clientNameForm.controls.clientName.value;
+    const clientId = client.split('\t')[0];
+    console.log(clientId);
+    this.router.navigate(['/form-client', +clientId]);
+  };
+
 }
