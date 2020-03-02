@@ -21,7 +21,7 @@ export class LoginAPIService {
       userPassword: PASSWORD
     };
     return this.http.post(API_URL + '/login', JSON.stringify(data), '')
-    .pipe(timeout(10000))
+    .pipe(timeout(30000))
     .map(resp => {
       return resp;
     });
@@ -91,7 +91,19 @@ export class LoginAPIService {
         return null;
       }
     }
+  }
+
+  isUserOperateur(): User {
+    const userString = sessionStorage.getItem('userSession');
+    if (userString) {
+      const user = JSON.parse(userString);
+      if (user.role === UserType.Operateur) {
+        return user;
+      } else {
+        return null;
+      }
     }
+  }
 
   logOut() {
     sessionStorage.removeItem('userSession');

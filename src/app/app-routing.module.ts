@@ -14,6 +14,7 @@ import { GestionComponent } from './gestion/gestion/gestion.component';
 import { StopwatchComponent } from './modal/stopwatch/stopwatch.component';
 import { ClientFormComponent } from './form/form-client/form-client.component';
 import { StatComponent } from './stat/stat.component';
+import { AppSettingsFormComponent } from './form/app-settings-form/app-settings-form.component';
 
 
 
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'gestion', component: GestionComponent},
   { path: 'chrono', component: StopwatchComponent},
   { path: 'stat', component: StatComponent},
+  { path: 'form-settings/:userId', component: AppSettingsFormComponent},
 ];
 
 @NgModule({

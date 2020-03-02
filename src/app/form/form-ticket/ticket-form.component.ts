@@ -10,6 +10,7 @@ import { Timer } from '../..//model/timer';
 import { State } from '../../model/state';
 import { tick } from '@angular/core/testing';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { LoginAPIService } from 'src/app/services/login/login-api.service';
 
 @Component({
   selector: 'app-ticket-form',
@@ -106,7 +107,7 @@ export class TicketFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private ticketApi: TicketAPIService,
               private route: ActivatedRoute, private spinnerService: Ng4LoadingSpinnerService,
-              private modalService: NgbModal, private router: Router) {
+              private modalService: NgbModal, private router: Router, private loginAPI: LoginAPIService) {
     this.initForm(fb);
     this.route.paramMap.subscribe(params => {
       this.ticketId = params.get('ticketId');
@@ -144,7 +145,7 @@ export class TicketFormComponent implements OnInit {
       form_objet: fb.control('', Validators.required),
       form_type: fb.control('', Validators.required),
       form_description: fb.control('', Validators.required),
-      form_technicien: fb.control('', Validators.required),
+      form_technicien: fb.control(''),
       form_demandeur: fb.control('', Validators.required),
       form_site: fb.control('', Validators.required),
       form_categorie: fb.control('', Validators.required),
@@ -191,13 +192,23 @@ export class TicketFormComponent implements OnInit {
       body.clientSiteList[index] = part.adresse.numero + ' ' + part.adresse.rue + ' ' + part.adresse.codePostal + ' ' + part.adresse.ville;
     }, body.clientSiteList);
     this.clientSiteList = body.clientSiteList;
-
+    const tmpUser = this.loginAPI.isUserTechnicien();
     // Si le ticket existe déjà
     if (body.ticket) {
+      console.log('ticket existe');
       this.clientName = body.ticket.nomClient;
       const description = body.ticket.description;
       const objet = body.ticket.objet;
       let tech = body.ticket.technicien.sexe + ' ' + body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
+      const tmpUser = this.loginAPI.isUserTechnicien();
+      if (tmpUser != null) {
+        if(+body.ticket.technicien.id != null) {
+          const tmp = tmpUser.gender + ' ' + tmpUser.id + ' ' + tmpUser.lastName + ' ' + tmpUser.firstName;
+          this.technicienList = ['', tmp];
+        } else if(+body.ticket.technicien.id != tmpUser.id) {
+          this.ticketFormGroup.controls.form_technicien.disable();
+        }
+      }
       const demande = body.ticket.type;
       const demandeur = body.ticket.demandeur.sexe + ' ' + body.ticket.demandeur.id + ' ' + body.ticket.demandeur.nom + ' ' + body.ticket.demandeur.prenom;
       const adresse = body.ticket.adresse.numero + ' ' + body.ticket.adresse.rue + ' ' +
@@ -233,6 +244,18 @@ export class TicketFormComponent implements OnInit {
       this.ticketFormGroup.controls.form_site.setValue(this.clientSiteList[0]);
       this.ticketFormGroup.controls.form_categorie.setValue(this.categorieList[0]);
       this.ticketFormGroup.controls.form_status.setValue(this.statusList[0]);
+
+      console.log('ticket existe pas');
+      if (tmpUser != null) {
+        console.log('technicien');
+        const tmp = tmpUser.gender + ' ' + tmpUser.id + ' ' + tmpUser.lastName + ' ' + tmpUser.firstName;
+        this.technicienList = ['', tmp];
+      }
+    }
+
+    if(this.loginAPI.isUserOperateur()) {
+      console.log('is operateur');
+      this.ticketFormGroup.controls.form_technicien.disable();
     }
   }
 
@@ -245,7 +268,7 @@ export class TicketFormComponent implements OnInit {
       tacheDescription: ['', Validators.required],
       tacheStatut: ['', Validators.required],
       tacheId: ['', Validators.required],
-      technicien: ['', Validators.required]
+      technicien: ['']
     });
   }
 
@@ -405,5 +428,6 @@ export class TicketFormComponent implements OnInit {
     console.log(index);
     this.selectedTache = index;
   }
+
 
 }

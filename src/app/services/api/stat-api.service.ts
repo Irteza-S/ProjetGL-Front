@@ -20,7 +20,7 @@ export class StatAPIService {
         token: this.user.token
       };
       return this.http.post(API_URL + '/statTicketParClient', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -34,7 +34,7 @@ export class StatAPIService {
         token: this.user.token
       };
       return this.http.post(API_URL + '/statTicketParCategorie', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });

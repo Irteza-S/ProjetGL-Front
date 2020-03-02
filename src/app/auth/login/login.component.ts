@@ -42,6 +42,14 @@ export class LoginComponent implements OnInit {
           console.log('Tech logged in');
           const tech = new User(staffId, Gender.Male, staffFirstName, staffLastName, UserType.Technicien, token);
           sessionStorage.setItem('userSession', JSON.stringify(tech));
+        } else if (staffRole === UserType.Operateur) {
+          console.log('Ope logged in');
+          const ope = new User(staffId, Gender.Male, staffFirstName, staffLastName, UserType.Operateur, token);
+          sessionStorage.setItem('userSession', JSON.stringify(ope));
+        } else if (staffRole === UserType.RespTech) {
+          console.log('RespoTech logged in');
+          const respo = new User(staffId, Gender.Male, staffFirstName, staffLastName, UserType.RespTech, token);
+          sessionStorage.setItem('userSession', JSON.stringify(respo));
         }
         this.spinnerService.hide();
         this.router.navigate(['']).then(() => {

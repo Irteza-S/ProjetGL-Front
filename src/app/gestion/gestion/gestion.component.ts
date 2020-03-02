@@ -51,6 +51,13 @@ export class GestionComponent implements OnInit {
         icon: 'assets/img/admin.ico',
         url: '/form-staff',
         parameters: currentUser.id
+      },
+      {
+        title : 'Application',
+        description : ['Gérer l\'application'],
+        icon: 'assets/img/boulon.ico',
+        url: '/form-settings',
+        parameters: currentUser.id
       }
     ];
     } else {

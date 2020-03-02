@@ -36,6 +36,7 @@ export class ListClientComponent implements OnInit {
   expandedElement: ClientTable | null;
   clientNameForm;
   clientList = [];
+  unAuthorized = false;
 
   // Modal type
   modalName;
@@ -92,6 +93,11 @@ export class ListClientComponent implements OnInit {
       this.clientList.push(client.SIREN + '\t' + client.name);
     }
     this.dataSource = new MatTableDataSource(this.Clients);
+
+    const isUserAuthorized = this.loginAPI.isUserAdmin() || this.loginAPI.isUserResponsable();
+    if(isUserAuthorized == null) {
+      this.unAuthorized = true;
+    }
   }
 
   // tslint:disable-next-line:use-lifecycle-interface

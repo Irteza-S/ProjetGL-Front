@@ -23,7 +23,7 @@ export class UserAPIService {
         staff: STAFF
       };
       return this.http.post(API_URL + '/create', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -39,7 +39,7 @@ export class UserAPIService {
         staffId: +STAFFID
       };
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -56,7 +56,7 @@ export class UserAPIService {
       };
       console.log(data);
       return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -72,7 +72,7 @@ export class UserAPIService {
         staffId: -1
       };
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -87,7 +87,7 @@ export class UserAPIService {
         token: this.user.token
       };
       return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -103,7 +103,7 @@ export class UserAPIService {
         staffId: +STAFFID
       };
       return this.http.post(API_URL + '/delete', JSON.stringify(data), '')
-      .pipe(timeout(10000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });

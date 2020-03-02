@@ -31,7 +31,7 @@ export class TicketAPIService {
         ticketId: TICKETID
       };
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -49,7 +49,7 @@ export class TicketAPIService {
         ticketId: -1
       };
       return this.http.post(API_URL + '/init', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -65,7 +65,7 @@ export class TicketAPIService {
         userId: -1
       };
       return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -81,7 +81,7 @@ export class TicketAPIService {
         userId: +userId
       };
       return this.http.post(API_URL + '/list', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -98,7 +98,7 @@ export class TicketAPIService {
       };
       console.log('EDIT TICKET : ' + JSON.stringify(data));
       return this.http.post(API_URL + '/modify', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });
@@ -113,7 +113,7 @@ export class TicketAPIService {
       };
       console.log('CREATE TICKET : ' + JSON.stringify(data));
       return this.http.post(API_URL + '/create', JSON.stringify(data), '')
-      .pipe(timeout(15000))
+      .pipe(timeout(30000))
       .map(resp => {
         return resp;
       });

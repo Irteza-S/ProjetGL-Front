@@ -9,13 +9,13 @@
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
-            <button style="margin-left: 30px;" onclick="window.location.href = '/form-client';" mat-mini-fab>
+            <button style="margin-left: 30px;" onclick="window.location.href = '/form-client';" mat-mini-fab [disabled]="unAuthorized">
                 <mat-icon>person_add</mat-icon>
             </button>
             <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content, 1)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content, 2)">
+            <button style="margin-left: 30px;" mat-mini-fab (click)="openVerticallyCentered(content, 2)" [disabled]="unAuthorized">
               <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>

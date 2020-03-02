@@ -38,6 +38,7 @@ import { ChartsModule } from 'ng2-charts';
 import { StatComponent } from './stat/stat.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AjoutBaseAPIService } from './services/api/ajout-base-api.service';
+import { AppSettingsFormComponent } from './form/app-settings-form/app-settings-form.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AjoutBaseAPIService } from './services/api/ajout-base-api.service';
     StopwatchComponent,
     DeleteModalComponent,
     ClientFormComponent,
-    StatComponent
+    StatComponent,
+    AppSettingsFormComponent
   ],
   imports: [
     BrowserModule,

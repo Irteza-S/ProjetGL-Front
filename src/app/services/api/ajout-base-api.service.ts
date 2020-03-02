@@ -22,7 +22,23 @@ export class AjoutBaseAPIService {
       };
       console.log('Creating adresse ' + data);
       return this.http.post(API_URL + '/adresse', JSON.stringify(data), '')
-        .pipe(timeout(10000))
+        .pipe(timeout(30000))
+        .map(resp => {
+          return resp;
+        });
+    }
+  }
+
+  createCompetence(COMPETENCE) {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token,
+        competence: COMPETENCE
+      };
+      console.log('Creating competence ' + data);
+      return this.http.post(API_URL + '/addCompetence', JSON.stringify(data), '')
+        .pipe(timeout(30000))
         .map(resp => {
           return resp;
         });
