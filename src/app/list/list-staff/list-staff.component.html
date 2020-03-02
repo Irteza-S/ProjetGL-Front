@@ -38,7 +38,7 @@
         </ng-container>
         <ng-container matColumnDef="edition">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> &nbsp; </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" [ngStyle]="{'visibility': (userIsAdmin) ? 'visible' : 'hidden'}">
             <a (click)="editStaff(element.id)">
               <mat-icon>edit</mat-icon>
             </a>
@@ -145,6 +145,56 @@
                 <mat-icon>delete</mat-icon>
               </a>
             </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator class="mat-paginator-sticky" [pageSize]="10" [pageSizeOptions]="[10, 20, 30, 50]"></mat-paginator>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label><span>Responsable Techniciens</span></ng-template>
+      <div fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="25%" appearance="outline">
+          <mat-label><span>Rechercher dans le tableau </span></mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button style="margin-left: 30px;" onclick="window.location.href = '/form-staff';" mat-mini-fab *ngIf="userIsAdmin">
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
+      <table mat-table [dataSource]="dataSource3" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tel">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro de téléphone</th>
+          <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+        </ng-container>
+        <ng-container matColumnDef="adress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+          <td mat-cell *matCellDef="let element"> {{element.adress}} </td>
+        </ng-container>
+        <ng-container matColumnDef="edition">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> &nbsp; </th>
+          <td mat-cell *matCellDef="let element">
+            <a (click)="editStaff(element.id)">
+              <mat-icon>edit</mat-icon>
+            </a>
+            <a mat-icon-button (click)="openVerticallyCentered(content, element.id, element.name)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

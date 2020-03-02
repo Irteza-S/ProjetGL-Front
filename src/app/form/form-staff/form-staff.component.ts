@@ -21,11 +21,20 @@ export class StaffFormComponent implements OnInit {
   fonctionList = ['Opérateur', 'Responsable Technicien', 'Technicien'];
   sexeList = ['M', 'F'];
   userId;
-  submitted=false;
 
   // Competences selection
   competencesDropdownSettings = {
     singleSelection: false,
+    idField: 'item_id',
+    textField: 'item_text',
+    selectAllText: 'Tout selectionner',
+    unSelectAllText: 'Tout de-selectionner',
+    allowSearchFilter: true
+  };
+
+  // Competences selection
+  fonctionDropdownSettings = {
+    singleSelection: true,
     idField: 'item_id',
     textField: 'item_text',
     selectAllText: 'Tout selectionner',
@@ -68,7 +77,6 @@ export class StaffFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  get f() { return this.staffFormGroup.controls; }
   
   initPage(data) {
     const resSTR = JSON.parse(JSON.stringify(data));
@@ -112,7 +120,7 @@ export class StaffFormComponent implements OnInit {
       mdpValidator = Validators.required;
     }
     this.staffFormGroup = this.fb.group({
-      form_sexe: ['', Validators.required],
+      form_sexe: fb.control('', Validators.required),
       form_nom: fb.control('', Validators.required),
       form_prenom: fb.control('', Validators.required),
       form_adresse_numero: fb.control('', Validators.required),
@@ -121,19 +129,20 @@ export class StaffFormComponent implements OnInit {
       form_adresse_ville: fb.control('', Validators.required),
       form_tel: fb.control('', Validators.required),
       form_fonction: fb.control('', Validators.required),
-      form_competences: fb.control('', Validators.required),
+      form_competences: fb.control(''),
       form_login: fb.control('', Validators.required),
       form_mdp: fb.control('', mdpValidator),
-      form_mail: ['', [Validators.required, Validators.email]],
+      form_mail: fb.control('', Validators.required),
     });
   }
 
   sendForm() {
-    if (this.staffFormGroup.invalid) {
-      return;
+    let tmp = [];
+    if(this.staffFormGroup.controls.form_competences.value != '') {
+      tmp = this.staffFormGroup.controls.form_competences.value;
     }
     let staff =  {
-      staffSexe: this.staffFormGroup.controls.form_sexe.value,
+      staffSexe: this.staffFormGroup.controls.form_sexe.value[0],
       staffUserName: this.staffFormGroup.controls.form_login.value,
       staffPassword: this.staffFormGroup.controls.form_mdp.value,
       staffMail: this.staffFormGroup.controls.form_mail.value,
@@ -146,8 +155,8 @@ export class StaffFormComponent implements OnInit {
       staffSurname: this.staffFormGroup.controls.form_prenom.value,
       staffName: this.staffFormGroup.controls.form_nom.value,
       staffTel: this.staffFormGroup.controls.form_tel.value,
-      staffCompetency: this.staffFormGroup.controls.form_competences.value,
-      staffRole: [this.staffFormGroup.controls.form_fonction.value]
+      staffCompetency: tmp,
+      staffRole: this.staffFormGroup.controls.form_fonction.value
     };
     if (this.staffFormType === StaffFormType.Edit) {
       console.log('MODIFICATION STAFF SAVED');
@@ -195,15 +204,4 @@ export class StaffFormComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    this.submitted = true;
-    console.log(this.staffFormGroup);
-    
-    // stop here if form is invalid
-    if (this.staffFormGroup.invalid) {
-        return;
-    }
-    // display form values on success
-    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.staffFormGroup.value, null, 4));
-}
 }

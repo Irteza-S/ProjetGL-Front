@@ -26,7 +26,8 @@ export class StatComponent implements OnInit {
     barChartOptions: {
       scalesShowVerticalLines: false,
       responsive: true
-    }
+    },
+    dataStatus: 'Sample Data : API Error'
   };
 
   // Data pour le nb tickets par client
@@ -34,7 +35,8 @@ export class StatComponent implements OnInit {
     doughnutChartLabels: ['Client 1', 'Client 2', 'Client 3', 'Client 4', 'Client 5',
     'Client 6', 'Client 7', 'Client 8', 'Client 9','Client 10'],
     doughnutChartData: [52, 150, 60, 10, 52, 32, 64, 52, 21, 100],
-    doughnutChartType: 'doughnut'
+    doughnutChartType: 'doughnut',
+    dataStatus: 'Sample Data : API Error'
   }
 
   // Data pour ticket par categorie
@@ -44,8 +46,18 @@ export class StatComponent implements OnInit {
       {data: [120, 150, 78, 90, 99], label: '2018'},
       {data: [90, 140, 50, 100, 99], label: '2019'}
     ],
-    radarChartType: 'radar'
+    radarChartType: 'radar',
+    dataStatus: 'Sample Data : API Error'
   }
+
+  STAT_TICKETPARCOMPETENCE = {
+    pieChartLabels: ['Frigoriste','Plombier','Electricien','Carreleur'],
+    pieChartData: [120, 150, 180, 90],
+    pieChartType: 'pie',
+    dataStatus: 'Sample Data : API Error'
+  }
+
+
 
   constructor(private StatAPI: StatAPIService, private loginAPI: LoginAPIService, private spinnerService: Ng4LoadingSpinnerService) {
     this.user = loginAPI.isUserLoggedIn();
@@ -65,8 +77,23 @@ export class StatComponent implements OnInit {
             error => {console.log('ERROR', error);
           }
         ).add(() => {
-          console.log('all data received');
-          this.spinnerService.hide();
+          this.StatAPI.getStatTicketParCompetence().subscribe(
+            value => {
+              this.initStatTicketParCompetence(value);
+            },
+              error => {console.log('ERROR', error);
+            }
+          ).add(() => {
+            this.StatAPI.getStatTempsParCompetence().subscribe(
+              value => {
+                this.initStatTempsParCompetence(value);
+              },
+                error => {console.log('ERROR', error);
+              }
+          ).add(() => {
+            this.spinnerService.hide();
+          })
+        });
         });
       });;
     }
@@ -76,12 +103,20 @@ export class StatComponent implements OnInit {
 
   }
 
-  initStats() {
-  
+  initStatTempsParCompetence(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const body = JSON.parse(resSTR._body);
+    this.STAT_TEMPSTECHNICIEN.barChartData = body.radarChartData;
+    this.STAT_TEMPSTECHNICIEN.barChartLabels = body.radarChartLabels;
+    this.STAT_TEMPSTECHNICIEN.dataStatus = '';
   }
 
-  initStatTempsTechnicien(data) {
-    
+  initStatTicketParCompetence(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const body = JSON.parse(resSTR._body);
+    this.STAT_TICKETPARCOMPETENCE.pieChartData = body.doughnutChartData;
+    this.STAT_TICKETPARCOMPETENCE.pieChartLabels = body.doughnutChartLabels;
+    this.STAT_TICKETPARCOMPETENCE.dataStatus = '';
   }
 
   initStatTicketParClient(data) {
@@ -89,6 +124,7 @@ export class StatComponent implements OnInit {
     const body = JSON.parse(resSTR._body);
     this.STAT_TICKETPARCLIENT.doughnutChartData = body.doughnutChartData;
     this.STAT_TICKETPARCLIENT.doughnutChartLabels = body.doughnutChartLabels;
+    this.STAT_TICKETPARCLIENT.dataStatus = '';
   }
 
   initStatTicketParCategorie(data) {
@@ -96,6 +132,7 @@ export class StatComponent implements OnInit {
     const body = JSON.parse(resSTR._body);
     this.STAT_TICKETPARCATEGORIE.radarChartData = body.radarChartData;
     this.STAT_TICKETPARCATEGORIE.radarChartLabels = body.radarChartLabels;
+    this.STAT_TICKETPARCATEGORIE.dataStatus = '';
   }
 
 }

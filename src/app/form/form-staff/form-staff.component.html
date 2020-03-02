@@ -9,20 +9,25 @@
     <div class="card-body container">
       <div class="form-row">
         <div class="form-group col-md-2">
-          <label>Sexe*</label>
-          <select class="form-control" formControlName="form_sexe" id="sexe" [ngClass]="{ 'is-invalid': submitted && f.form_sexe.errors }">
-            <option *ngFor="let sexe of sexeList" let i=index [ngValue]="sexe" >{{sexe}}</option>
-          </select>
+          <label>Sexe</label>
+          <ng-multiselect-dropdown
+            name="competence"
+            [placeholder]="'Fonction'"
+            [data]="sexeList"
+            formControlName="form_sexe"
+            [disabled]="disabled"
+            [settings]="fonctionDropdownSettings">
+          </ng-multiselect-dropdown>
           <div *ngIf="submitted && f.form_sexe.errors" class="invalid-feedback">
             <div *ngIf="f.form_sexe.errors.required">Sexe is required</div>
         </div>
         </div>
         <div class="form-group col-md-5">
-          <label>Nom de famille*</label>
+          <label>Nom de famille</label>
           <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
         </div>
         <div class="form-group col-md-5">
-          <label>Prénom*</label>
+          <label>Prénom</label>
           <input type="text" class="form-control" formControlName="form_prenom" placeholder="Prénom">
         </div>
       </div>
@@ -58,12 +63,18 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label>Fonction</label>
-          <select class="form-control" formControlName="form_fonction" id="fonction">
-            <option *ngFor="let fonction of fonctionList" let i=index [ngValue]="fonction" >{{fonction}}</option>
-          </select>
+          <ng-multiselect-dropdown
+            name="competence"
+            [placeholder]="'Fonction'"
+            [data]="fonctionList"
+            formControlName="form_fonction"
+            [disabled]="disabled"
+            [settings]="fonctionDropdownSettings">
+          </ng-multiselect-dropdown>
         </div>
         <div class="form-group col-md-4" style="
         padding-top: 32px;">
+          <label>Competences</label>
           <ng-multiselect-dropdown
             name="competence"
             [placeholder]="'Competences'"
@@ -91,18 +102,14 @@
         </div>
         <div class="form-group col-md-4">
           <label>Numéro de téléphone</label>
-          <input type="number" class="form-control" formControlName="form_tel" placeholder="Numéro">
+          <input type="text" class="form-control" formControlName="form_tel" placeholder="Numéro">
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group col-md-7">
           <label>Mail</label>
-          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com"[ngClass]="{ 'is-invalid': submitted && f.form_mail.errors }" />
-          <div *ngIf="submitted && f.form_mail.errors" class="invalid-feedback">
-              <div *ngIf="f.form_mail.errors.required">L'Email est requis</div>
-              <div *ngIf="f.form_mail.errors.email">Attention, l'email doit être valid</div>
-          </div>
+          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com">
         </div>
       </div>
 

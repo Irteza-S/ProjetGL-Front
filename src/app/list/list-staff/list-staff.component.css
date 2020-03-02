@@ -7,7 +7,7 @@ th {
     font-size-adjust: inherit;
 }
 span {
-    color: gray;
+    color: slategray;
 }
 a {
     color: rgb(223, 211, 211);
@@ -23,4 +23,7 @@ mat-paginator {
   bottom: 0px;
   position: sticky;
   z-index: 10;
+}
+mat-tab-label {
+    color: white;
 }

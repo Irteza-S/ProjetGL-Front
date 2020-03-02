@@ -60,7 +60,32 @@ export class GestionComponent implements OnInit {
         parameters: currentUser.id
       }
     ];
-    } else {
+    } else if (currentUser.role === UserType.RespTech) {
+      console.log('resp tech');
+      this.features = [
+        {
+          title : 'Personnels',
+          description : ['Gérer les employés'],
+          icon: 'assets/img/personel.ico',
+          url: '/list-staff',
+          parameters: ''
+        },
+        {
+          title : 'Compte',
+          description : ['Gérer le compte'],
+          icon: 'assets/img/admin.ico',
+          url: '/form-staff',
+          parameters: currentUser.id
+        },
+        {
+          title : 'Application',
+          description : ['Gérer l\'application'],
+          icon: 'assets/img/boulon.ico',
+          url: '/form-settings',
+          parameters: currentUser.id
+        }
+      ];
+    }else {
       console.log('not admin');
       this.features = [{
         title : 'Compte',

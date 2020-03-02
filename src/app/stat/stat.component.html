@@ -3,6 +3,7 @@
         <mat-tab label="Temps techniciens">
             <div>
                 <div style="display: block;">
+                    <a>{{STAT_TEMPSTECHNICIEN.dataStatus}}</a>
                 <canvas baseChart  
                         [datasets]="STAT_TEMPSTECHNICIEN.barChartData"
                         [labels]="STAT_TEMPSTECHNICIEN.barChartLabels"
@@ -16,6 +17,7 @@
 
         <mat-tab label="Tickets par client">
             <div style="display: block">
+                <a>{{STAT_TICKETPARCLIENT.dataStatus}}</a>
                 <canvas baseChart
                         [data]="STAT_TICKETPARCLIENT.doughnutChartData"
                         [labels]="STAT_TICKETPARCLIENT.doughnutChartLabels"
@@ -26,12 +28,24 @@
 
         <mat-tab label="Statut tickets par categorie">
             <div style="display: block">
+                <a>{{STAT_TICKETPARCATEGORIE.dataStatus}}</a>
                 <canvas baseChart
                         [datasets]="STAT_TICKETPARCATEGORIE.radarChartData"
                         [labels]="STAT_TICKETPARCATEGORIE.radarChartLabels"
                         [chartType]="STAT_TICKETPARCATEGORIE.radarChartType">
                 </canvas>
             </div>
+        </mat-tab>
+
+        <mat-tab label="Tickets par client">
+            <div style="display: block">
+                <a>{{STAT_TICKETPARCOMPETENCE.dataStatus}}</a>
+                <canvas baseChart
+                        [data]="STAT_TICKETPARCOMPETENCE.pieChartData"
+                        [labels]="STAT_TICKETPARCOMPETENCE.pieChartLabels"
+                        [chartType]="STAT_TICKETPARCOMPETENCE.pieChartType">
+                    </canvas>
+                </div>
         </mat-tab>
     </mat-tab-group>
     

@@ -33,7 +33,35 @@ export class StatAPIService {
       const data = {
         token: this.user.token
       };
-      return this.http.post(API_URL + '/statTicketParCategorie', JSON.stringify(data), '')
+      return this.http.post(API_URL + '/statTicketParStatut', JSON.stringify(data), '')
+      .pipe(timeout(30000))
+      .map(resp => {
+        return resp;
+      });
+    }
+  }
+  
+  getStatTicketParCompetence() {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token
+      };
+      return this.http.post(API_URL + '/statNombreTicketParCompetence', JSON.stringify(data), '')
+      .pipe(timeout(30000))
+      .map(resp => {
+        return resp;
+      });
+    }
+  }
+
+  getStatTempsParCompetence() {
+    this.user = this.loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      const data = {
+        token: this.user.token
+      };
+      return this.http.post(API_URL + '/statTempsParCompetences', JSON.stringify(data), '')
       .pipe(timeout(30000))
       .map(resp => {
         return resp;

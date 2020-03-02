@@ -23,7 +23,10 @@ let Ops: StaffTable[] = [
 let Admins: StaffTable[] = [
 ];
 
-const Techs: StaffTable[] = [
+let Techs: StaffTable[] = [
+];
+
+let RespoTechs: StaffTable[] = [
 ];
 
 @Component({
@@ -37,6 +40,7 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
   dataSource = new MatTableDataSource(Ops);
   dataSource2 = new MatTableDataSource(Techs);
   dataSource3 = new MatTableDataSource(Admins);
+  dataSource4 = new MatTableDataSource(RespoTechs);
   userIsAdmin = false;
   deleteStaffID;
   deleteStaffName;
@@ -81,11 +85,14 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
         Techs.push(tmp);
       } else if (staff.staffRole[0] === UserType.Operateur) {
         Ops.push(tmp);
+      } else if (staff.staffRole[0] === UserType.RespTech) {
+        RespoTechs.push(tmp);
       }
     }
     this.dataSource = new MatTableDataSource(Ops);
     this.dataSource2 = new MatTableDataSource(Techs);
     this.dataSource3 = new MatTableDataSource(Admins);
+    this.dataSource4 = new MatTableDataSource(RespoTechs);
   }
 
   ngAfterViewInit(): void {
@@ -97,12 +104,16 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
 
     this.dataSource3.sort = this.sort;
     this.dataSource3.paginator = this.paginator;
+
+    this.dataSource4.sort = this.sort;
+    this.dataSource4.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource2.filter = filterValue.trim().toLowerCase();
     this.dataSource3.filter = filterValue.trim().toLowerCase();
+    this.dataSource4.filter = filterValue.trim().toLowerCase();
   }
 
   openDialog(nom): void {

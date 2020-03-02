@@ -17,11 +17,12 @@ export class UserAPIService {
   createStaff(STAFF) {
     this.user = this.loginAPI.isUserLoggedIn();
     if (this.user != null) {
-      console.log('CREATING STAFFAPI : ' + STAFF + ' ' + this.user.token);
+      console.log('CREATING STAFFAPI : ' + JSON.stringify(STAFF) + ' ' + this.user.token);
       const data = {
         token: this.user.token,
         staff: STAFF
       };
+      console.log(data);
       return this.http.post(API_URL + '/create', JSON.stringify(data), '')
       .pipe(timeout(30000))
       .map(resp => {
