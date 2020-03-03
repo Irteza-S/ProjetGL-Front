@@ -377,9 +377,12 @@ export class TicketFormComponent implements OnInit {
         rue: adresse[1] + ' ' + adresse[2],
         ville: adresse[4],
         codePostal: adresse[3]
-      },
-      taches: tacheList
+      }
     };
+    if (tacheList.length > 0) {
+      Object.assign(ticket, {taches: tacheList});
+    }
+
     if (this.ticketFormType === 'Modification ticket') {
       console.log('MODIFICATION SAVED');
       console.log(this.ticketFormGroup.value);
