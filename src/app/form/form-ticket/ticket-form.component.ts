@@ -186,6 +186,12 @@ export class TicketFormComponent implements OnInit {
       body.demandeurList[index] = part.sexe + ' ' + part.id + ' ' + part.nom + ' ' + part.prenom;
     }, body.demandeurList);
     this.demandeurList = body.demandeurList;
+    console.log('ccaca');
+    console.log(this.demandeurList.length);
+    if (this.demandeurList.length === 0) {
+      alert('Impossible de créer un ticket pour un client qui n\'a pas de demandeur, veuillez créer un demandeur');
+      this.router.navigate(['/list-ticket']);
+    }
 
     // ClientSite
     body.clientSiteList.forEach((part, index) => {

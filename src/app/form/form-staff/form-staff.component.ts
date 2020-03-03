@@ -168,7 +168,9 @@ export class StaffFormComponent implements OnInit {
         value => {
           console.log(value);
           this.spinnerService.hide();
-          this.router.navigate(['/list-staff']);
+          this.router.navigate(['/list-staff']).then(() => {
+            window.location.reload();
+          });
         },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );
@@ -181,7 +183,9 @@ export class StaffFormComponent implements OnInit {
         value => {
           console.log(value);
           this.spinnerService.hide();
-          this.router.navigate(['/list-staff']);
+          this.router.navigate(['/list-staff']).then(() => {
+            window.location.reload();
+          });
         },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       );

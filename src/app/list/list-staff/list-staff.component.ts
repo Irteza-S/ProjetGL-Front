@@ -51,6 +51,10 @@ export class ListStaffComponent implements OnInit, AfterViewInit{
 
   constructor(public dialog: MatDialog, private UserAPI: UserAPIService, private spinnerService: Ng4LoadingSpinnerService,
               private router: Router, private loginAPI: LoginAPIService, private modalService: NgbModal) {
+    this.dataSource = new MatTableDataSource(Ops);
+    this.dataSource2 = new MatTableDataSource(Techs);
+    this.dataSource3 = new MatTableDataSource(Admins);
+    this.dataSource4 = new MatTableDataSource(RespoTechs);
     if (loginAPI.isUserAdmin()) {
       this.userIsAdmin = true;
     }
