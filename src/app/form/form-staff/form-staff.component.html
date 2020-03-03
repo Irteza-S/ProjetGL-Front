@@ -11,8 +11,8 @@
         <div class="form-group col-md-2">
           <label>Sexe</label>
           <ng-multiselect-dropdown
-            name="competence"
-            [placeholder]="'Fonction'"
+            name="Sexe"
+            [placeholder]="'Sexe'"
             [data]="sexeList"
             formControlName="form_sexe"
             [disabled]="disabled"
@@ -68,19 +68,18 @@
             [placeholder]="'Fonction'"
             [data]="fonctionList"
             formControlName="form_fonction"
-            [disabled]="disabled"
+            [disabled]="disabledFonctions"
             [settings]="fonctionDropdownSettings">
           </ng-multiselect-dropdown>
         </div>
-        <div class="form-group col-md-4" style="
-        padding-top: 32px;">
+        <div class="form-group col-md-4">
           <label>Competences</label>
           <ng-multiselect-dropdown
             name="competence"
             [placeholder]="'Competences'"
             [data]="competenceList"
             formControlName="form_competences"
-            [disabled]="disabled"
+            [disabled]="disabledCompetences"
             [settings]="dropdownSettings">
           </ng-multiselect-dropdown>
         </div>

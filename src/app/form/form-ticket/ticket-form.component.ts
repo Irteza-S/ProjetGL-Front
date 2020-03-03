@@ -258,10 +258,13 @@ export class TicketFormComponent implements OnInit {
         this.technicienList = ['', tmp];
       }
     }
-
+    this.technicienList.push('');
     if(this.loginAPI.isUserOperateur()) {
       console.log('is operateur');
       this.ticketFormGroup.controls.form_technicien.disable();
+      if (this.ticketFormType === TicketFormType.Create) {
+        this.ticketFormGroup.controls.form_technicien.setValue('');
+      }
     }
   }
 

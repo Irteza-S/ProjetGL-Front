@@ -60,7 +60,7 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button style="margin-left: 30px;" onclick="window.location.href = '/staff';" mat-mini-fab>
+        <button style="margin-left: 30px;" onclick="window.location.href = '/form-staff';" mat-mini-fab *ngIf="userIsAdmin">
           <mat-icon>person_add</mat-icon>
         </button>
       </div>
@@ -91,7 +91,7 @@
             <a (click)="editStaff(element.id)">
               <mat-icon>edit</mat-icon>
             </a>
-            <a mat-icon-button (click)="openDialog(element.name)" >
+            <a mat-icon-button (click)="openVerticallyCentered(content, element.id, element.name)">
               <mat-icon>delete</mat-icon>
             </a>
           </td>
@@ -109,7 +109,7 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
-        <button style="margin-left: 30px;" onclick="window.location.href = '/staff';" mat-mini-fab>
+        <button style="margin-left: 30px;" onclick="window.location.href = '/form-staff';" mat-mini-fab *ngIf="userIsAdmin">
           <mat-icon>person_add</mat-icon>
         </button>
       </div>
@@ -141,7 +141,7 @@
               <a (click)="editStaff(element.id)">
                 <mat-icon>edit</mat-icon>
               </a>
-              <a mat-icon-button (click)="openDialog(element.name)" >
+              <a mat-icon-button (click)="openVerticallyCentered(content, element.id, element.name)">
                 <mat-icon>delete</mat-icon>
               </a>
             </td>
@@ -164,7 +164,7 @@
           <mat-icon>person_add</mat-icon>
         </button>
       </div>
-      <table mat-table [dataSource]="dataSource3" matSort class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource4" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>

@@ -123,8 +123,8 @@
                                             <select class="form-control" formControlName="technicien">
                                                 <option *ngFor="let tech of technicienList" let i = index [ngValue]="tech" >{{tech}}</option>
                                             </select>
-                                            <input type="text" class="form-control" formControlName="estimatedTacheLength" placeholder="Temps estimé">
-                                            <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps passé" disabled>
+                                            <input type="text" class="form-control" formControlName="estimatedTacheLength" placeholder="Temps estimé (min)">
+                                            <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps passé (min)" disabled>
                                             &nbsp;
                                             &nbsp;
                                             <button type="button" class="btn btn-outline-info" (click)="openChrono(content, pointIndex)">Commencer</button>

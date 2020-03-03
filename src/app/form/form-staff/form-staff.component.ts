@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserAPIService } from '../../services/api/user-api.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { UserType } from 'src/app/model/userole';
+import { LoginAPIService } from 'src/app/services/login/login-api.service';
 
 @Component({
   selector: 'app-form-staff',
@@ -21,6 +23,7 @@ export class StaffFormComponent implements OnInit {
   fonctionList = ['Opérateur', 'Responsable Technicien', 'Technicien'];
   sexeList = ['M', 'F'];
   userId;
+  isUserAuthorized = false;
 
   // Competences selection
   competencesDropdownSettings = {
@@ -43,7 +46,7 @@ export class StaffFormComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder, private userAPI: UserAPIService, private route: ActivatedRoute,
-              private spinnerService: Ng4LoadingSpinnerService, private router: Router) {
+              private spinnerService: Ng4LoadingSpinnerService, private router: Router, private loginAPI: LoginAPIService) {
     this.initForm(fb);
     // this.ticketFormType = formType;
     this.route.paramMap.subscribe(params => {
@@ -97,8 +100,9 @@ export class StaffFormComponent implements OnInit {
       const adresseCodePostal = body.staff.staffAdress.codePostal;
       const adresseNumero = body.staff.staffAdress.numero;
       const adresseVille = body.staff.staffAdress.ville;
-      const fonction = body.staff.staffRole[0];
+      let fonction = body.staff.staffRole;
       const staffSexe = body.staff.staffSexe;
+      let staffCompetency = body.staff.staffCompetency;
 
       this.staffFormGroup.controls.form_sexe.setValue(staffSexe);
       this.staffFormGroup.controls.form_nom.setValue(nom);
@@ -111,6 +115,31 @@ export class StaffFormComponent implements OnInit {
       this.staffFormGroup.controls.form_adresse_ville.setValue(adresseVille);
       this.staffFormGroup.controls.form_adresse_numero.setValue(adresseNumero);
       this.staffFormGroup.controls.form_fonction.setValue(fonction);
+      this.staffFormGroup.controls.form_competences.setValue(staffCompetency);
+    }
+    if (this.loginAPI.isUserAdmin()) {
+      console.log('user is admin');
+      this.isUserAuthorized = true;
+    } else {
+      console.log('user is notadmin');
+    }
+  }
+
+  get disabledCompetences() {
+    if (!this.isUserAuthorized) {
+      return this.staffFormGroup.get('form_competences').disable;
+    }
+  }
+
+  get disabledFonctions() {
+    if (!this.isUserAuthorized) {
+      return this.staffFormGroup.get('form_fonction').disable;
+    }
+  }
+
+  get disabledSexe() {
+    if (!this.isUserAuthorized) {
+      return this.staffFormGroup.get('form_sexe').disable;
     }
   }
 
@@ -168,12 +197,13 @@ export class StaffFormComponent implements OnInit {
         value => {
           console.log(value);
           this.spinnerService.hide();
-          this.router.navigate(['/list-staff']).then(() => {
-            window.location.reload();
-          });
         },
-          error => {console.log('ERROR', error); this.spinnerService.hide(); }
-      );
+        error => {console.log('ERROR', error); this.spinnerService.hide(); }
+    ).add(() => {
+      this.router.navigate(['/list-staff']).then(() => {
+          window.location.reload();
+        });
+    });
     } else {
     // Create ticket
       console.log('CREATION STAFF SAVED');
@@ -183,12 +213,13 @@ export class StaffFormComponent implements OnInit {
         value => {
           console.log(value);
           this.spinnerService.hide();
-          this.router.navigate(['/list-staff']).then(() => {
-            window.location.reload();
-          });
         },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
-      );
+      ).add(() => {
+        this.router.navigate(['/list-staff']).then(() => {
+            window.location.reload();
+          });
+      });
     }
   }
 
