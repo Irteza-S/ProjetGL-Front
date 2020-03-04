@@ -225,6 +225,8 @@ export class TicketFormComponent implements OnInit {
       body.ticket.adresse.codePostal + ' ' + body.ticket.adresse.ville;
       const categorie = body.ticket.categorie;
       const statut = body.ticket.statut;
+      console.log(body.ticket.priorite);
+      const priorite = body.ticket.priorite.toString();
 
       this.ticketFormGroup.controls.form_type.setValue(demande);
       if(tech !== '') {
@@ -236,6 +238,7 @@ export class TicketFormComponent implements OnInit {
       this.ticketFormGroup.controls.form_description.setValue(description);
       this.ticketFormGroup.controls.form_objet.setValue(objet);
       this.ticketFormGroup.controls.form_status.setValue(statut);
+      this.ticketFormGroup.controls.form_priorite.setValue(priorite);
 
       // Ajout de taches existantes
       if (body.ticket.taches) {
@@ -360,7 +363,7 @@ export class TicketFormComponent implements OnInit {
     let ticket =  {
       categorie: this.ticketFormGroup.controls.form_categorie.value,
       competences: ['Electricien', 'Frigoriste'],
-      priorite: 1,
+      priorite: +this.ticketFormGroup.controls.form_priorite.value,
       demandeur: {
         sexe: demandeur[0],
         id: +demandeur[1],

@@ -70,7 +70,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     const body = JSON.parse(resSTR._body);
     console.log(body);
     for (const ticket of body) {
-      const technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      let technicien = '';
+      if (ticket.technicien) {
+        technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      }
       const tmp = {
         num: ticket.id,
         date: '02/09/2019',
@@ -91,7 +94,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     const body = JSON.parse(resSTR._body);
     console.log(body);
     for (const ticket of body) {
-      const technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      let technicien = '';
+      if (ticket.technicien) {
+        technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      }
       const tmp = {
         num: ticket.id,
         date: '02/09/2019',

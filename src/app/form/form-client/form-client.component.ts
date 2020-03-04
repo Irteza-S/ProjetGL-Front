@@ -83,7 +83,6 @@ export class ClientFormComponent implements OnInit {
     const resSTR = JSON.parse(JSON.stringify(data));
     const body = JSON.parse(resSTR._body);
     console.log(body);
-
     const clientName = body.client.nom;
     const clientSIREN = body.client.SIREN;
     const clientRue = body.client.adresse.rue;
@@ -98,6 +97,12 @@ export class ClientFormComponent implements OnInit {
     this.clientFormGroup.controls.form_adresse_codePostal.setValue(clientCodePostal);
     this.clientFormGroup.controls.form_adresse_ville.setValue(clientVille);
 
+    if (clientSIREN !== '') {
+      this.clientFormGroup.controls.form_adresse_codePostal.disable();
+      this.clientFormGroup.controls.form_adresse_numero.disable();
+      this.clientFormGroup.controls.form_adresse_rue.disable();
+      this.clientFormGroup.controls.form_adresse_ville.disable();
+    }
     // Setup site list
     if (body.clientSiteList) {
       body.clientSiteList.forEach(element => {

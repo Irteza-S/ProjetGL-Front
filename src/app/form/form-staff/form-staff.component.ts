@@ -200,9 +200,15 @@ export class StaffFormComponent implements OnInit {
         },
         error => {console.log('ERROR', error); this.spinnerService.hide(); }
     ).add(() => {
-      this.router.navigate(['/list-staff']).then(() => {
+      if (this.isUserAuthorized) {
+        this.router.navigate(['/list-staff']).then(() => {
           window.location.reload();
         });
+      } else {
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
+      }
     });
     } else {
     // Create ticket
@@ -216,9 +222,15 @@ export class StaffFormComponent implements OnInit {
         },
           error => {console.log('ERROR', error); this.spinnerService.hide(); }
       ).add(() => {
-        this.router.navigate(['/list-staff']).then(() => {
+        if (this.isUserAuthorized) {
+          this.router.navigate(['/list-staff']).then(() => {
             window.location.reload();
           });
+        } else {
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
+        }
       });
     }
   }
