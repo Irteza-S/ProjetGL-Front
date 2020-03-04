@@ -205,14 +205,18 @@ export class TicketFormComponent implements OnInit {
       this.clientName = body.ticket.nomClient;
       const description = body.ticket.description;
       const objet = body.ticket.objet;
-      let tech = body.ticket.technicien.sexe + ' ' + body.ticket.technicien.id + ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
-      const tmpUser = this.loginAPI.isUserTechnicien();
-      if (tmpUser != null) {
-        if(+body.ticket.technicien.id != null) {
-          const tmp = tmpUser.gender + ' ' + tmpUser.id + ' ' + tmpUser.lastName + ' ' + tmpUser.firstName;
-          this.technicienList = ['', tmp];
-        } else if(+body.ticket.technicien.id != tmpUser.id) {
-          this.ticketFormGroup.controls.form_technicien.disable();
+      let tech = '';
+      if(body.ticket.technicien) {
+        tech = body.ticket.technicien.sexe + ' ' + body.ticket.technicien.id +
+        ' ' + body.ticket.technicien.nom + ' ' + body.ticket.technicien.prenom;
+        const tmpUser = this.loginAPI.isUserTechnicien();
+        if (tmpUser != null) {
+          if(+body.ticket.technicien.id != null) {
+            const tmp = tmpUser.gender + ' ' + tmpUser.id + ' ' + tmpUser.lastName + ' ' + tmpUser.firstName;
+            this.technicienList = ['', tmp];
+          } else if(+body.ticket.technicien.id != tmpUser.id) {
+            this.ticketFormGroup.controls.form_technicien.disable();
+          }
         }
       }
       const demande = body.ticket.type;
@@ -223,7 +227,9 @@ export class TicketFormComponent implements OnInit {
       const statut = body.ticket.statut;
 
       this.ticketFormGroup.controls.form_type.setValue(demande);
-      this.ticketFormGroup.controls.form_technicien.setValue(tech);
+      if(tech !== '') {
+        this.ticketFormGroup.controls.form_technicien.setValue(tech);
+      }
       this.ticketFormGroup.controls.form_demandeur.setValue(demandeur);
       this.ticketFormGroup.controls.form_site.setValue(adresse);
       this.ticketFormGroup.controls.form_categorie.setValue(categorie);
@@ -365,12 +371,6 @@ export class TicketFormComponent implements OnInit {
       nomClient: 'A',
       objet: this.ticketFormGroup.controls.form_objet.value,
       statut: this.ticketFormGroup.controls.form_status.value,
-      technicien: {
-        sexe: technicien[0],
-        id: +technicien[1],
-        nom: technicien[2],
-        prenom: technicien[3]
-      },
       type: this.ticketFormGroup.controls.form_type.value,
       adresse: {
         numero: +adresse[0],
@@ -381,6 +381,13 @@ export class TicketFormComponent implements OnInit {
     };
     if (tacheList.length > 0) {
       Object.assign(ticket, {taches: tacheList});
+    }
+    if (technicien[0] !== '') {
+      Object.assign(ticket, {technicien: {
+        sexe: technicien[0],
+        id: +technicien[1],
+        nom: technicien[2],
+        prenom: technicien[3]}});
     }
 
     if (this.ticketFormType === 'Modification ticket') {
