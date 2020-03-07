@@ -1,16 +1,29 @@
 table {
     width: 100%;
+    background-color: slategray;
 }
 th {
     font-weight: bold;
+    font-size-adjust: inherit;
 }
-.bold {
-    font-weight: bold;
+span {
+    color: gray;
 }
-.center {
-    text-align: center;
+mat-paginator {
+    background-color: slategray;
 }
-.mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+
+.example-container {
+    height: 600px;
+    overflow: auto;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.underline-on-hover:hover {
+    cursor: pointer;
+}

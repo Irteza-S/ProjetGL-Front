@@ -2,15 +2,18 @@
 
     <form [formGroup]="ticketFormGroup">
     <div class="card-header form-row">
-        <div class="form-group col-md-9">
+        <div class="form-group col-6 col-md-4">
             <h3 class="mb-0">{{ticketFormType}}</h3>
         </div>
-        <div class="form-group col-md-3 input-group mb-3">
+        <div class="form-group col-6 col-md-4">
+            <p><ngb-progressbar [animated]="true" [striped]="true" height="22px" type="{{progressBarStatus}}" [value]="progressBarValue">{{progressBarValue}}%</ngb-progressbar></p>
+        </div>
+        <div class="form-group col-6 col-md-4 input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Statut</label>
             </div>
             <select class="form-control custom-select" formControlName="form_status">
-                <option *ngFor="let type of statusList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                <option *ngFor="let type of statusList" let i = index [ngValue]="type" >{{type}}</option>
             </select>
           </div>
     </div>
@@ -23,7 +26,7 @@
                       <div class="form-group col-md-5">
                         <label>Type de la demande</label>
                         <select class="form-control" formControlName="form_type">
-                            <option *ngFor="let type of demandeTypeList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                            <option *ngFor="let type of demandeTypeList" let i = index [ngValue]="type" >{{type}}</option>
                         </select>
                       </div>
                     </div>
@@ -37,8 +40,8 @@
                         </div>
                         <div class="form-group col-md-5">
                                 <label>Technicien affecté</label>
-                                <select class="form-control" formControlName="form_technicien" disabled>
-                                    <option *ngFor="let type of technicienList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                <select class="form-control" formControlName="form_technicien">
+                                    <option *ngFor="let type of technicienList" let i = index [ngValue]="type">{{type}}</option>
                                 </select>
                         </div>
                     </div>
@@ -48,21 +51,17 @@
                         <div class="form-group col-md-4">
                                 <label>Demandeur</label>
                                 <select class="form-control" formControlName="form_demandeur">
-                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of demandeurList" let i = index [ngValue]="type" >{{type}}</option>
                                 </select>
                         </div>
                         <div class="form-group col-md-4">
                                 <label>Client</label>
-                                <select id="inputState" class="form-control" disabled>
-                                    <option selected>Client1</option>
-                                    <option>Client2</option>
-                                    <option>Client3</option>
-                                </select>
+                                <input type="text" value="{{clientName}}" class="form-control" placeholder="Client" disabled>
                         </div>
                         <div class="form-group col-md-4">
                                 <label>Site du client</label>
                                 <select class="form-control" formControlName="form_site">
-                                        <option *ngFor="let type of clientSiteList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                        <option *ngFor="let type of clientSiteList" let i = index [ngValue]="type" >{{type}}</option>
                                 </select>
                         </div>
                     </div>
@@ -72,13 +71,13 @@
                         <div class="form-group col-md-4">
                             <label>Catégorie</label>
                             <select class="form-control" formControlName="form_categorie">
-                                    <option *ngFor="let type of categorieList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of categorieList" let i = index [ngValue]="type" >{{type}}</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Niveau de priorité</label>
                             <select class="form-control" formControlName="form_priorite">
-                                    <option *ngFor="let type of prioriteList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                    <option *ngFor="let type of prioriteList" let i = index [ngValue]="type" >{{type}}</option>
                             </select>
                     </div>
                     </div>
@@ -101,19 +100,35 @@
 
                     <div formArrayName="form_tache">
                         <div class="form-row">
-                            <div class="col-md-9">
+                            <div>
                                 <div *ngFor="let item of form_tache.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                                <div class="input-group" >
+                                    <div class="input-group" >
                                             <div class="input-group-prepend">
                                                 <button class="btn btn-outline-secondary" type="button" (click)="deleteTache(pointIndex)">-</button>
                                             </div>
-                                            <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
-                                            <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps estimé">
-                                            <select class="form-control" formControlName="tacheCompetence">
-                                                <option *ngFor="let type of competenceList" let i = index [ngValue]="type" [selected]="!i">{{type}}</option>
+                                            <input type="text" class="form-control" formControlName="tacheId" placeholder="ID" disabled>
+                                            <select class="form-control" formControlName="tacheStatut">
+                                                <option *ngFor="let status of statusList" let i = index [ngValue]="status" >{{status}}</option>
                                             </select>
-                                        
-                                        </div>
+                                            <input type="text" class="form-control" formControlName="tacheName" placeholder="Nom de la tâche">
+                                            <input type="text" class="form-control" formControlName="tacheDescription" placeholder="Description">
+                                            <ng-multiselect-dropdown
+                                                name="competence"
+                                                [placeholder]="'Competences'"
+                                                [data]="competenceList"
+                                                formControlName="tacheCompetence"
+                                                [disabled]="disabled"
+                                                [settings]="dropdownSettings">
+                                            </ng-multiselect-dropdown>
+                                            <select class="form-control" formControlName="technicien">
+                                                <option *ngFor="let tech of technicienList" let i = index [ngValue]="tech" >{{tech}}</option>
+                                            </select>
+                                            <input type="text" class="form-control" formControlName="estimatedTacheLength" placeholder="Temps estimé (min)">
+                                            <input type="text" class="form-control" formControlName="tacheLength" placeholder="Temps passé (min)" disabled>
+                                            &nbsp;
+                                            &nbsp;
+                                            <button type="button" class="btn btn-outline-info" (click)="openChrono(content, pointIndex)">Commencer</button>
+                                    </div>
                                 </div>    
                             </div>
                         </div>
@@ -123,40 +138,47 @@
                     <hr class="style14">
                     <br>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date d'ouverture
-                                <br>
-                                <input [formControl]="openingDate" [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
-                                <owl-date-time #dtPicker1></owl-date-time>
-                            </label>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date de saisie
-                                <br>
-                                <input [formControl]="inputDate" [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
-                                <owl-date-time #dtPicker2></owl-date-time>
-                            </label>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label>
-                                Date de début de traitement
-                                <br>
-                                <input [formControl]="startingDate" [owlDateTimeTrigger]="dtPicker3" [owlDateTime]="dtPicker3">
-                                <owl-date-time #dtPicker3></owl-date-time>
-                            </label>
-                        </div>
-                    
-                    </div>
-
                     
                     <div class="form-row">
-                    <button type="submit" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer ticket</button>
+                        <button type="submit" *ngIf="isCreation()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer ticket</button>
+                        <button type="submit" *ngIf="isModification()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Modifier ticket</button>
                     </div>
     </div>
     </form>
 </div>
+
+<!--CHRONO TEMPLATE-->
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Chronomètre</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="text-center">
+            <h5><span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.heures" (keydown.enter)="saveHeure($event)" style="width:35px;">
+            Heures</span>
+            &nbsp;&nbsp;
+            <span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.minutes" (keydown.enter)="saveMin($event)" style="width:35px;">
+            Minutes</span>
+            &nbsp;&nbsp;
+            <span [className]="isSelected ? 'badge badge-primary' : 'badge badge-secondary'">
+            <input [ngModel]="_timer.secondes" (keydown.enter)="saveSec($event)" style="width:35px;">
+            Secondes</span></h5>
+        <p>
+            <button class="btn btn-danger" *ngIf="_state.backward" (click)="backward()" [disabled]="disableChrono">Effacer</button>&nbsp;
+            <button class="btn btn-danger" *ngIf="_state.stop" (click)="stop()" [disabled]="disableChrono">Arrêter</button>&nbsp;
+            <button class="btn btn-primary" *ngIf="_state.play" (click)="play()" [disabled]="disableChrono">{{_btnPlay}}</button>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Quitter sans souvegarder</button>
+      <button type="button" class="btn btn-primary" (click)="saveChrono();modal.close('Close click')">Souvegarder</button>
+    </div>
+</ng-template>
+

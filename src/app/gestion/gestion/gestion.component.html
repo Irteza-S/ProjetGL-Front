@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        <app-gestion-card *ngFor="let feature of features"
+        class="col-md-4"
+        [title]="feature.title"
+        [description]="feature.description"
+        [icon]="feature.icon"
+        [routerLink]="[feature.url, feature.parameters]">
+        </app-gestion-card>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<!-- Carte de fonctionnalité -->
+<div class="card mb-3">
+    <h3 class="card-header">{{ title }}</h3>
+    <div class="card-body">
+        <img [src]="icon" (click)="imageClick(title)" style="cursor: pointer;" class="w-25 img-fluid mx-auto d-block"/>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li *ngFor="let desc of description" class="list-group-item text-center" style="cursor: pointer;"  onmouseover="this.style.textDecoration='underline';" 
+        onmouseout="this.style.textDecoration='none';" (click)="imageClick(title)">
+            {{ desc }}
+        </li>
+    </ul>
+</div>

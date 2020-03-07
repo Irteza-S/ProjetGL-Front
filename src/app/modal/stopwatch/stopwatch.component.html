@@ -1,0 +1,29 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Chronomètre</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="text-center">
+            <h5><span class="badge badge-secondary">{{_timer.heures}} &nbsp; Heures</span>
+            &nbsp;&nbsp;
+            <span class="badge badge-secondary">{{_timer.minutes}} &nbsp; Minutes</span>
+            &nbsp;&nbsp;
+            <span class="badge badge-secondary">{{_timer.secondes}} &nbsp; Secondes</span></h5>
+        <p>
+            <button class="btn btn-danger" *ngIf="_state.backward" (click)="backward()">Effacer</button>&nbsp;
+            <button class="btn btn-danger" *ngIf="_state.stop" (click)="stop()">Arrêter</button>&nbsp;
+            <button class="btn btn-primary" *ngIf="_state.play" (click)="play()">{{_btnPlay}}</button>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="modal.close('Close click')">Quitter sans souvegarder</button>
+      <button type="button" class="btn btn-primary" (click)="save();modal.close('Close click')">Souvegarder</button>
+    </div>
+</ng-template>
+<button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Modal vertically centered</button>
+  

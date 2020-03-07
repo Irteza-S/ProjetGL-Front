@@ -1,0 +1,128 @@
+<div class="card card-outline-secondary">
+
+  <form [formGroup]="staffFormGroup" (ngSubmit)="sendForm()">
+    <div class="card-header form-row">
+      <div class="form-group col-6 col-md-4">
+          <h3 class="mb-0">{{staffFormType}}</h3>
+      </div>
+    </div>
+    <div class="card-body container">
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label>Sexe</label>
+          <ng-multiselect-dropdown
+            name="Sexe"
+            [placeholder]="'Sexe'"
+            [data]="sexeList"
+            formControlName="form_sexe"
+            [disabled]="disabled"
+            [settings]="fonctionDropdownSettings">
+          </ng-multiselect-dropdown>
+          <div *ngIf="submitted && f.form_sexe.errors" class="invalid-feedback">
+            <div *ngIf="f.form_sexe.errors.required">Sexe is required</div>
+        </div>
+        </div>
+        <div class="form-group col-md-5">
+          <label>Nom de famille</label>
+          <input type="text" class="form-control" formControlName="form_nom" placeholder="Nom">
+        </div>
+        <div class="form-group col-md-5">
+          <label>Prénom</label>
+          <input type="text" class="form-control" formControlName="form_prenom" placeholder="Prénom">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label>N° Rue</label>
+          <input type="text" class="form-control" formControlName="form_adresse_numero" placeholder="1, 1-Bis...">
+        </div>
+        <div class="form-group col-md-10">
+          <label>Adresse</label>
+          <input type="text" class="form-control" formControlName="form_adresse_rue" placeholder="Adresse">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label>Code Postal</label>
+          <input type="text" class="form-control" formControlName="form_adresse_codePostal" placeholder="91080, 91000...">
+        </div>
+        <div class="form-group col-md-7">
+          <label>Ville</label>
+          <input type="text" class="form-control" formControlName="form_adresse_ville" placeholder="Orsay, Courcouronnes....">
+        </div>
+        <div class="form-group col-md-2">
+          <label>ID</label>
+          <input type="text" class="form-control" value="{{userId}}" disabled>
+        </div>
+      </div>
+
+      <br>
+      <hr class="style14">
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Fonction</label>
+          <ng-multiselect-dropdown
+            name="competence"
+            [placeholder]="'Fonction'"
+            [data]="fonctionList"
+            formControlName="form_fonction"
+            [disabled]="disabledFonctions"
+            [settings]="fonctionDropdownSettings">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Competences</label>
+          <ng-multiselect-dropdown
+            name="competence"
+            [placeholder]="'Competences'"
+            [data]="competenceList"
+            formControlName="form_competences"
+            [disabled]="disabledCompetences"
+            [settings]="dropdownSettings">
+          </ng-multiselect-dropdown>
+        </div>
+      </div>
+
+
+      <br>
+      <hr class="style14">
+      <br>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Login</label>
+          <input type="text" class="form-control" formControlName="form_login" placeholder="Login">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Mot de passe</label>
+          <input type="password" class="form-control" formControlName="form_mdp" placeholder="********">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Numéro de téléphone</label>
+          <input type="text" class="form-control" formControlName="form_tel" placeholder="Numéro">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label>Mail</label>
+          <input type="email" class="form-control" formControlName="form_mail" placeholder="user@gmail.com">
+        </div>
+      </div>
+
+      <br>
+      <hr class="style14">
+      <br>
+
+
+
+
+      <div class="form-row">
+        <button type="submit" *ngIf="isCreation()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Créer Staff</button>
+        <button type="submit" *ngIf="isModification()" class="btn btn-outline-primary btn-lg" (click)="sendForm()">Modifier employé</button>
+      </div>
+    </div>
+  </form>
+</div>

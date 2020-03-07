@@ -1,135 +1,26 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
+import { TicketAPIService } from '../../services/api/ticket-api.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { LoginAPIService } from 'src/app/services/login/login-api.service';
+import { User } from 'src/app/model/user';
+import { ClientAPIService } from '../../services/api/client-apiservice.service';
+
+import { Router } from '@angular/router';
 
 export interface TicketsTable {
   num: number;
   date: string;
   title: string;
-  client: string;
+  clientNom: string;
   type: string;
   status: string;
   tech: string;
   edition: string;
+
   }
-const ELEMENT_DATA: TicketsTable[] = [
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  },{
-    num: 1, date: '02/09/2019', title: 'Installation d\'une nouvelle vitrine réfrigérée',
-    client:'Boucherie ALAINE', type:'Demande', status:'En cours', tech: 'XX', edition:'Modifier'
-  },
-  {
-    num: 2, date: '11/09/2019', title: 'Un des compresseurs de la chambre froide ne fonctionne plus',
-    client:'Boucherie SANZO', type:'Incident', status:'Fermé', tech: 'YY', edition:'Consulter'
-  },
-  {
-    num: 3, date: '02/09/2019', title: 'La vitrine réfrigérée n\'est plus assez froide',
-    client:'Fauchon', type:'Incident', status:'En attente', tech: 'XX', edition:'Modifier'
-  }
-];
+let ELEMENT_DATA_ALL: TicketsTable[] = [];
+let ELEMENT_DATA_MY: TicketsTable[] = [];
 
 @Component({
   selector: 'app-tickets',
@@ -139,23 +30,113 @@ const ELEMENT_DATA: TicketsTable[] = [
 export class TicketsComponent implements OnInit, AfterViewInit {
 
   public displayedColumns: string[] = ['num', 'date', 'title', 'client', 'type', 'status', 'tech', 'edition'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
+  dataSourceAllTickets = new MatTableDataSource(ELEMENT_DATA_ALL);
+  dataSourceMyTickets = new MatTableDataSource(ELEMENT_DATA_MY);
+  user: User;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor() { }
+
+  constructor(private ticketAPI: TicketAPIService, private spinnerService: Ng4LoadingSpinnerService,
+              private loginAPI: LoginAPIService, private clientAPI: ClientAPIService,
+              private router: Router) {
+    ELEMENT_DATA_ALL = [];
+    ELEMENT_DATA_MY = [];
+    this.spinnerService.show();
+    console.log('loading');
+    this.user = loginAPI.isUserLoggedIn();
+    if (this.user != null) {
+      this.ticketAPI.listAllTickets().subscribe(
+        value => {
+          this.initListAllTickets(value);
+          this.spinnerService.hide();
+        },
+          error => {console.log('ERROR', error); }
+      );
+      this.ticketAPI.listMyTickets(this.user.id).subscribe(
+        value => {
+          this.initListMyTickets(value);
+        },
+          error => {console.log('ERROR', error); }
+      );
+    }
+  }
 
   ngOnInit() {
   }
 
+  initListAllTickets(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const body = JSON.parse(resSTR._body);
+    console.log(body);
+    for (const ticket of body) {
+      let technicien = '';
+      if (ticket.technicien) {
+        technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      }
+      const tmp = {
+        num: ticket.id,
+        date: '02/09/2019',
+        title: ticket.objet,
+        clientNom: ticket.clientName,
+        type: ticket.type,
+        status: ticket.statut,
+        tech: technicien,
+        edition: 'Modifier'
+      };
+      ELEMENT_DATA_ALL.push(tmp);
+    }
+    this.dataSourceAllTickets = new MatTableDataSource(ELEMENT_DATA_ALL);
+  }
+
+  initListMyTickets(data) {
+    const resSTR = JSON.parse(JSON.stringify(data));
+    const body = JSON.parse(resSTR._body);
+    console.log(body);
+    for (const ticket of body) {
+      let technicien = '';
+      if (ticket.technicien) {
+        technicien = ticket.technicien.id + ' ' + ticket.technicien.nom + ' ' + ticket.technicien.prenom;
+      }
+      const tmp = {
+        num: ticket.id,
+        date: '02/09/2019',
+        title: ticket.objet,
+        clientNom: ticket.clientName,
+        type: ticket.type,
+        status: ticket.statut,
+        tech: technicien,
+        edition: 'Modifier'
+      };
+      ELEMENT_DATA_MY.push(tmp);
+    }
+    this.dataSourceMyTickets = new MatTableDataSource(ELEMENT_DATA_MY);
+  }
+
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.dataSourceAllTickets.sort = this.sort;
+    this.dataSourceAllTickets.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourceAllTickets.filter = filterValue.trim().toLowerCase();
+    if (this.dataSourceAllTickets.paginator) {
+      this.dataSourceAllTickets.paginator.firstPage();
+    }
+  }
+
+  editTicket(clientName, ticketId) {
+    this.spinnerService.show();
+    console.log(clientName);
+    this.clientAPI.getCLientId(clientName).subscribe(
+      value => {
+        console.log(value);
+        const resSTR = JSON.parse(JSON.stringify(value));
+        const clientId = JSON.parse(resSTR._body);
+        this.router.navigate(['/form-ticket', +clientId, +ticketId]);
+      },
+        error => {console.log('ERROR', error); }
+    );
+    this.spinnerService.hide();
   }
 }
- 

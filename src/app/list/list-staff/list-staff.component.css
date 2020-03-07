@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+    background-color: slategray;
+}
+th {
+    font-weight: bold;
+    font-size-adjust: inherit;
+}
+span {
+    color: slategray;
+}
+a {
+    color: rgb(223, 211, 211);
+}
+mat-paginator {
+    background-color: slategray;
+}
+.costumButton{
+    color: rgb(223, 211, 211);
+    cursor: pointer;
+}
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+mat-tab-label {
+    color: white;
+}

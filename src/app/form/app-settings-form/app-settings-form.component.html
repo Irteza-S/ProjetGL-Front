@@ -1,0 +1,16 @@
+<div class="card card-outline-secondary">
+
+    <form [formGroup]="appSettingsForm">
+        <div class="card-header form-row">
+            <div class="form-group col-6 col-md-4">
+                <h3 class="mb-0">Paramètres application</h3>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="form-row">
+                <input type="text" class="form-control" formControlName="competence" placeholder="Nouvelle compétence">
+                <button type="submit" class="btn btn-primary" (click)="sendForm()">Créer compétence</button>
+            </div>
+        </div>
+    </form>
+</div>
